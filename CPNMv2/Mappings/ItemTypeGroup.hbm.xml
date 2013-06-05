@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="CPNMv2" namespace="CPNMv2.Domain">
+
+  <class name="ItemTypeGroup">
+    <id name="ItemTypeGroupKey">
+      <generator class="guid" />
+    </id>
+    <property name="ItemGroupName" />
+  </class>
+</hibernate-mapping>
