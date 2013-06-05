@@ -7,5 +7,9 @@ namespace CPNMv2.Domain
 {
     class UnitOfMeasure
     {
+        public Guid UnitKey { get; protected set; }
+        public string Symbol { get; set; }
+        public double ConvFactor { get; set; }
+        public double OffsetFactor { get; set; }
     }
 }

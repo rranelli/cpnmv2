@@ -9,6 +9,12 @@ namespace CPNMv2.Domain
     {
         public Guid ItemTypeKey { get; protected set; }
         public string ItemTypeName { get; set; }
-        protected List<Property> ValidProperties;
+        protected List<Property> ValidProperties { get; set; }
+        public IList<Discipline> DisciplinesWithAccess { get; set; }
+
+        public List<Property> GetValidProperties()
+        {
+            return ValidProperties;
+        }
     }
 }

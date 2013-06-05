@@ -8,6 +8,7 @@ namespace CPNMv2.Domain
     internal class Item : ItemType
     {
         public Guid ItemKey { get; protected set; }
+        public Project Project { get; set; }
         public string UniqueName;
         public string ItemName;
         public string Description;
