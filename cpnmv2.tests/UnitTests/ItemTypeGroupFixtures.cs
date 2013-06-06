@@ -36,7 +36,7 @@ namespace CPNMv2.Tests
         {
             var itemTypeGroup = new ItemTypeGroup();
             ItemTypeGroupRepository repository = new ItemTypeGroupRepository();
-            itemTypeGroup.ItemGroupName = "Instrumentos";
+            itemTypeGroup.GroupName = "Instrumentos";
             repository.Add(itemTypeGroup);
         }
     }

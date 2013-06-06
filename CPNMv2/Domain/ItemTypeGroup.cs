@@ -7,7 +7,8 @@ namespace CPNMv2.Domain
 {
     public class ItemTypeGroup
     {
-        public virtual Guid ItemTypeGroupKey { get; protected set; }
-        public virtual string ItemGroupName { get; set; }
+        public virtual Guid GroupKey { get; protected set; }
+        public virtual string GroupName { get; set; }
+        public virtual string GroupDescription { get; set; }
     }
 }

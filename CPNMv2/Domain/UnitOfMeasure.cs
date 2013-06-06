@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    class UnitOfMeasure
+    public class UnitOfMeasure
     {
         public Guid UnitKey { get; protected set; }
         public string Symbol { get; set; }

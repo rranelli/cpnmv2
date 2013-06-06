@@ -6,10 +6,12 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    class PropValue : Property
+    public class PropValue : Property
     {
         public Guid ValueKey { get; protected set; }
         public string Value { get; set; }
+
+        public PropValue() {}
 
         public override bool IsConvertible()
         {
@@ -17,7 +19,7 @@ namespace CPNMv2.Domain
             return base.IsConvertible() && double.TryParse(Value, out dummyParsed);
         }
 
-        public string FormatedValue(UnitOfMeasure desiredUnit, int RefOption)
+        public string GetFormatedValue(UnitOfMeasure desiredUnit, int RefOption)
         {
             if (!IsConvertible())
             {

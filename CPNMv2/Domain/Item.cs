@@ -21,5 +21,10 @@ namespace CPNMv2.Domain
                     where propval.PropKey == propKey
                     select propval).SingleOrDefault();
         }
+
+        public List<PropValue> GetAllPropValues()
+        {
+            return _propValues;
+        }
     }
 }

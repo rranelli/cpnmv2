@@ -7,8 +7,8 @@ namespace CPNMv2.Domain
 {
     public class PropertyGroup
     {
-        public virtual Guid PropertyGroupKey { get; protected set; }
-        public virtual string PropertyGroupName { set; get; }
-        public virtual string Description { set; get; }
+        public virtual Guid GroupKey { get; protected set; }
+        public virtual string GroupName { set; get; }
+        public virtual string GroupDescription { set; get; }
     }
 }
