@@ -5,7 +5,8 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    public class Discipline : Entity
+    public class Dimension : Entity
     {
+        public virtual ICollection<UnitOfMeasure> Units { get; set; }
     }
 }

@@ -7,17 +7,15 @@ namespace CPNMv2.Domain
 {
     public interface IUnitOfMeasure
     {
-        Guid UnitKey { get; }
         string Symbol { get; set; }
         double ConvFactor { get; set; }
         double OffsetFactor { get; set; }
     }
 
-    public class UnitOfMeasure : IUnitOfMeasure
+    public class UnitOfMeasure : Entity, IUnitOfMeasure
     {
-        public Guid UnitKey { get; protected set; }
-        public string Symbol { get; set; }
-        public double ConvFactor { get; set; }
-        public double OffsetFactor { get; set; }
+        public virtual string Symbol { get; set; }
+        public virtual double ConvFactor { get; set; }
+        public virtual double OffsetFactor { get; set; }
     }
 }

@@ -17,8 +17,7 @@ namespace CPNMv2.Tests.UnitTests
         {
             _configuration = new Configuration();
             _configuration.Configure();
-            _configuration.AddAssembly(typeof(ItemTypeGroup).Assembly);
-            _sessionFactory = _configuration.BuildSessionFactory();
+            _configuration.AddAssembly(typeof (ItemTypeGroup).Assembly);
         }
 
         [SetUp]
@@ -81,10 +80,9 @@ namespace CPNMv2.Tests.UnitTests
             var repository = new ItemTypeGroupRepository();
             var groupToBeUpdated = repository.GetByName("Caldeiraria");
             groupToBeUpdated.Name = "Caldeiralove";
-            
             repository.Update(groupToBeUpdated);
-            var fromDb = repository.GetById(groupToBeUpdated.Id);
 
+            var fromDb = repository.GetById(groupToBeUpdated.Id);
             var fromDbOld = repository.GetByName("Caldeiraria");
 
             Assert.IsNotNull(fromDb);

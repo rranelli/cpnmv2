@@ -7,8 +7,9 @@ namespace CPNMv2.Domain
 {
     class ItemType : Entity
     {
-        public string Name { get; set; }
-        public List<Property> ValidProperties { get; set; }
-        public IList<Discipline> DisciplinesWithAccess { get; set; }
+        public virtual List<Property> ValidProperties { get; set; }
+        public virtual ItemTypeGroup ItemTypeGroup { get; set; }
+        public virtual Discipline OwnerDiscipline { get; set; }
+        public virtual string Description { get; set; }
     }
 }

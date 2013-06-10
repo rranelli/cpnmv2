@@ -14,7 +14,8 @@ namespace CPNMv2.Tests.UnitTests
             var cfg = new Configuration();
             cfg.Configure();
             cfg.AddAssembly(typeof(ItemTypeGroup).Assembly);
-            new SchemaExport(cfg).Execute(false, true, false);
+            new SchemaExport(cfg).Drop(false, true);
+            new SchemaExport(cfg).Create(false,true);
         }
     }
 }
