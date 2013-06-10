@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CPNMv2.Domain;
+﻿using CPNMv2.Domain;
 using CPNMv2.Repositories;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
-namespace CPNMv2.Tests
+namespace CPNMv2.Tests.UnitTests
 {
     class PropertyGroupFixture
     {
@@ -36,14 +32,14 @@ namespace CPNMv2.Tests
         {
             var propertyGroup = new PropertyGroup();
             var groupName = "A New Group";
-            propertyGroup.GroupName = groupName;
+            propertyGroup.Name = groupName;
 
             var repository = new PropertyGroupRepository();
             repository.Add(propertyGroup);
-            var fromDb = repository.GetByID(propertyGroup.GroupKey);
+            var fromDb = repository.GetById(propertyGroup.Id);
          
             Assert.IsNotNull(fromDb);
-            Assert.AreEqual(fromDb.GroupKey, propertyGroup.GroupKey);
+            Assert.AreEqual(fromDb.Id, propertyGroup.Id);
             Assert.AreNotSame(fromDb, propertyGroup);
         }
     }

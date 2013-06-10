@@ -5,10 +5,8 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    public class PropertyGroup
+    public class PropertyGroup : Entity
     {
-        public virtual Guid GroupKey { get; protected set; }
-        public virtual string GroupName { set; get; }
-        public virtual string GroupDescription { set; get; }
+        public virtual string Description { set; get; }
     }
 }

@@ -8,7 +8,7 @@ using NHibernate.Linq;
 
 namespace CPNMv2.Repositories
 {
-    class ItemRepository : IItemRepository
+    class ItemRepository : IRepository<Item>
     {
         public Item GetByName(string itemName)
         {
@@ -20,12 +20,27 @@ namespace CPNMv2.Repositories
             }
         }
 
-        public Item GetByID(Guid id)
+        public Item GetById(Guid id)
         {
             using(ISession session = NHibernateHelper.OpenSession())
             {
                 return session.Get<Item>(id);
             }
+        }
+
+        public void Add(Item ent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Item ent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(Item ent)
+        {
+            throw new NotImplementedException();
         }
     }
 }

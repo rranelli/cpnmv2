@@ -5,12 +5,12 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    internal class Item : ItemType
+    internal class Item : Entity
     {
-        public Guid ItemKey { get; protected set; }
         public Project Project { get; set; }
+        public ItemType ItemType { get; set; }
+        
         public string UniqueName;
-        public string ItemName;
         public string Description;
         public bool IsActive;
         private List<PropValue> _propValues;
@@ -18,7 +18,7 @@ namespace CPNMv2.Domain
         public PropValue GetValue(Guid propKey)
         {
             return (from propval in _propValues
-                    where propval.PropKey == propKey
+                    where propval.Id == propKey
                     select propval).SingleOrDefault();
         }
 

@@ -5,9 +5,8 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    class Project
+    class Project : Entity
     {
-        public Guid ProjectId { get; protected set; }
         public string Name { set; get; }
         private IList<Item> _items;
 

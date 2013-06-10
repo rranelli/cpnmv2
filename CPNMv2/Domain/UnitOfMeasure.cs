@@ -5,7 +5,15 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    public class UnitOfMeasure
+    public interface IUnitOfMeasure
+    {
+        Guid UnitKey { get; }
+        string Symbol { get; set; }
+        double ConvFactor { get; set; }
+        double OffsetFactor { get; set; }
+    }
+
+    public class UnitOfMeasure : IUnitOfMeasure
     {
         public Guid UnitKey { get; protected set; }
         public string Symbol { get; set; }

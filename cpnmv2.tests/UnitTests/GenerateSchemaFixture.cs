@@ -3,7 +3,7 @@ using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
-namespace CPNMv2.Tests
+namespace CPNMv2.Tests.UnitTests
 {
     [TestFixture]
     public class GenerateSchemaFixture

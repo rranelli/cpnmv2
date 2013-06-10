@@ -5,10 +5,8 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    public class ItemTypeGroup
+    public class ItemTypeGroup : Entity
     {
-        public virtual Guid GroupKey { get; protected set; }
-        public virtual string GroupName { get; set; }
-        public virtual string GroupDescription { get; set; }
+        public virtual string Description { get; set; }
     }
 }
