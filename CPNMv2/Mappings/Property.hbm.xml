@@ -7,6 +7,7 @@
     </id>
     <property name="Name"/>
     <property name="Description"/>
+    <property name="IsCalculated"/>
     <many-to-one name="DefaultUnit" cascade="save-update"/>
     <many-to-one name="Dimension" cascade="all" not-null="false" lazy="false"/>
     <many-to-one name="PropertyGroup" cascade="save-update" not-null="false"/>

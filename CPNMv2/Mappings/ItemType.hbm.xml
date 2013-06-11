@@ -7,8 +7,8 @@
     </id>
     <property name="Name"/>
     <property name="Description"/>
-    <many-to-one name ="OwnerDiscipline" cascade="none"/>
-    <many-to-one name="ItemTypeGroup" cascade ="none"/>
+    <many-to-one name ="OwnerDiscipline" cascade="none" lazy="false"/>
+    <many-to-one name="ItemTypeGroup" cascade ="save-update" lazy="false"/>
     <!--Todo: Adicionar as propriedades validas.-->
   </class>
 </hibernate-mapping>

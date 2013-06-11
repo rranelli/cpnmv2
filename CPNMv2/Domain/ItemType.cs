@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    class ItemType : Entity, INamed
+    public class ItemType : Entity, INamed
     {
         public virtual List<Property> ValidProperties { get; set; }
         public virtual ItemTypeGroup ItemTypeGroup { get; set; }

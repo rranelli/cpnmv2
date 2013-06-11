@@ -11,7 +11,8 @@ namespace CPNMv2.Domain
         public virtual PropertyGroup PropertyGroup { get; set; }
         public virtual Dimension Dimension { get; set; }
         public virtual string Description { get; set; }
-        public virtual  string Name { get; set; }
+        public virtual string Name { get; set; }
+        public virtual bool IsCalculated { get; protected set; }
 
         public virtual ICollection<UnitOfMeasure> ValidUnits
         {
