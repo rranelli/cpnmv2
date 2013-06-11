@@ -11,7 +11,6 @@ namespace CPNMv2.Tests.UnitTests
     class PropertyFixture
     {
         private Configuration _configuration;
-        private ISessionFactory _sessionFactory;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()

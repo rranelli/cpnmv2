@@ -5,12 +5,13 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    public class Property : Entity
+    public class Property : Entity, INamed
     {
         public virtual UnitOfMeasure DefaultUnit { get; set; }
         public virtual PropertyGroup PropertyGroup { get; set; }
         public virtual Dimension Dimension { get; set; }
         public virtual string Description { get; set; }
+        public virtual  string Name { get; set; }
 
         public virtual ICollection<UnitOfMeasure> ValidUnits
         {

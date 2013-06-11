@@ -5,14 +5,16 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    internal class Item : Entity
+    internal class Item : Entity, INamed
     {
-        public Project Project { get; set; }
-        public ItemType ItemType { get; set; }
-        public string UniqueName;
-        public string Description;
-        public bool IsActive;
-        private List<PropValue> _validProps;
+        public virtual Project Project { get; set; }
+        public virtual ItemType ItemType { get; set; }
+        public virtual string UniqueName { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
+        public virtual bool IsActive { get; set; }
+
+        private  List<PropValue> _validProps;
 
         public List<PropValue> PropValues
         {
@@ -56,5 +58,7 @@ namespace CPNMv2.Domain
         {
             return PropValues;
         }
+
+        
     }
 }

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    class Project : Entity
+    class Project : Entity, INamed
     {
-        public string Name { set; get; }
+        public virtual string Name { set; get; }
         private IList<Item> _items;
 
         public IList<Item> GetAllItems()

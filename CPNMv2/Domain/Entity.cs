@@ -8,7 +8,11 @@ namespace CPNMv2.Domain
 {
     public abstract class Entity : Entity<Guid>
     {
-        public virtual string Name { get; set; }
+    }
+
+    public interface INamed
+    {
+        string Name { get; set; }
     }
 
     public abstract class Entity<TId>

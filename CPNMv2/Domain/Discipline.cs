@@ -5,7 +5,8 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    public class Discipline : Entity
+    public class Discipline : Entity, INamed
     {
+        public virtual string Name { get; set; }
     }
 }
