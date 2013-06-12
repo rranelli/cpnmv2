@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="CPNMv2" namespace="CPNMv2.Domain">
+  <class name="Project">
+    <id name="Id">
+      <generator class="guid"/>
+    </id>
+    <property name="Name"/>
+    <property name="Description"/>
+    <set name="Items" inverse="true" lazy="true">
+      <key column ="Project"/>
+      <one-to-many class="Item"/>
+    </set>
+  </class>
+</hibernate-mapping>
