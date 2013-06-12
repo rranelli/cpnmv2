@@ -9,5 +9,6 @@ namespace CPNMv2.Domain
     {
         public virtual Property Property { get; set; }
         public virtual ItemType ItemType { get; set; }
+        public virtual bool IsInternallyCalculated { get; set; }
     }
 }

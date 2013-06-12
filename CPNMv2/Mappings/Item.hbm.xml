@@ -9,7 +9,11 @@
     <property name="UniqueName"/>
     <property name="Description"/>
     <property name="IsActive"/>
-    <many-to-one name ="ItemType"/>
-    <many-to-one name="Project"/>
+    <many-to-one name ="ItemType" cascade="all"/>
+    <many-to-one name="Project" cascade="all"/>
+    <set name="PropValues" cascade="all-delete-orphan">
+      <key column="ItemId"/>
+      <one-to-many class="PropValue"/>
+    </set>
   </class>
 </hibernate-mapping>

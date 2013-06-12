@@ -102,5 +102,7 @@ namespace CPNMv2.Tests.UnitTests
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(fromDb.ItemTypeGroup, typeToUpdateGroup.ItemTypeGroup);
         }
+
+        //todo: Implementar os testes para as propriedades validas.
     }
 }

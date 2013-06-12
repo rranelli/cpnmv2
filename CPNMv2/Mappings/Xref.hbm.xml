@@ -5,7 +5,8 @@
     <id name="Id">
       <generator class="guid"/>
     </id>
-    <many-to-one name="Property" cascade="save-update"/>
-    <many-to-one name="ItemType" cascade ="save-update"/>
+    <property name="IsInternallyCalculated"/>
+    <many-to-one name="Property" cascade="save-update" lazy="false"/>
+    <many-to-one name="ItemType" cascade ="save-update" lazy="false"/>
   </class>
 </hibernate-mapping>

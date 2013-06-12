@@ -15,7 +15,6 @@ namespace CPNMv2.Repositories
                 {
                     var configuration = new Configuration();
                     configuration.Configure();
-                    //configuration.AddAssembly(typeof(ItemTypeGroup).Assembly); //todo: entender como funciona esse add assembly.
                     configuration.AddAssembly(typeof (PropertyGroup).Assembly);
                     _sessionFactory = configuration.BuildSessionFactory();
                 }

@@ -5,14 +5,10 @@ using System.Text;
 
 namespace CPNMv2.Domain
 {
-    class Project : Entity, INamed
+    public class Project : Entity, INamed
     {
-        public virtual string Name { set; get; }
-        private IList<Item> _items;
-
-        public IList<Item> GetAllItems()
-        {
-            return _items;
-        }
+        public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
     }
 }

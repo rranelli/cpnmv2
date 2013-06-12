@@ -1,5 +1,7 @@
 ﻿using CPNMv2.Domain;
 using CPNMv2.Repositories;
+using NHibernate.Cfg;
+using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -14,18 +16,27 @@ namespace CPNMv2.Tests.UnitTests
         private PropValue _thispropvalue;
         private PropValue _propValue1;
         private PropValue _propValue2;
+        private Configuration _configuration;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _unit1 = new UnitOfMeasure() { ConvFactor = 3, OffsetFactor = 1, Symbol = "Unit1" };
-            _unit2 = new UnitOfMeasure() { ConvFactor = 2, Symbol = "Unit2" };
-            _unit3 = new UnitOfMeasure() { ConvFactor = 0.3, OffsetFactor = 1, Symbol = "Unit3" };
+
+
+            _configuration = new Configuration();
+            _configuration.Configure();
+            _configuration.AddAssembly(typeof(PropertyGroup).Assembly);
         }
 
         [SetUp]
         public void SetUp()
         {
+            new SchemaExport(_configuration).Execute(false, true, false);
+
+            _unit1 = new UnitOfMeasure() { ConvFactor = 3, OffsetFactor = 1, Symbol = "Unit1" };
+            _unit2 = new UnitOfMeasure() { ConvFactor = 2, Symbol = "Unit2" };
+            _unit3 = new UnitOfMeasure() { ConvFactor = 0.3, OffsetFactor = 1, Symbol = "Unit3" };
+
             var dimension = new Dimension() { Units = new UnitOfMeasure[] { _unit1, _unit2, _unit3 } };
             _thisproperty = new Property() { Dimension = dimension, DefaultUnit = _unit3 };
             _thispropvalue = new PropValue { Property = _thisproperty, Value = "100" };
@@ -90,11 +101,37 @@ namespace CPNMv2.Tests.UnitTests
         }
 
         [Test]
+        public void CanRemovePropValue()
+        {
+            var repository = new PropValueRepository();
+            repository.Add(_propValue1);
+            Assert.IsNotNull(repository.GetById(_propValue1.Id));
+
+            repository.Remove(_propValue1);
+            Assert.IsNull(repository.GetById(_propValue1.Id));
+        }
+
+        [Test]
+        public void CanAddPropertyAlong()
+        {
+            var newPropValue = new PropValue()
+            {
+                Property = new Property() { Name = "NewProp" },
+                ItemType = new ItemType() { Name = "A New One!" }
+            };
+            var repository = new PropValueRepository();
+            repository.Add(newPropValue);
+
+            var fromDb = repository.GetById(newPropValue.Id);
+            Assert.AreEqual(fromDb, newPropValue);
+        }
+
+        [Test]
         public void BreaksShareCorrecly()
         {
             var repository = new PropValueRepository();
             _propValue1.MakeShare(_propValue2);
-            var propValueSharedWith2 = _propValue1;            
+            var propValueSharedWith2 = _propValue1;
 
             repository.Add(_propValue2);
             repository.Add(propValueSharedWith2);
@@ -141,6 +178,13 @@ namespace CPNMv2.Tests.UnitTests
             var nullValue = new PropValue();
             Assert.IsNull(nullValue.Value);
             Assert.False(nullValue.IsConvertible());
+        }
+
+        [Test]
+        public void CannotConvertIfPropertyIsNull()
+        {
+            var nullProp = new PropValue() { Value = "112", Property = null };
+            Assert.False(nullProp.IsConvertible());
         }
 
         [Test]

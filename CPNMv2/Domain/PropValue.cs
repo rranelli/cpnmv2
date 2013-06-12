@@ -11,13 +11,40 @@ namespace CPNMv2.Domain
     {
         public virtual string Value { get; set; }
     }
-
+    
     public class PropValue : Entity
     {
         public enum FormatType { ValueAndUnit, Value, Unit }
-
-        public virtual Property Property { get; set; }
         protected internal virtual ValueRef ValueRef { get; set; }
+        protected internal virtual Xref Xref { get; set; }
+
+        public virtual Property Property
+        {
+            get
+            {
+                if (Xref == null) Xref = new Xref();
+                return Xref.Property;
+            }
+            set
+            {
+                if (Xref == null) Xref = new Xref();
+                Xref.Property = value;
+            }
+        }
+
+        public virtual ItemType ItemType
+        {
+            get
+            {
+                if (Xref == null) Xref = new Xref();
+                return Xref.ItemType;
+            }
+            set
+            {
+                if (Xref == null) Xref = new Xref();
+                Xref.ItemType = value;
+            }
+        }
 
         public virtual string Value
         {
@@ -67,7 +94,7 @@ namespace CPNMv2.Domain
 
         public virtual void MakeShare(PropValue other)
         {
-            if(!Property.Dimension.Equals(other.Property.Dimension)) throw new Exception("Dimensoes invalidas para o Share");
+            if (!Property.Dimension.Equals(other.Property.Dimension)) throw new Exception("Dimensoes invalidas para o Share");
             ValueRef = other.ValueRef;
         }
 

@@ -6,6 +6,6 @@
       <generator class="guid"/>
     </id>
     <many-to-one name ="ValueRef" cascade="all" lazy="false"/>
-    <many-to-one name ="Property" cascade="save-update"/>
+    <many-to-one name ="Xref" cascade="save-update" lazy="false"/>
   </class>
 </hibernate-mapping>
