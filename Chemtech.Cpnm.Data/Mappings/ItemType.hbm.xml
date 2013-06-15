@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model" namespace="Chemtech.CPNM.Model.Domain">
+  <class name="ItemType" lazy="false">
+    <id name="Id">
+      <generator class="guid"/>
+    </id>
+    <property name="Name"/>
+    <property name="Description"/>
+    <many-to-one name ="OwnerDiscipline" cascade="none"/>
+    <many-to-one name="ItemTypeGroup" cascade ="save-update"/>
+    <set name="ValidXrefs" cascade="all" table="PropertyItemTypeXref" lazy="false">
+      <key column="ItemType"/>
+      <one-to-many class="Xref"/>
+    </set>
+  </class>
+</hibernate-mapping>
