@@ -7,7 +7,7 @@ using NHibernate.Linq;
 
 namespace Chemtech.CPNM.Data.Repositories
 {
-    public class ItemRepository : GeneralRepository<Item>, INamedRepository<Item> 
+    public class ItemRepository : GeneralRepository<Item>, INamedRepository<Item>
     {
         public ICollection<PropValue> GetAllPropValues(Item item)
         {
@@ -28,11 +28,21 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public new void Update(Item item)
         {
-            using(ISession session = NHibernateHelper.OpenSession())
-            using(ITransaction transaction = session.BeginTransaction())
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
             {
                 session.SaveOrUpdate(item);
                 transaction.Commit();
+            }
+        }
+
+        public ICollection<Item> GetAllByProject(Project project)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                return (from i in session.Query<Item>()
+                        where i.Project.Equals(project)
+                        select i).ToList();
             }
         }
     }

@@ -1,6 +1,8 @@
 ﻿using System;
-using Chemtech.CPNM.Model.Domain;
+using System.Collections.Generic;
+using System.Linq;
 using NHibernate;
+using NHibernate.Linq;
 
 namespace Chemtech.CPNM.Data.Repositories
 {
@@ -42,6 +44,23 @@ namespace Chemtech.CPNM.Data.Repositories
             using (session.BeginTransaction())
             {
                 return session.Get<T>(id);
+            }
+        }
+
+        public ICollection<T> GetAll()
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                return (from ent in session.Query<T>()
+                        select ent).ToList();
+            }
+        }
+
+        public IQueryable GetQueryable()
+        {
+            using(ISession session = NHibernateHelper.OpenSession())
+            {
+                return session.Query<T>();
             }
         }
     }

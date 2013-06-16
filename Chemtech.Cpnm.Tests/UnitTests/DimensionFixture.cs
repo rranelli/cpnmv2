@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.Repositories;
 using NHibernate.Cfg;
@@ -11,54 +12,38 @@ namespace Chemtech.CPNM.Tests.UnitTests
     {
         private Configuration _configuration;
 
+        #region Fixture, Setup and Teardown config
+
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _configuration = new Configuration();
-            _configuration.Configure();
-            _configuration.AddAssembly(typeof(DimensionRepository).Assembly);
-            _configuration.AddAssembly(typeof(UnitOfMeasure).Assembly);
+            _configuration = new TestHelper().MakeConfiguration();
         }
 
         [SetUp]
         public void SetUp()
         {
-            new SchemaExport(_configuration).Execute(false, true, false);
-            var unitsOfMeasure = new UnitOfMeasure[] 
-                                            {
-                                                new UnitOfMeasure() {ConvFactor = 1, OffsetFactor = 0,Symbol = "K"},
-                                                new UnitOfMeasure() {ConvFactor = 2, OffsetFactor = 0,Symbol = "C"},
-                                                new UnitOfMeasure() {ConvFactor = 3, OffsetFactor = 1, Symbol = "T"}
-                                            };
-            var dimensions = new Dimension[]
-                                  {
-                                      new Dimension() {Name = "Vazao", Units = unitsOfMeasure},
-                                      new Dimension() {Name = "Pressao"},
-                                      new Dimension() {Name = "Potencia"},
-                                      new Dimension() {Name = "Tensao"},
-                                      new Dimension() {Name = "Ovo"}
-                                  };
-            addGroups(dimensions);
+            new TestHelper().SetUpDatabaseTestData(_configuration);
         }
 
-        private void addGroups(Dimension[] dimensions)
+        [TestFixtureTearDown]
+        public void TearDown()
         {
-            var repository = new DimensionRepository();
-            foreach (var thisDim in dimensions)
-            {
-                repository.Add(thisDim);
-            }
+            new TestHelper().TestTearDown(_configuration);
         }
+
+        #endregion
 
         [Test]
         public void CanGetDimensionByName()
         {
             var repository = new DimensionRepository();
 
-            var pressao = repository.GetByName("Pressao");
+            var pressao = repository.GetByName("Vazao");
 
             Assert.IsNotNull(pressao);
-            Assert.AreEqual(pressao.Name, "Pressao");
+            Assert.AreEqual(pressao.Name, "Vazao");
+            Assert.IsNotNull(pressao.Units);
         }
 
         [Test]
@@ -90,13 +75,26 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void CanRemoveDimension()
         {
             var repository = new DimensionRepository();
-            var dimensionToRemove = repository.GetByName("Ovo");
+            var unitrepository = new GeneralRepository<UnitOfMeasure>();
+            var dumbUnit = new UnitOfMeasure {ConvFactor = 1.1, OffsetFactor = 1.2, Symbol = "1123"};
+            var dumbdim = new Dimension {Name = "duuuuumb", Units = new[] {dumbUnit}};
+            repository.Add(dumbdim);
+
+            // asserting que a dimensao e a unidade foram criadas
+            var fromDb = repository.GetById(dumbdim.Id);
+            var unitFromDb = unitrepository.GetById(dumbUnit.Id);
+            Assert.IsNotNull(fromDb);
+            Assert.IsNotNull(unitFromDb);
+
+            var dimensionToRemove = repository.GetByName("duuuuumb");
             repository.Remove(dimensionToRemove);
 
-            var fromDb = repository.GetById(dimensionToRemove.Id);
-
+            // asserting que a dimensao e a unidade foram criadas
+            fromDb = repository.GetById(dimensionToRemove.Id);
+            unitFromDb = unitrepository.GetById(dumbUnit.Id);
             Assert.IsNotNull(dimensionToRemove);
             Assert.IsNull(fromDb);
+            Assert.IsNull(unitFromDb);
         }
 
         [Test]

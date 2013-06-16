@@ -10,6 +10,7 @@
     <property name="IsActive"/>
     <many-to-one name ="ItemType" cascade="all"/>
     <many-to-one name="Project" cascade="all"/>
+    <!--TODO: Make PropValues LAZY!!!! -->
     <set name="PropValues" cascade="all" lazy="false">
       <key column="ItemId"/>
       <one-to-many class="PropValue"/>

@@ -7,13 +7,13 @@ namespace Chemtech.CPNM.Model.Domain
     {
         public virtual string Value { get; set; }
     }
-    
+
     public class PropValue : Entity
     {
         public enum FormatType { ValueAndUnit, Value, Unit }
         public virtual Xref Xref { get; set; }
         protected internal virtual ValueRef ValueRef { get; set; }
-        
+
         public virtual Property GetProperty
         {
             get { return Xref.Property; }
@@ -36,7 +36,8 @@ namespace Chemtech.CPNM.Model.Domain
         public virtual bool IsConvertible()
         {
             double dummyParsed;
-            if (GetProperty == null) return false;
+            if (Xref == null) return false;
+            if (Xref.Property == null) return false;
             return GetProperty.IsConvertible() && double.TryParse(Value, out dummyParsed); //Try parse sera falso se value == null
         }
 
@@ -44,7 +45,6 @@ namespace Chemtech.CPNM.Model.Domain
         {
             return FormatedValue(FormatType.Value);
         }
-
         public virtual string FormatedValue(UnitOfMeasure desiredUnit, FormatType formatType)
         {
             if (!IsConvertible())
@@ -64,7 +64,6 @@ namespace Chemtech.CPNM.Model.Domain
                     throw new Exception("Opção para unidade inválida");
             }
         }
-
         public virtual string FormatedValue(FormatType formatType)
         {
             return FormatedValue(GetProperty.DefaultUnit, formatType);

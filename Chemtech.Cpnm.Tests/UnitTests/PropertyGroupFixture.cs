@@ -10,40 +10,27 @@ namespace Chemtech.CPNM.Tests.UnitTests
     {
         private Configuration _configuration;
 
+        #region Fixture, Setup and Teardown config
+
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _configuration = new Configuration();
-            _configuration.Configure();
-            _configuration.AddAssembly(typeof(DimensionRepository).Assembly);
-            _configuration.AddAssembly(typeof(UnitOfMeasure).Assembly);
+            _configuration = new TestHelper().MakeConfiguration();
         }
 
         [SetUp]
-        public void TestSetUp()
+        public void SetUp()
         {
-            new SchemaExport(_configuration).Execute(false, true, false);
-            var propGroups = new PropertyGroup[]
-                                     {
-                                         new PropertyGroup() {Name = "Dados de Processo", Description = "desc1"},
-                                         new PropertyGroup() {Name = "Dados de Fornecedor", Description = "123"},
-                                         new PropertyGroup() {Name = "Dados de Catalogo", Description = "123"},
-                                         new PropertyGroup() {Name = "Dados Tecnicos", Description = "123"},
-                                         new PropertyGroup() {Name = "Tagueamento e rastreabilidade", Description = "123"},
-                                         new PropertyGroup() {Name = "Materiais", Description = "123"},
-                                         new PropertyGroup() {Name = "Dados EAP", Description = "123"},
-                                     };
-            addGroups(propGroups);
+            new TestHelper().SetUpDatabaseTestData(_configuration);
         }
 
-        private void addGroups(PropertyGroup[] groups)
+        [TestFixtureTearDown]
+        public void TearDown()
         {
-            var repository = new PropertyGroupRepository();
-            foreach (var thisGroup in groups)
-            {
-                repository.Add(thisGroup);
-            }
+            new TestHelper().TestTearDown(_configuration);
         }
+
+        #endregion
 
         [Test]
         public void CanAddPropertyGroup()
@@ -65,10 +52,12 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void CanRemovePropertyGroup()
         {
             var repository = new PropertyGroupRepository();
-            var propGroupToRemove = repository.GetByName("Dados de Processo");
+            repository.Add(new PropertyGroup { Name = "grupo baguncado"});
+            var propGroupToRemove = repository.GetByName("grupo baguncado");
+            Assert.IsNotNull(propGroupToRemove);
+
             repository.Remove(propGroupToRemove);
             var fromDb = repository.GetById(propGroupToRemove.Id);
-
             Assert.IsNotNull(propGroupToRemove);
             Assert.IsNull(fromDb);
         }

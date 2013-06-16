@@ -15,6 +15,11 @@ namespace Chemtech.CPNM.Model.Domain
         public virtual string Description { get; set; }
         public virtual ICollection<PropValue> PropValues { get; set; }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         public virtual void SetPropValue(PropValue propValue)
         {
             PropValues.Add(propValue);

@@ -1,7 +1,7 @@
-﻿using Chemtech.CPNM.Model.Domain;
+﻿using System.Linq;
+using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.Repositories;
 using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -9,46 +9,61 @@ namespace Chemtech.CPNM.Tests.UnitTests
 {
     class PropValueFixture
     {
-        private UnitOfMeasure _unit1;
-        private UnitOfMeasure _unit2;
-        private UnitOfMeasure _unit3;
         private Property _thisproperty;
         private PropValue _thispropvalue;
         private PropValue _propValue1;
         private PropValue _propValue2;
+        private UnitOfMeasure _unit1;
+        private UnitOfMeasure _unit2;
+        private UnitOfMeasure _unit3;
         private Configuration _configuration;
+        private Xref _newXref;
+
+        #region Fixture, Setup and Teardown config
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _configuration = new Configuration();
-            _configuration.Configure();
-            _configuration.AddAssembly(typeof(DimensionRepository).Assembly);
-            _configuration.AddAssembly(typeof(UnitOfMeasure).Assembly);
+            _configuration = new TestHelper().MakeConfiguration();
         }
 
         [SetUp]
         public void SetUp()
         {
-            new SchemaExport(_configuration).Execute(false, true, false);
+            new TestHelper().SetUpDatabaseTestData(_configuration);
 
-            _unit1 = new UnitOfMeasure() { ConvFactor = 3, OffsetFactor = 1, Symbol = "Unit1" };
-            _unit2 = new UnitOfMeasure() { ConvFactor = 2, Symbol = "Unit2" };
-            _unit3 = new UnitOfMeasure() { ConvFactor = 0.3, OffsetFactor = 1, Symbol = "Unit3" };
+            var dimension = new DimensionRepository().GetByName("Vazao");
+            _unit1 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit1");
+            _unit2 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit2");
+            _unit3 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit3");
 
-            var dimension = new Dimension() { Units = new UnitOfMeasure[] { _unit1, _unit2, _unit3 } };
             _thisproperty = new Property() { Dimension = dimension, DefaultUnit = _unit3 };
-            _thispropvalue = new PropValue { Xref = new Xref() { Property = _thisproperty }, Value = "100" };
+            _thispropvalue = new PropValue { Xref = _newXref, Value = "100" };
 
-            _propValue1 = new PropValue() { Value = "new value1", Xref = new Xref() { Property = _thisproperty } };
-            _propValue2 = new PropValue() { Value = "A Hell Of A Value!", Xref = new Xref() { Property = _thisproperty } };
+            _newXref = new Xref { Property = _thisproperty };
+            var propRepo = new PropertyRepository();
+            var xrefRepo = new XrefRepository();
+            propRepo.Add(_thisproperty);
+            xrefRepo.Add(_newXref);
+
+            _propValue1 = new PropValue() { Value = "new value1", Xref = _newXref };
+            _propValue2 = new PropValue() { Value = "A Hell Of A Value!", Xref = _newXref };
         }
+
+        [TestFixtureTearDown]
+        public void TearDown()
+        {
+            new TestHelper().TestTearDown(_configuration);
+        }
+
+        #endregion
 
         // Testes da camada de persistencia.
         [Test]
         public void CanAddPropValue()
         {
-            var propValueToAdd = new PropValue() { Value = "new value", Xref = new Xref() { Property = _thisproperty } };
+
+            var propValueToAdd = new PropValue() { Value = "new value", Xref = _newXref };
             var repository = new PropValueRepository();
 
             repository.Add(propValueToAdd);
@@ -165,9 +180,9 @@ namespace Chemtech.CPNM.Tests.UnitTests
         }
 
         [Test]
-        public void CannotConvertIfPropertyIsNull()
+        public void CannotConvertIfXrefIsNull()
         {
-            var nullProp = new PropValue() { Value = "112", Xref = new Xref() { Property = null } };
+            var nullProp = new PropValue() { Value = "112", Xref = null };
             Assert.False(nullProp.IsConvertible());
         }
 

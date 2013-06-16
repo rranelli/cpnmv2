@@ -10,41 +10,27 @@ namespace Chemtech.CPNM.Tests.UnitTests
     {
         private Configuration _configuration;
 
+        #region Fixture, Setup and Teardown config
+
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _configuration = new Configuration();
-            _configuration.Configure();
-            _configuration.AddAssembly(typeof(DimensionRepository).Assembly);
-            _configuration.AddAssembly(typeof(UnitOfMeasure).Assembly);
+            _configuration = new TestHelper().MakeConfiguration();
         }
 
         [SetUp]
-        public void TestSetUp()
+        public void SetUp()
         {
-            new SchemaExport(_configuration).Execute(false, true, false);
-            var itemTypeGroups = new ItemTypeGroup[]
-                                     {
-                                         new ItemTypeGroup() {Name = "Instrumentos", Description = "desc1"},
-                                         new ItemTypeGroup() {Name = "Caldeiraria", Description = "123"},
-                                         new ItemTypeGroup() {Name = "Estaticos", Description = "123"},
-                                         new ItemTypeGroup() {Name = "Rotativos", Description = "123"},
-                                         new ItemTypeGroup() {Name = "Documentos", Description = "123"},
-                                         new ItemTypeGroup() {Name = "Eletrica", Description = "123"},
-                                         new ItemTypeGroup() {Name = "Metalica", Description = "123"},
-                                         new ItemTypeGroup() {Name = "Tubulacao", Description = "123"}
-                                     };
-            addGroups(itemTypeGroups);
+            new TestHelper().SetUpDatabaseTestData(_configuration);
         }
 
-        private void addGroups(ItemTypeGroup[] itemTypeGroups)
+        [TestFixtureTearDown]
+        public void TearDown()
         {
-            var repository = new ItemTypeGroupRepository();
-            foreach (var thisGroup in itemTypeGroups)
-            {
-                repository.Add(thisGroup);
-            }
+            new TestHelper().TestTearDown(_configuration);
         }
+
+        #endregion
 
         [Test]
         public void CanAddItemTypeGroup()

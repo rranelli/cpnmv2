@@ -5,6 +5,6 @@
       <generator class="guid"/>
     </id>
     <property name="IsInternallyCalculated"/>
-    <many-to-one name="Property"/>
+    <many-to-one name="Property" cascade="none" lazy ="false"/>
   </class>
 </hibernate-mapping>

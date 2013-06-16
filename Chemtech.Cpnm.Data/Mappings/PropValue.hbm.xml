@@ -4,7 +4,7 @@
     <id name="Id">
       <generator class="guid"/>
     </id>
-    <many-to-one name ="ValueRef" cascade="all" lazy="false"/>
+    <many-to-one name ="ValueRef" cascade="all-delete-orphan" lazy="false"/>
     <many-to-one name ="Xref" cascade="none" lazy="false"/>
   </class>
 </hibernate-mapping>

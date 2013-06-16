@@ -1,5 +1,7 @@
-﻿using Chemtech.CPNM.Model.Domain;
+﻿using System.Collections;
+using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.Repositories;
+using System.Collections.Generic;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
@@ -10,39 +12,27 @@ namespace Chemtech.CPNM.Tests.UnitTests
     {
         private Configuration _configuration;
 
+        #region Fixture, Setup and Teardown config
+
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _configuration = new Configuration();
-            _configuration.Configure();
-            _configuration.AddAssembly(typeof(DimensionRepository).Assembly);
-            _configuration.AddAssembly(typeof(UnitOfMeasure).Assembly);
+            _configuration = new TestHelper().MakeConfiguration();
         }
 
         [SetUp]
-        public void TestSetUp()
+        public void SetUp()
         {
-            new SchemaExport(_configuration).Execute(false, true, false);
-            var itemTypeGroup = new ItemTypeGroup() { Name = "Estaticos" };
-            var itemTypes = new ItemType[]
-                                     {
-                                         new ItemType() {Name = "Tanque", Description = "desc1", ItemTypeGroup = itemTypeGroup},
-                                         new ItemType() {Name = "Transmissor", Description = "123", ItemTypeGroup = itemTypeGroup},
-                                         new ItemType() {Name = "Bomba", Description = "123", ItemTypeGroup = itemTypeGroup},
-                                         new ItemType() {Name = "Linha", Description = "123", ItemTypeGroup = itemTypeGroup},
-                                         new ItemType() {Name = "Cantoneira", Description = "123", ItemTypeGroup = itemTypeGroup}
-                                     };
-            addGroups(itemTypes);
+            new TestHelper().SetUpDatabaseTestData(_configuration);
         }
 
-        private void addGroups(ItemType[] itemTypes)
+        [TestFixtureTearDown]
+        public void TearDown()
         {
-            var repository = new ItemTypeRepository();
-            foreach (var thisType in itemTypes)
-            {
-                repository.Add(thisType);
-            }
+            new TestHelper().TestTearDown(_configuration);
         }
+
+        #endregion
 
         [Test]
         public void CanAddItemType()
@@ -87,27 +77,27 @@ namespace Chemtech.CPNM.Tests.UnitTests
             Assert.IsNull(fromDbOld);
         }
 
-        [Test]
-        public void CanUpdateGroup()
+        /*[Test]
+        public void CannotUpdateGroup()
         {
             var repository = new ItemTypeRepository();
             var typeToUpdateGroup = repository.GetByName("Bomba");
             var newItemTypeGroup = new ItemTypeGroup() { Name = "Rotativos" };
-
             typeToUpdateGroup.ItemTypeGroup = newItemTypeGroup;
-            repository.Update(typeToUpdateGroup);
+            //var mockedRepo =  TODO: Criar um repositorio mockado que faz um assert da exception;
+            mockedRepo.Update(typeToUpdateGroup);
 
             var fromDb = repository.GetById(typeToUpdateGroup.Id);
 
             Assert.IsNotNull(fromDb);
-            Assert.AreEqual(fromDb.ItemTypeGroup, typeToUpdateGroup.ItemTypeGroup);
-        }
+            Assert.AreNotEqual(fromDb.ItemTypeGroup, typeToUpdateGroup.ItemTypeGroup);
+        }*/
 
         [Test]
-        public void CanUpdateValidProperties()
+        public void CanUpdateValidXrefs()
         {
             var prop2 = new Property() { Name = "Prop2" };
-            var prop3 = new Property() {Name = "Prop3"};
+            var prop3 = new Property() { Name = "Prop3" };
 
             var propRepo = new PropertyRepository();
             propRepo.Add(prop2);
@@ -125,6 +115,34 @@ namespace Chemtech.CPNM.Tests.UnitTests
 
             var repository = new ItemTypeRepository();
             repository.Add(newItemType);
+        }
+
+        [Test]
+        public void CanGetWholeGroup()
+        {
+            var itemgroupRepo = new ItemTypeGroupRepository();
+            var itemtyperepo = new ItemTypeRepository();
+
+            var theGroup = new[]
+                               {
+                                   itemtyperepo.GetByName("Tanque"),
+                                   itemtyperepo.GetByName("Transmissor"),
+                                   itemtyperepo.GetByName("Bomba"),
+                                   itemtyperepo.GetByName("Linha"),
+                                   itemtyperepo.GetByName("Cantoneira"),
+                               };
+
+
+            var fromDbGroup = itemgroupRepo.GetByName("Estaticos");
+            Assert.IsNotNull(fromDbGroup);
+
+            var fromDb = itemtyperepo.GetByGroup(fromDbGroup);
+            Assert.IsNotNull(fromDb);
+
+            foreach(var thisItemType in theGroup)
+            {
+                Assert.IsTrue(fromDb.Contains(thisItemType));
+            }
         }
     }
 }

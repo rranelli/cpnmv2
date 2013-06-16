@@ -11,48 +11,28 @@ namespace Chemtech.CPNM.Tests.UnitTests
     {
         private Configuration _configuration;
 
+        #region Fixture, Setup and Teardown config
+
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _configuration = new Configuration();
-            _configuration.Configure();
-            _configuration.AddAssembly(typeof(DimensionRepository).Assembly);
-            _configuration.AddAssembly(typeof(UnitOfMeasure).Assembly);
+            _configuration = new TestHelper().MakeConfiguration();
         }
 
         [SetUp]
-        public void TestSetUp()
+        public void SetUp()
         {
-            new SchemaExport(_configuration).Execute(false, true, false);
-
-            var unitsOfMeasure = new UnitOfMeasure[] 
-                                            {
-                                                new UnitOfMeasure() {ConvFactor = 1, OffsetFactor = 0,Symbol = "K"},
-                                                new UnitOfMeasure() {ConvFactor = 2, OffsetFactor = 0,Symbol = "C"},
-                                                new UnitOfMeasure() {ConvFactor = 3, OffsetFactor = 1, Symbol = "T"}
-                                            };
-
-            var dimension = new Dimension() { Units = unitsOfMeasure, Name = "dummyDim" };
-            var dimensionRepository = new DimensionRepository();
-            dimensionRepository.Add(dimension);
-
-            var properties = new Property[]
-                                     {
-                                         new Property() {Name = "Prop1", Description = "desc1"},
-                                         new Property() {Name = "Prop2", },
-                                         new Property() {Name = "Prop3", Dimension = dimension, DefaultUnit = unitsOfMeasure[0]}
-                                     };
-            addGroups(properties);
+            new TestHelper().SetUpDatabaseTestData(_configuration);
         }
 
-        private void addGroups(IEnumerable<Property> properties)
+        [TestFixtureTearDown]
+        public void TearDown()
         {
-            var repository = new PropertyRepository();
-            foreach (var thisproperty in properties)
-            {
-                repository.Add(thisproperty);
-            }
+            new TestHelper().TestTearDown(_configuration);
         }
+
+        #endregion
+
 
         [Test]
         public void CanAddProperty()
@@ -71,10 +51,13 @@ namespace Chemtech.CPNM.Tests.UnitTests
         }
 
         [Test]
-        public void CanRemovePropertyGroup()
+        public void CanRemoveProperty()
         {
             var repository = new PropertyRepository();
-            var propertyToRemove = repository.GetByName("Prop2");
+            repository.Add(new Property {Name = "Ima gonna be remuvd"});
+            var propertyToRemove = repository.GetByName("Ima gonna be remuvd");
+            Assert.IsNotNull(propertyToRemove);
+
             repository.Remove(propertyToRemove);
             var fromDb = repository.GetById(propertyToRemove.Id);
 
@@ -83,7 +66,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         }
 
         [Test]
-        public void CanUpdatePropertyGroup()
+        public void CanUpdateProperty()
         {
             var repository = new PropertyRepository();
             var propertyToUpdate = repository.GetByName("Prop1");

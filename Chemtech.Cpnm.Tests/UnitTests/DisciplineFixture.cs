@@ -10,38 +10,27 @@ namespace Chemtech.CPNM.Tests.UnitTests
     {
         private Configuration _configuration;
 
+        #region Fixture, Setup and Teardown config
+
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _configuration = new Configuration();
-            _configuration.Configure();
-            _configuration.AddAssembly(typeof(DimensionRepository).Assembly);
-            _configuration.AddAssembly(typeof(UnitOfMeasure).Assembly);
+            _configuration = new TestHelper().MakeConfiguration();
         }
 
         [SetUp]
         public void SetUp()
         {
-            new SchemaExport(_configuration).Execute(false, true, false);
-            var disciplines = new Discipline[]
-                                  {
-                                      new Discipline() {Name = "Eletrica"},
-                                      new Discipline() {Name = "Processo"},
-                                      new Discipline() {Name = "Tubulacao"},
-                                      new Discipline() {Name = "Metalica"},
-                                      new Discipline() {Name = "Civil"}
-                                  };
-            addGroups(disciplines);
+            new TestHelper().SetUpDatabaseTestData(_configuration);
         }
 
-        private void addGroups(Discipline[] disciplines)
+        [TestFixtureTearDown]
+        public void TearDown()
         {
-            var repository = new DisciplineRepository();
-            foreach (var thisDisc in disciplines)
-            {
-                repository.Add(thisDisc);
-            }
+            new TestHelper().TestTearDown(_configuration);
         }
+
+        #endregion
 
         [Test]
         public void CanGetDisciplineByName()

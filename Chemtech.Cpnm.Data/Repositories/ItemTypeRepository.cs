@@ -1,19 +1,30 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate;
 using NHibernate.Linq;
 
 namespace Chemtech.CPNM.Data.Repositories
 {
-    public class ItemTypeRepository : GeneralRepository<ItemType>, INamedRepository<ItemType> 
+    public class ItemTypeRepository : GeneralRepository<ItemType>, INamedRepository<ItemType>
     {
         public ItemType GetByName(string name)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                return (from ig in session.Query<ItemType>()
-                        where ig.Name == name
-                        select ig).SingleOrDefault();
+                return (from it in session.Query<ItemType>()
+                        where it.Name == name
+                        select it).SingleOrDefault();
+            }
+        }
+
+        public ICollection<ItemType> GetByGroup(ItemTypeGroup itemTypeGroup)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                return (from it in session.Query<ItemType>()
+                        where it.ItemTypeGroup.Id == itemTypeGroup.Id
+                        select it).ToList();
             }
         }
     }
