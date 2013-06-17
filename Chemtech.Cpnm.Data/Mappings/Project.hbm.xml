@@ -1,14 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model" namespace="Chemtech.CPNM.Model.Domain">
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model"
+                   namespace="Chemtech.CPNM.Model.Domain">
   <class name="Project">
     <id name="Id">
-      <generator class="guid"/>
+      <generator class="guid" />
     </id>
-    <property name="Name"/>
-    <property name="Description"/>
+    <property name="Name" />
+    <property name="Description" />
     <set name="Items" inverse="true" lazy="true">
-      <key column ="Project"/>
-      <one-to-many class="Item"/>
+      <key column="Project" />
+      <one-to-many class="Item" />
     </set>
   </class>
 </hibernate-mapping>

@@ -1,23 +1,31 @@
-﻿using System.Linq;
-using Chemtech.CPNM.Model.Domain;
+﻿// Projeto: Chemtech.CPNM.Tests
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:18 PM
+
+using System;
+using System.Linq;
 using Chemtech.CPNM.Data.Repositories;
+using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace Chemtech.CPNM.Tests.UnitTests
 {
-    class PropValueFixture
+    internal class PropValueFixture
     {
-        private Property _thisproperty;
-        private PropValue _thispropvalue;
-        private PropValue _propValue1;
-        private PropValue _propValue2;
-        private UnitOfMeasure _unit1;
-        private UnitOfMeasure _unit2;
-        private UnitOfMeasure _unit3;
         private Configuration _configuration;
         private Xref _newXref;
+        private PropValue _propValue1;
+        private PropValue _propValue2;
+        private Property _thisproperty;
+        private PropValue _thispropvalue;
+        private UnitOfMeasure _unit1;
+        private Guid _parentId1;
+        private Guid _parentId2;
+        private UnitOfMeasure _unit2;
+        private UnitOfMeasure _unit3;
 
         #region Fixture, Setup and Teardown config
 
@@ -37,8 +45,10 @@ namespace Chemtech.CPNM.Tests.UnitTests
             _unit2 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit2");
             _unit3 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit3");
 
-            _thisproperty = new Property() { Dimension = dimension, DefaultUnit = _unit3 };
-            _thispropvalue = new PropValue { Xref = _newXref, Value = "100" };
+            _thisproperty = new Property { Dimension = dimension, DefaultUnit = _unit3 };
+            _parentId1 = new ItemRepository().GetAll().SingleOrDefault(i => i.Name == "Complex").Id;
+            _parentId2 = new ItemRepository().GetAll().SingleOrDefault(i => i.Name == "P-101").Id;
+            _thispropvalue = new PropValue { Xref = _newXref, Value = "100", ItemId = _parentId1 };
 
             _newXref = new Xref { Property = _thisproperty };
             var propRepo = new PropertyRepository();
@@ -46,8 +56,8 @@ namespace Chemtech.CPNM.Tests.UnitTests
             propRepo.Add(_thisproperty);
             xrefRepo.Add(_newXref);
 
-            _propValue1 = new PropValue() { Value = "new value1", Xref = _newXref };
-            _propValue2 = new PropValue() { Value = "A Hell Of A Value!", Xref = _newXref };
+            _propValue1 = new PropValue { Value = "new value1", Xref = _newXref, ItemId = _parentId1 };
+            _propValue2 = new PropValue { Value = "A Hell Of A Value!", Xref = _newXref, ItemId = _parentId2 };
         }
 
         [TestFixtureTearDown]
@@ -62,8 +72,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanAddPropValue()
         {
-
-            var propValueToAdd = new PropValue() { Value = "new value", Xref = _newXref };
+            var propValueToAdd = new PropValue { Value = "new value", Xref = _newXref, ItemId = _parentId1 };
             var repository = new PropValueRepository();
 
             repository.Add(propValueToAdd);
@@ -167,7 +176,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
             var mockedProperty = MockRepository.GenerateStub<Property>();
             mockedProperty.Stub(x => x.IsConvertible()).Return(false);
 
-            var propValue = new PropValue() { Xref = new Xref() { Property = mockedProperty }, Value = "112.2" };
+            var propValue = new PropValue { Xref = new Xref { Property = mockedProperty }, Value = "112.2" };
             Assert.IsFalse(propValue.IsConvertible());
         }
 
@@ -182,7 +191,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CannotConvertIfXrefIsNull()
         {
-            var nullProp = new PropValue() { Value = "112", Xref = null };
+            var nullProp = new PropValue { Value = "112", Xref = null };
             Assert.False(nullProp.IsConvertible());
         }
 
@@ -192,7 +201,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
             var mockedProperty = MockRepository.GenerateStub<Property>();
             mockedProperty.Stub(x => x.IsConvertible()).Return(false);
 
-            var propValue = new PropValue() { Xref = new Xref() { Property = mockedProperty }, Value = "112.2" };
+            var propValue = new PropValue { Xref = new Xref { Property = mockedProperty }, Value = "112.2" };
             Assert.IsFalse(propValue.IsConvertible());
         }
 
@@ -202,7 +211,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
             var mockedProperty = MockRepository.GenerateStub<Property>();
             mockedProperty.Expect(x => x.IsConvertible()).Return(true);
 
-            var propValue = new PropValue { Xref = new Xref() { Property = mockedProperty } };
+            var propValue = new PropValue { Xref = new Xref { Property = mockedProperty } };
             propValue.IsConvertible();
         }
 
@@ -212,14 +221,13 @@ namespace Chemtech.CPNM.Tests.UnitTests
             var mockedProperty = MockRepository.GenerateStub<Property>();
             mockedProperty.Expect(x => x.IsConvertible()).Return(true);
 
-            var propValue = new PropValue { Xref = new Xref() { Property = mockedProperty }, Value = "112.2" };
+            var propValue = new PropValue { Xref = new Xref { Property = mockedProperty }, Value = "112.2" };
             Assert.IsTrue(propValue.IsConvertible());
         }
 
         [Test] // must convert correctly
         public void CanConvert()
         {
-
             var stringValue1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.Value);
             var stringValue2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.Value);
 

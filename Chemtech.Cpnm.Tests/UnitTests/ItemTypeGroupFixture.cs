@@ -1,12 +1,16 @@
-﻿using Chemtech.CPNM.Model.Domain;
+﻿// Projeto: Chemtech.CPNM.Tests
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:18 PM
+
 using Chemtech.CPNM.Data.Repositories;
+using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
 namespace Chemtech.CPNM.Tests.UnitTests
 {
-    class ItemTypeGroupFixture
+    internal class ItemTypeGroupFixture
     {
         private Configuration _configuration;
 
@@ -54,7 +58,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
             var groupToBeRemoved = repository.GetByName("Eletrica");
             repository.Remove(groupToBeRemoved);
             Assert.IsNotNull(groupToBeRemoved);
-            
+
             var fromDb = repository.GetById(groupToBeRemoved.Id);
             Assert.IsNull(fromDb);
         }

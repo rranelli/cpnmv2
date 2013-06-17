@@ -1,12 +1,16 @@
-﻿using Chemtech.CPNM.Model.Domain;
+﻿// Projeto: Chemtech.CPNM.Tests
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:17 PM
+
 using Chemtech.CPNM.Data.Repositories;
+using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
 namespace Chemtech.CPNM.Tests.UnitTests
 {
-    class DisciplineFixture
+    internal class DisciplineFixture
     {
         private Configuration _configuration;
 
@@ -46,7 +50,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanAddDiscipline()
         {
-            var newDiscipline = new Discipline() { Name = "Planejamento" };
+            var newDiscipline = new Discipline {Name = "Planejamento"};
             var repository = new DisciplineRepository();
 
             repository.Add(newDiscipline);

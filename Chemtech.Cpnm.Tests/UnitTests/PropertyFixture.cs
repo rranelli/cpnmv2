@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿// Projeto: Chemtech.CPNM.Tests
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:18 PM
+
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
 namespace Chemtech.CPNM.Tests.UnitTests
 {
-    class PropertyFixture
+    internal class PropertyFixture
     {
         private Configuration _configuration;
 
@@ -32,7 +35,6 @@ namespace Chemtech.CPNM.Tests.UnitTests
         }
 
         #endregion
-
 
         [Test]
         public void CanAddProperty()

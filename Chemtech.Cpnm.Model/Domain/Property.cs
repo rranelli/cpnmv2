@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿// Projeto: Chemtech.CPNM.Model
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:17 PM
+
+using System.Collections.Generic;
 
 namespace Chemtech.CPNM.Model.Domain
 {
@@ -8,8 +13,8 @@ namespace Chemtech.CPNM.Model.Domain
         public virtual PropertyGroup PropertyGroup { get; set; }
         public virtual Dimension Dimension { get; set; }
         public virtual string Description { get; set; }
-        public virtual string Name { get; set; }
         public virtual bool IsCalculated { get; protected set; }
+        public virtual string Name { get; set; }
 
         public virtual ICollection<UnitOfMeasure> ValidUnits
         {

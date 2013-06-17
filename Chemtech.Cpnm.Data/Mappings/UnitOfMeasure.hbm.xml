@@ -1,11 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model" namespace="Chemtech.CPNM.Model.Domain">
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model"
+                   namespace="Chemtech.CPNM.Model.Domain">
   <class name="UnitOfMeasure">
     <id name="Id">
-      <generator class="guid"/>
+      <generator class="guid" />
     </id>
-    <property name="Symbol" not-null="true"/>
-    <property name="ConvFactor" not-null="true"/>
-    <property name ="OffsetFactor" not-null="true"/>
+    <property name="Symbol" not-null="true" />
+    <property name="ConvFactor" not-null="true" />
+    <property name="OffsetFactor" not-null="true" />
   </class>
 </hibernate-mapping>

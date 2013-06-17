@@ -1,4 +1,9 @@
-﻿namespace Chemtech.CPNM.Model.Domain
+﻿// Projeto: Chemtech.CPNM.Model
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:17 PM
+
+namespace Chemtech.CPNM.Model.Domain
 {
     public class Xref : Entity
     {

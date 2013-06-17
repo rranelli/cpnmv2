@@ -1,12 +1,16 @@
-﻿using Chemtech.CPNM.Model.Domain;
+﻿// Projeto: Chemtech.CPNM.Tests
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:18 PM
+
 using Chemtech.CPNM.Data.Repositories;
+using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
 namespace Chemtech.CPNM.Tests.UnitTests
 {
-    class PropertyGroupFixture
+    internal class PropertyGroupFixture
     {
         private Configuration _configuration;
 
@@ -42,7 +46,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
             var repository = new PropertyGroupRepository();
             repository.Add(propertyGroup);
             var fromDb = repository.GetById(propertyGroup.Id);
-         
+
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(fromDb.Id, propertyGroup.Id);
             Assert.AreNotSame(fromDb, propertyGroup);
@@ -52,7 +56,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void CanRemovePropertyGroup()
         {
             var repository = new PropertyGroupRepository();
-            repository.Add(new PropertyGroup { Name = "grupo baguncado"});
+            repository.Add(new PropertyGroup {Name = "grupo baguncado"});
             var propGroupToRemove = repository.GetByName("grupo baguncado");
             Assert.IsNotNull(propGroupToRemove);
 

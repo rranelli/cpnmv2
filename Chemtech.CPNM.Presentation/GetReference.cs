@@ -1,122 +1,159 @@
-﻿using System.Collections;
+﻿// Projeto: Chemtech.CPNM.UI
+// Solution: Chemtech.CPNM
+// Implementado por: Renan Ranelli
+// 6:18 PM
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
-using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
+using Chemtech.CPNM.Tests.UnitTests;
 
 namespace Chemtech.CPNM.Presentation
 {
     public partial class GetReference : Form
     {
         public PropValue SelectedPropValue;
-        private ICollection<Item> _allItems;
-        private ItemRepository _itemRepository;
+        public UnitOfMeasure SelectedUnit;
+        public PropValue.FormatType SelectedFormat;
+        private ICollection<ItemTypeGroup> _itemTypeGroups;
+        private ICollection<PropertyGroup> _propertyGroups;
 
         public GetReference()
         {
             InitializeComponent();
 
-            var fixish = new fix();
-            fixish.TestFixtureSetUp();
-            fixish.SetUp();
+            GetSelectedFormat();
 
-            _itemRepository = new ItemRepository();
-            _allItems = _itemRepository.GetAll();
-            
-            foreach(var item in _allItems)
-                ltbItem.Items.Add(item);
+            _itemTypeGroups = new ItemTypeGroupRepository().GetAll();
+            _propertyGroups = new PropertyGroupRepository().GetAll();
+
+            _itemTypeGroups.ToList().ForEach(itg => cmbItemTypeGroup.Items.Add(itg));
+            _propertyGroups.ToList().ForEach(pg => cmbPropGroup.Items.Add(pg));
+        }
+
+        private void GetSelectedPropValue()
+        {
+            if (ltbItem.SelectedItem != null && ltbProperty.SelectedItem != null)
+            {
+                var selectedItem = ((Item)ltbItem.SelectedItem);
+                var selectedProperty = (Property)ltbProperty.SelectedItem;
+                SelectedPropValue = selectedItem.GetPropValue(selectedProperty) ??
+                                    selectedItem.GetNewPropValue(selectedProperty);
+            }
+            else
+            {
+                SelectedPropValue = null;
+            }
+        }
+
+        private void GetSelectedFormat()
+        {
+            if (rbValueAndUnit.Checked)
+                SelectedFormat = PropValue.FormatType.ValueAndUnit;
+            if (rbValueOnly.Checked)
+                SelectedFormat = PropValue.FormatType.Value;
+            if (rbUnitOnly.Checked)
+                SelectedFormat = PropValue.FormatType.Unit;
+        }
+
+        private void GetSelectedUnit()
+        {
+            SelectedUnit = (UnitOfMeasure)ltbUnit.SelectedItem;
+        }
+
+        private void SetTextboxCurrentValue()
+        {
+            GetSelectedFormat();
+            txbValue.Text = null;
+
+            if (SelectedPropValue != null)
+            {
+                txbValue.Text = SelectedPropValue.FormatedValue(SelectedUnit, SelectedFormat);
+            }
         }
 
         private void btnFinishSelection_Click(object sender, System.EventArgs e)
         {
-            SelectedPropValue = new PropValue {Value = "123"};
-            this.Hide();
-        }
-    }
+            GetSelectedPropValue();
+            GetSelectedFormat();
+            GetSelectedUnit();
 
-    public class fix
-    {
-        private Configuration _configuration;
-
-        public void TestFixtureSetUp()
-        {
-            _configuration = new Configuration();
-            _configuration.Configure();
-            _configuration.AddAssembly(typeof(DimensionRepository).Assembly);
-            _configuration.AddAssembly(typeof(UnitOfMeasure).Assembly);
-        }
-
-        public void SetUp()
-        {
-            new SchemaExport(_configuration).Execute(false, true, false);
-
-            var unitsOfMeasure = new[]
-                                         {
-                                             new UnitOfMeasure()
-                                                 {ConvFactor = 1, OffsetFactor = 0, Symbol = "K"},
-                                             new UnitOfMeasure()
-                                                 {ConvFactor = 2, OffsetFactor = 0, Symbol = "C"},
-                                             new UnitOfMeasure()
-                                                 {ConvFactor = 3, OffsetFactor = 1, Symbol = "T"}
-                                         };
-
-            var dimension = new Dimension() { Units = unitsOfMeasure, Name = "dummyDim" };
-
-            var prop1 = new Property() { Name = "Prop1", Description = "desc1" };
-            var prop2 = new Property() { Name = "Prop2" };
-            var prop3 = new Property()
-                            {
-                                Name = "Prop3",
-                                Dimension = dimension,
-                                DefaultUnit = unitsOfMeasure[0]
-                            };
-
-            var propRepo = new PropertyRepository();
-            propRepo.Add(prop1);
-            propRepo.Add(prop2);
-            propRepo.Add(prop3);
-
-            var newItemType = new ItemType()
-                                  {
-                                      Name = "NovoTipo",
-                                      ValidXrefs = new[]
-                                                           {
-                                                               new Xref() {Property = prop1},
-                                                               new Xref() {Property = prop2},
-                                                               new Xref() {Property = prop3}
-                                                           }
-                                  };
-
-            var itemtyperepo = new ItemTypeRepository();
-            itemtyperepo.Add(newItemType);
-
-            var items = new[]
-                                {
-                                    new Item {Name = "P-101", UniqueName = "P-101"},
-                                    new Item
-                                        {
-                                            Name = "Complex",
-                                            UniqueName = "Complex",
-                                            IsActive = true,
-                                            ItemType = newItemType
-                                        }
-                                };
-
-            addItems(items);
-        }
-
-        private void addItems(IEnumerable<Item> itemTypes)
-        {
-            var repository = new ItemRepository();
-            foreach (var thisItem in itemTypes)
+            if (SelectedPropValue != null)
             {
-                repository.Add(thisItem);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Selecione um Item e uma propriedade.");
             }
         }
+
+        private void cmbItemTypeGroup_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            ltbItemType.Items.Clear();
+            if (cmbItemTypeGroup.SelectedItem != null)
+            {
+                var itemTypesByGroup = new ItemTypeRepository().GetByGroup((ItemTypeGroup)cmbItemTypeGroup.SelectedItem);
+                itemTypesByGroup.ToList().ForEach(it => ltbItemType.Items.Add(it));
+            }
+        }
+
+        private void ltbItemType_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            ltbItem.Items.Clear();
+            ltbProperty.Items.Clear();
+            if (ltbItemType.SelectedItem != null)
+            {
+                var selectedItemType = (ItemType)ltbItemType.SelectedItem;
+                selectedItemType.ValidProperties.ToList().ForEach(prop => ltbProperty.Items.Add(prop));
+
+                var itemsByType = new ItemRepository().GetByType(selectedItemType);
+                itemsByType.ToList().ForEach(i => ltbItem.Items.Add(i));
+            }
+        }
+
+        private void ltbProperty_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            GetSelectedPropValue();
+            SetTextboxCurrentValue();
+            ltbUnit.Items.Clear();
+
+            if (ltbProperty.SelectedItem != null)
+            {
+                var property = ((Property)ltbProperty.SelectedItem);
+                if (property.ValidUnits != null)
+                    property.ValidUnits.ToList().ForEach(uni => ltbUnit.Items.Add(uni));
+            }
+        }
+
+        private void ltbUnit_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            GetSelectedUnit();
+            SetTextboxCurrentValue();
+        }
+
+        private void ltbItem_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            GetSelectedPropValue();
+            SetTextboxCurrentValue();
+        }
+
+        private void rbValueOnly_CheckedChanged(object sender, System.EventArgs e)
+        {
+            SetTextboxCurrentValue();
+        }
+
+        private void rbValueAndUnit_CheckedChanged(object sender, System.EventArgs e)
+        {
+            SetTextboxCurrentValue();
+        }
+
+        private void rbUnitOnly_CheckedChanged(object sender, System.EventArgs e)
+        {
+            SetTextboxCurrentValue();
+        }
     }
-
-
 }

@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿// Projeto: Chemtech.CPNM.Tests
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:17 PM
+
 using System.Linq;
-using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.Repositories;
+using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
 namespace Chemtech.CPNM.Tests.UnitTests
 {
-    class DimensionFixture
+    internal class DimensionFixture
     {
         private Configuration _configuration;
 
@@ -49,17 +52,17 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanAddDimension()
         {
-            var newUnits = new UnitOfMeasure[]
-                              {
-                                  new UnitOfMeasure()
-                                      {
-                                          ConvFactor = 1.2,
-                                          OffsetFactor = 0,
-                                          Symbol = "Symb"
-                                      }
-                              };
+            var newUnits = new[]
+                               {
+                                   new UnitOfMeasure
+                                       {
+                                           ConvFactor = 1.2,
+                                           OffsetFactor = 0,
+                                           Symbol = "Symb"
+                                       }
+                               };
 
-            var newDimension = new Dimension() { Name = "Entalpia", Units = newUnits };
+            var newDimension = new Dimension { Name = "Entalpia", Units = newUnits };
             var repository = new DimensionRepository();
 
             repository.Add(newDimension);
@@ -76,8 +79,8 @@ namespace Chemtech.CPNM.Tests.UnitTests
         {
             var repository = new DimensionRepository();
             var unitrepository = new GeneralRepository<UnitOfMeasure>();
-            var dumbUnit = new UnitOfMeasure {ConvFactor = 1.1, OffsetFactor = 1.2, Symbol = "1123"};
-            var dumbdim = new Dimension {Name = "duuuuumb", Units = new[] {dumbUnit}};
+            var dumbUnit = new UnitOfMeasure { ConvFactor = 1.1, OffsetFactor = 1.2, Symbol = "1123" };
+            var dumbdim = new Dimension { Name = "duuuuumb", Units = new[] { dumbUnit } };
             repository.Add(dumbdim);
 
             // asserting que a dimensao e a unidade foram criadas

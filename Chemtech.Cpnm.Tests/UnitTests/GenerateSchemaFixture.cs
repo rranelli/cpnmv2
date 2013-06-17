@@ -1,4 +1,9 @@
-﻿using Chemtech.CPNM.Data.Repositories;
+﻿// Projeto: Chemtech.CPNM.Tests
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:17 PM
+
+using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
@@ -14,10 +19,10 @@ namespace Chemtech.CPNM.Tests.UnitTests
         {
             var cfg = new Configuration();
             cfg.Configure();
-            cfg.AddAssembly(typeof(DimensionRepository).Assembly);
-            cfg.AddAssembly(typeof(UnitOfMeasure).Assembly);
+            cfg.AddAssembly(typeof (DimensionRepository).Assembly);
+            cfg.AddAssembly(typeof (UnitOfMeasure).Assembly);
             new SchemaExport(cfg).Drop(false, true);
-            new SchemaExport(cfg).Create(false,true);
+            new SchemaExport(cfg).Create(false, true);
         }
     }
 }

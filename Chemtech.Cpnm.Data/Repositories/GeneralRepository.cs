@@ -1,17 +1,23 @@
-﻿using System;
+﻿// Projeto: Chemtech.CPNM.Data
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:18 PM
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NHibernate;
 using NHibernate.Linq;
 
 namespace Chemtech.CPNM.Data.Repositories
 {
     public class GeneralRepository<T> : IRepository<T>
     {
+        #region IRepository<T> Members
+
         public void Add(T ent)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
+            using (var session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
                 session.Save(ent);
                 transaction.Commit();
@@ -20,8 +26,8 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public void Update(T ent)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
+            using (var session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
                 session.Update(ent);
                 transaction.Commit();
@@ -30,8 +36,8 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public void Remove(T ent)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
+            using (var session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
                 session.Delete(ent);
                 transaction.Commit();
@@ -40,16 +46,18 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public T GetById(Guid id)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
+            using (var session = NHibernateHelper.OpenSession())
             using (session.BeginTransaction())
             {
                 return session.Get<T>(id);
             }
         }
 
+        #endregion
+
         public ICollection<T> GetAll()
         {
-            using (ISession session = NHibernateHelper.OpenSession())
+            using (var session = NHibernateHelper.OpenSession())
             {
                 return (from ent in session.Query<T>()
                         select ent).ToList();
@@ -58,7 +66,7 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public IQueryable GetQueryable()
         {
-            using(ISession session = NHibernateHelper.OpenSession())
+            using (var session = NHibernateHelper.OpenSession())
             {
                 return session.Query<T>();
             }

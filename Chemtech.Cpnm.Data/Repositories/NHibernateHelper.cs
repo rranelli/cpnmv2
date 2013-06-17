@@ -1,4 +1,9 @@
-﻿using Chemtech.CPNM.Model.Domain;
+﻿// Projeto: Chemtech.CPNM.Data
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:18 PM
+
+using Chemtech.CPNM.Model.Domain;
 using NHibernate;
 using NHibernate.Cfg;
 
@@ -7,6 +12,7 @@ namespace Chemtech.CPNM.Data.Repositories
     public static class NHibernateHelper
     {
         private static ISessionFactory _sessionFactory;
+
         private static ISessionFactory SessionFactory
         {
             get
@@ -15,8 +21,8 @@ namespace Chemtech.CPNM.Data.Repositories
                 {
                     var configuration = new Configuration();
                     configuration.Configure();
-                    configuration.AddAssembly(typeof(DimensionRepository).Assembly);
-                    configuration.AddAssembly(typeof(UnitOfMeasure).Assembly);
+                    configuration.AddAssembly(typeof (DimensionRepository).Assembly);
+                    configuration.AddAssembly(typeof (UnitOfMeasure).Assembly);
                     _sessionFactory = configuration.BuildSessionFactory();
                 }
                 return _sessionFactory;

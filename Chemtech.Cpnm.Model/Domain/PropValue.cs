@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Projeto: Chemtech.CPNM.Model
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:17 PM
+
+using System;
 using System.Globalization;
 
 namespace Chemtech.CPNM.Model.Domain
@@ -10,7 +15,18 @@ namespace Chemtech.CPNM.Model.Domain
 
     public class PropValue : Entity
     {
-        public enum FormatType { ValueAndUnit, Value, Unit }
+        #region FormatType enum
+
+        public enum FormatType
+        {
+            ValueAndUnit,
+            Value,
+            Unit
+        }
+
+        #endregion
+
+        public virtual Guid ItemId { get; set; }
         public virtual Xref Xref { get; set; }
         protected internal virtual ValueRef ValueRef { get; set; }
 
@@ -38,19 +54,23 @@ namespace Chemtech.CPNM.Model.Domain
             double dummyParsed;
             if (Xref == null) return false;
             if (Xref.Property == null) return false;
-            return GetProperty.IsConvertible() && double.TryParse(Value, out dummyParsed); //Try parse sera falso se value == null
+            return GetProperty.IsConvertible() && double.TryParse(Value, out dummyParsed);
+                //Try parse sera falso se value == null
         }
 
         public override string ToString()
         {
             return FormatedValue(FormatType.Value);
         }
+
         public virtual string FormatedValue(UnitOfMeasure desiredUnit, FormatType formatType)
         {
             if (!IsConvertible())
             {
                 return Value;
             }
+
+            if (desiredUnit == null) desiredUnit = Xref.Property.DefaultUnit;
 
             switch (formatType)
             {
@@ -64,6 +84,7 @@ namespace Chemtech.CPNM.Model.Domain
                     throw new Exception("Opção para unidade inválida");
             }
         }
+
         public virtual string FormatedValue(FormatType formatType)
         {
             return FormatedValue(GetProperty.DefaultUnit, formatType);
@@ -71,7 +92,8 @@ namespace Chemtech.CPNM.Model.Domain
 
         public virtual void MakeShare(PropValue other)
         {
-            if (!GetProperty.Dimension.Equals(other.GetProperty.Dimension)) throw new Exception("Dimensoes invalidas para o Share");
+            if (!GetProperty.Dimension.Equals(other.GetProperty.Dimension))
+                throw new Exception("Dimensoes invalidas para o Share");
             ValueRef = other.ValueRef;
         }
 
@@ -79,18 +101,18 @@ namespace Chemtech.CPNM.Model.Domain
         {
             if (Equals(ValueRef, other.ValueRef))
             {
-                ValueRef = new ValueRef() { Value = other.Value };
+                ValueRef = new ValueRef {Value = other.Value};
                 if (Equals(ValueRef, other.ValueRef)) throw new Exception("BreakShare failed miserably.");
             }
         }
 
-        private string ConvertValue(IUnitOfMeasure desiredUnit)
+        private string ConvertValue(UnitOfMeasure desiredUnit)
         {
             if (desiredUnit == null) throw new ArgumentNullException("desiredUnit");
 
             double valueAsDouble;
             double.TryParse(Value, out valueAsDouble); //TODO: Implementar opção de colocar casas decimais
-            valueAsDouble = (valueAsDouble + desiredUnit.OffsetFactor) * desiredUnit.ConvFactor;
+            valueAsDouble = (valueAsDouble + desiredUnit.OffsetFactor)*desiredUnit.ConvFactor;
             return valueAsDouble.ToString(CultureInfo.InvariantCulture);
         }
     }

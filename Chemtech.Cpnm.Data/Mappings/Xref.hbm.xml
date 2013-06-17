@@ -1,10 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model" namespace="Chemtech.CPNM.Model.Domain">
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model"
+                   namespace="Chemtech.CPNM.Model.Domain">
   <class name="Xref" table="PropertyItemTypeXref">
     <id name="Id">
-      <generator class="guid"/>
+      <generator class="guid" />
     </id>
-    <property name="IsInternallyCalculated"/>
-    <many-to-one name="Property" cascade="none" lazy ="false"/>
+    <property name="IsInternallyCalculated" />
+    <many-to-one name="Property" cascade="none" lazy="false" />
   </class>
 </hibernate-mapping>

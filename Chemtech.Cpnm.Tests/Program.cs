@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Projeto: Chemtech.CPNM.Tests
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:17 PM
+
+using System;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
@@ -13,8 +18,8 @@ namespace Chemtech.CPNM.Tests
             Console.WriteLine("HelloWorld!!!!");
             var cfg = new Configuration();
             cfg.Configure();
-            cfg.AddAssembly(typeof(ItemTypeGroup).Assembly);
-            cfg.AddAssembly(typeof(ItemTypeGroupRepository).Assembly);
+            cfg.AddAssembly(typeof (ItemTypeGroup).Assembly);
+            cfg.AddAssembly(typeof (ItemTypeGroupRepository).Assembly);
             new SchemaExport(cfg).Drop(false, true);
         }
     }

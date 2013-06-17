@@ -1,13 +1,16 @@
-﻿using System;
+﻿// Projeto: Chemtech.CPNM.Model
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:17 PM
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Chemtech.CPNM.Model.Domain
 {
     public class Item : Entity, INamed
     {
-        public virtual string Name { get; set; }
         public virtual Project Project { get; set; }
         public virtual ItemType ItemType { get; set; }
         public virtual bool IsActive { get; set; }
@@ -15,7 +18,13 @@ namespace Chemtech.CPNM.Model.Domain
         public virtual string Description { get; set; }
         public virtual ICollection<PropValue> PropValues { get; set; }
 
-        public override string ToString()
+        #region INamed Members
+
+        public virtual string Name { get; set; }
+
+        #endregion
+
+        public new virtual string ToString()
         {
             return Name;
         }
@@ -41,8 +50,9 @@ namespace Chemtech.CPNM.Model.Domain
 
         public virtual PropValue GetNewPropValue(Property property)
         {
-            if (!ItemType.AssertIsValidProperty(property)) throw new Exception("Tentativa de criar uma propriedade sem xref para o tipoitem");
-            return new PropValue { Xref = ItemType.GetXref(property) };
+            if (!ItemType.AssertIsValidProperty(property))
+                throw new Exception("Tentativa de criar uma propriedade sem xref para o tipoitem");
+            return new PropValue {ItemId = Id, Xref = ItemType.GetXref(property)};
         }
     }
 }

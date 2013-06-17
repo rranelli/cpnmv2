@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Projeto: Chemtech.CPNM.Data
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:18 PM
+
+using System;
 
 namespace Chemtech.CPNM.Data.Repositories
 {

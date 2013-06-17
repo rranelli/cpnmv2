@@ -1,13 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model" namespace="Chemtech.CPNM.Model.Domain">
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model"
+                   namespace="Chemtech.CPNM.Model.Domain">
   <class name="Dimension">
     <id name="Id">
-      <generator class="guid"/>
+      <generator class="guid" />
     </id>
-    <property name="Name"/>
-    <set name="Units" cascade ="all-delete-orphan" lazy="false">
-      <key column = "Dimension"/>
-      <one-to-many class="UnitOfMeasure"/>
+    <property name="Name" />
+    <set name="Units" cascade="all-delete-orphan" lazy="false">
+      <key column="Dimension" />
+      <one-to-many class="UnitOfMeasure" />
     </set>
   </class>
 </hibernate-mapping>

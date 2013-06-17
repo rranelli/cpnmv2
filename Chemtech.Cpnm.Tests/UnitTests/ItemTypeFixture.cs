@@ -1,14 +1,16 @@
-﻿using System.Collections;
-using Chemtech.CPNM.Model.Domain;
+﻿// Projeto: Chemtech.CPNM.Tests
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:17 PM
+
 using Chemtech.CPNM.Data.Repositories;
-using System.Collections.Generic;
+using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
 namespace Chemtech.CPNM.Tests.UnitTests
 {
-    class ItemTypeFixture
+    internal class ItemTypeFixture
     {
         private Configuration _configuration;
 
@@ -96,21 +98,21 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanUpdateValidXrefs()
         {
-            var prop2 = new Property() { Name = "Prop2" };
-            var prop3 = new Property() { Name = "Prop3" };
+            var prop2 = new Property {Name = "Prop2"};
+            var prop3 = new Property {Name = "Prop3"};
 
             var propRepo = new PropertyRepository();
             propRepo.Add(prop2);
             propRepo.Add(prop3);
 
-            var newItemType = new ItemType()
+            var newItemType = new ItemType
                                   {
                                       Name = "NovoTipo",
-                                      ValidXrefs = new Xref[]
-                                                            {   
-                                                                new Xref() {Property = prop2},
-                                                                new Xref() {Property = prop3}
-                                                            }
+                                      ValidXrefs = new[]
+                                                       {
+                                                           new Xref {Property = prop2},
+                                                           new Xref {Property = prop3}
+                                                       }
                                   };
 
             var repository = new ItemTypeRepository();
@@ -139,7 +141,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
             var fromDb = itemtyperepo.GetByGroup(fromDbGroup);
             Assert.IsNotNull(fromDb);
 
-            foreach(var thisItemType in theGroup)
+            foreach (var thisItemType in theGroup)
             {
                 Assert.IsTrue(fromDb.Contains(thisItemType));
             }

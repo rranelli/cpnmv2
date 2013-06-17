@@ -1,14 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model" namespace="Chemtech.CPNM.Model.Domain">
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Chemtech.CPNM.Model"
+                   namespace="Chemtech.CPNM.Model.Domain">
   <class name="Property">
     <id name="Id">
-      <generator class="guid"/>
+      <generator class="guid" />
     </id>
-    <property name="Name"/>
-    <property name="Description"/>
-    <property name="IsCalculated"/>
-    <many-to-one name="DefaultUnit" cascade="none"/>
-    <many-to-one name="Dimension" cascade="none" not-null="false" lazy="false"/>
-    <many-to-one name="PropertyGroup" cascade="none" not-null="false"/>
+    <property name="Name" />
+    <property name="Description" />
+    <property name="IsCalculated" />
+    <many-to-one name="DefaultUnit" cascade="none" />
+    <many-to-one name="Dimension" cascade="none" not-null="false" lazy="false" />
+    <many-to-one name="PropertyGroup" cascade="none" not-null="false" />
   </class>
 </hibernate-mapping>

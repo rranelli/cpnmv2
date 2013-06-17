@@ -1,8 +1,11 @@
-﻿using Chemtech.CPNM.Model.Domain;
+﻿// Projeto: Chemtech.CPNM.Data
+// Solution: Chemtech.CPNM
+// Implementado por: 
+// 6:18 PM
 
 namespace Chemtech.CPNM.Data.Repositories
 {
-    interface INamedRepository<T>
+    internal interface INamedRepository<T>
     {
         T GetByName(string name);
     }
