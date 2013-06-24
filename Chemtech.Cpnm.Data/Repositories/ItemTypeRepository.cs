@@ -1,11 +1,14 @@
-﻿// Projeto: Chemtech.CPNM.Data
+﻿// ItemTypeRepository.cs
+// Projeto: Chemtech.CPNM.Data
 // Solution: Chemtech.CPNM
-// Implementado por: 
-// 6:18 PM
+// Implementado por: Renan
+// Criado em: 15/06/2013
+// Modificado em: 18/06/2013 : 1:52 AM
 
 using System.Collections.Generic;
 using System.Linq;
 using Chemtech.CPNM.Model.Domain;
+using NHibernate;
 using NHibernate.Linq;
 
 namespace Chemtech.CPNM.Data.Repositories
@@ -16,7 +19,7 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public ItemType GetByName(string name)
         {
-            using (var session = NHibernateHelper.OpenSession())
+            using (ISession session = NHibernateHelper.OpenSession())
             {
                 return (from it in session.Query<ItemType>()
                         where it.Name == name
@@ -28,7 +31,7 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public ICollection<ItemType> GetByGroup(ItemTypeGroup itemTypeGroup)
         {
-            using (var session = NHibernateHelper.OpenSession())
+            using (ISession session = NHibernateHelper.OpenSession())
             {
                 return (from it in session.Query<ItemType>()
                         where it.ItemTypeGroup.Id == itemTypeGroup.Id

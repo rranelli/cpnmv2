@@ -1,7 +1,9 @@
-﻿// Projeto: Chemtech.CPNM.Data
+﻿// AssemblyInfo.cs
+// Projeto: Chemtech.CPNM.Data
 // Solution: Chemtech.CPNM
-// Implementado por: 
-// 6:18 PM
+// Implementado por: Renan
+// Criado em: 15/06/2013
+// Modificado em: 18/06/2013 : 1:52 AM
 
 using System.Reflection;
 using System.Runtime.InteropServices;

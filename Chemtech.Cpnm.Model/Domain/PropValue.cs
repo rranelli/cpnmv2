@@ -1,7 +1,9 @@
-﻿// Projeto: Chemtech.CPNM.Model
+﻿// PropValue.cs
+// Projeto: Chemtech.CPNM.Model
 // Solution: Chemtech.CPNM
-// Implementado por: 
-// 6:17 PM
+// Implementado por: Renan
+// Criado em: 05/06/2013
+// Modificado em: 18/06/2013 : 1:51 AM
 
 using System;
 using System.Globalization;
@@ -55,7 +57,7 @@ namespace Chemtech.CPNM.Model.Domain
             if (Xref == null) return false;
             if (Xref.Property == null) return false;
             return GetProperty.IsConvertible() && double.TryParse(Value, out dummyParsed);
-                //Try parse sera falso se value == null
+            //Try parse sera falso se value == null
         }
 
         public override string ToString()

@@ -1,7 +1,9 @@
-﻿// Projeto: Chemtech.CPNM.Model
+﻿// Property.cs
+// Projeto: Chemtech.CPNM.Model
 // Solution: Chemtech.CPNM
-// Implementado por: 
-// 6:17 PM
+// Implementado por: Renan
+// Criado em: 05/06/2013
+// Modificado em: 18/06/2013 : 1:51 AM
 
 using System.Collections.Generic;
 
@@ -14,7 +16,6 @@ namespace Chemtech.CPNM.Model.Domain
         public virtual Dimension Dimension { get; set; }
         public virtual string Description { get; set; }
         public virtual bool IsCalculated { get; protected set; }
-        public virtual string Name { get; set; }
 
         public virtual ICollection<UnitOfMeasure> ValidUnits
         {
@@ -24,6 +25,12 @@ namespace Chemtech.CPNM.Model.Domain
                 return Dimension.Units;
             }
         }
+
+        #region INamed Members
+
+        public virtual string Name { get; set; }
+
+        #endregion
 
         public virtual bool IsConvertible()
         {

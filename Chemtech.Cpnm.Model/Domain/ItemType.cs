@@ -1,7 +1,9 @@
-﻿// Projeto: Chemtech.CPNM.Model
+﻿// ItemType.cs
+// Projeto: Chemtech.CPNM.Model
 // Solution: Chemtech.CPNM
-// Implementado por: 
-// 6:17 PM
+// Implementado por: Renan
+// Criado em: 05/06/2013
+// Modificado em: 18/06/2013 : 1:51 AM
 
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +40,11 @@ namespace Chemtech.CPNM.Model.Domain
             return (from xref in ValidXrefs
                     where xref.Property.Equals(property)
                     select xref).Any();
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

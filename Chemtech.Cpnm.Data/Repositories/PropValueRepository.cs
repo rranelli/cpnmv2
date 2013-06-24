@@ -1,11 +1,14 @@
-﻿// Projeto: Chemtech.CPNM.Data
+﻿// PropValueRepository.cs
+// Projeto: Chemtech.CPNM.Data
 // Solution: Chemtech.CPNM
-// Implementado por: 
-// 6:18 PM
+// Implementado por: Renan
+// Criado em: 15/06/2013
+// Modificado em: 18/06/2013 : 1:52 AM
 
 using System;
 using System.Linq;
 using Chemtech.CPNM.Model.Domain;
+using NHibernate;
 using NHibernate.Linq;
 
 namespace Chemtech.CPNM.Data.Repositories
@@ -14,7 +17,7 @@ namespace Chemtech.CPNM.Data.Repositories
     {
         public PropValue GetByItemAndPropId(Guid itemId, Guid propId)
         {
-            using(var session = NHibernateHelper.OpenSession())
+            using (ISession session = NHibernateHelper.OpenSession())
             {
                 return (from pval in session.Query<PropValue>()
                         where pval.Xref.Property.Id == propId && pval.ItemId == itemId

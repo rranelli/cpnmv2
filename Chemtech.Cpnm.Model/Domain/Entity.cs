@@ -1,7 +1,9 @@
-﻿// Projeto: Chemtech.CPNM.Model
+﻿// Entity.cs
+// Projeto: Chemtech.CPNM.Model
 // Solution: Chemtech.CPNM
-// Implementado por: 
-// 6:17 PM
+// Implementado por: Renan
+// Criado em: 07/06/2013
+// Modificado em: 18/06/2013 : 1:51 AM
 
 using System;
 
@@ -39,8 +41,8 @@ namespace Chemtech.CPNM.Model.Domain
 
             if (!IsTransient(this) && !IsTransient(other) && Equals(Id, other.Id))
             {
-                var otherType = other.GetUnproxiedType();
-                var thisType = GetUnproxiedType();
+                Type otherType = other.GetUnproxiedType();
+                Type thisType = GetUnproxiedType();
                 return thisType.IsAssignableFrom(otherType) || otherType.IsAssignableFrom(thisType);
             }
 
