@@ -1,4 +1,6 @@
-﻿namespace Chemtech.CPNM.AppExcel.Forms
+﻿using System.Windows.Forms;
+
+namespace Chemtech.Cpnm.AppExcel.ExportImport.Forms
 {
     partial class SetUpExportWorkbook
     {
@@ -33,22 +35,25 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbItemTypeGroup = new System.Windows.Forms.ComboBox();
-            this.ltbItemType = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbPropGroup = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbSubArea = new System.Windows.Forms.ComboBox();
+            this.ltbItemType = new System.Windows.Forms.ListBox();
+            this.ckbFetchAllProperties = new System.Windows.Forms.CheckBox();
+            this.ckbFetchAllItems = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnRedefWorksheet
             // 
-            this.btnRedefWorksheet.Location = new System.Drawing.Point(202, 464);
+            this.btnRedefWorksheet.Location = new System.Drawing.Point(201, 509);
             this.btnRedefWorksheet.Name = "btnRedefWorksheet";
             this.btnRedefWorksheet.Size = new System.Drawing.Size(164, 39);
             this.btnRedefWorksheet.TabIndex = 0;
             this.btnRedefWorksheet.Text = "Redefinir Planilha";
             this.btnRedefWorksheet.UseVisualStyleBackColor = true;
+            this.btnRedefWorksheet.Click += new System.EventHandler(this.btnRedefWorksheet_Click);
             // 
             // clbProperties
             // 
@@ -88,17 +93,6 @@
             this.cmbItemTypeGroup.Sorted = true;
             this.cmbItemTypeGroup.TabIndex = 14;
             this.cmbItemTypeGroup.SelectedIndexChanged += new System.EventHandler(this.cmbItemTypeGroup_SelectedIndexChanged);
-            // 
-            // ltbItemType
-            // 
-            this.ltbItemType.DisplayMember = "Name";
-            this.ltbItemType.Location = new System.Drawing.Point(12, 80);
-            this.ltbItemType.Name = "ltbItemType";
-            this.ltbItemType.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.ltbItemType.Size = new System.Drawing.Size(166, 368);
-            this.ltbItemType.Sorted = true;
-            this.ltbItemType.TabIndex = 13;
-            this.ltbItemType.SelectedIndexChanged += new System.EventHandler(this.ltbItemType_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -147,11 +141,50 @@
             this.cmbSubArea.Sorted = true;
             this.cmbSubArea.TabIndex = 26;
             // 
+            // ltbItemType
+            // 
+            this.ltbItemType.DisplayMember = "Name";
+            this.ltbItemType.FormattingEnabled = true;
+            this.ltbItemType.Location = new System.Drawing.Point(12, 80);
+            this.ltbItemType.Name = "ltbItemType";
+            this.ltbItemType.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.ltbItemType.Size = new System.Drawing.Size(165, 368);
+            this.ltbItemType.Sorted = true;
+            this.ltbItemType.TabIndex = 28;
+            this.ltbItemType.SelectedIndexChanged += new System.EventHandler(this.ltbItemType_SelectedIndexChanged);
+            // 
+            // ckbFetchAllProperties
+            // 
+            this.ckbFetchAllProperties.AutoSize = true;
+            this.ckbFetchAllProperties.Checked = true;
+            this.ckbFetchAllProperties.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbFetchAllProperties.Location = new System.Drawing.Point(201, 486);
+            this.ckbFetchAllProperties.Name = "ckbFetchAllProperties";
+            this.ckbFetchAllProperties.Size = new System.Drawing.Size(146, 17);
+            this.ckbFetchAllProperties.TabIndex = 29;
+            this.ckbFetchAllProperties.Text = "Todas as propriedades??";
+            this.ckbFetchAllProperties.UseVisualStyleBackColor = true;
+            // 
+            // ckbFetchAllItems
+            // 
+            this.ckbFetchAllItems.AutoSize = true;
+            this.ckbFetchAllItems.Checked = true;
+            this.ckbFetchAllItems.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbFetchAllItems.Location = new System.Drawing.Point(201, 460);
+            this.ckbFetchAllItems.Name = "ckbFetchAllItems";
+            this.ckbFetchAllItems.Size = new System.Drawing.Size(110, 17);
+            this.ckbFetchAllItems.TabIndex = 30;
+            this.ckbFetchAllItems.Text = "Todos os Items??";
+            this.ckbFetchAllItems.UseVisualStyleBackColor = true;
+            // 
             // SetUpExportWorkbook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(387, 521);
+            this.ClientSize = new System.Drawing.Size(381, 558);
+            this.Controls.Add(this.ckbFetchAllItems);
+            this.Controls.Add(this.ckbFetchAllProperties);
+            this.Controls.Add(this.ltbItemType);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbSubArea);
             this.Controls.Add(this.label7);
@@ -160,7 +193,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cmbItemTypeGroup);
-            this.Controls.Add(this.ltbItemType);
             this.Controls.Add(this.clbProperties);
             this.Controls.Add(this.btnRedefWorksheet);
             this.Name = "SetUpExportWorkbook";
@@ -177,11 +209,13 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cmbItemTypeGroup;
-        private System.Windows.Forms.ListBox ltbItemType;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cmbPropGroup;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbSubArea;
+        private ListBox ltbItemType;
+        private CheckBox ckbFetchAllProperties;
+        private CheckBox ckbFetchAllItems;
     }
 }

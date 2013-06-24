@@ -82,8 +82,8 @@ namespace Chemtech.CPNM.Tests.UnitTests
                                      new PropertyGroup {Name = "Dados EAP", Description = "123"},
                                  };
 
-            var prop1 = new Property {Name = "Prop1", Description = "desc1", PropertyGroup = propGroups[1]};
-            var prop2 = new Property {Name = "Prop2", PropertyGroup = propGroups[0]};
+            var prop1 = new Property { Name = "Prop1", Description = "desc1", PropertyGroup = propGroups[1] };
+            var prop2 = new Property { Name = "Prop2", PropertyGroup = propGroups[0] };
             var prop3 = new Property
                             {
                                 Name = "Prop3",
@@ -91,9 +91,9 @@ namespace Chemtech.CPNM.Tests.UnitTests
                                 DefaultUnit = unitsOfMeasure[0]
                             };
 
-            var properties = new[] {prop1, prop2, prop3};
+            var properties = new[] { prop1, prop2, prop3 };
 
-            var newItemTypeGroup = new ItemTypeGroup {Name = "Estaticos"};
+            var newItemTypeGroup = new ItemTypeGroup { Name = "Estaticos" };
             var itemTypeGroups = new[]
                                      {
                                          new ItemTypeGroup {Name = "Instrumentos", Description = "desc1"},
@@ -119,6 +119,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
                                       ValidXrefs = xrefs,
                                       ItemTypeGroup = newItemTypeGroup,
                                   };
+
             var itemTypes = new[]
                                 {
                                     new ItemType
@@ -135,17 +136,23 @@ namespace Chemtech.CPNM.Tests.UnitTests
                                     newItemType
                                 };
 
+            var aProject = new Project() { Name = "NewProject" };
+            var projects = new[] { aProject };
+            var aSubArea = new SubArea() {Name = "NovaSubArea", Project = aProject};
+            var subAreas = new[] {aSubArea};
+
             var items = new[]
                             {
-                                new Item {Name = "P-101", UniqueName = "P-101", ItemType = newItemType},
+                                new Item {Name = "P-101", UniqueName = "P-101", ItemType = newItemType, SubArea = aSubArea},
                                 new Item
-                                    {Name = "Complex", UniqueName = "Complex", IsActive = true, ItemType = newItemType},
+                                    {Name = "Complex", UniqueName = "Complex", IsActive = true, ItemType = newItemType, SubArea = aSubArea},
                                 new Item
                                     {
                                         Name = "Complex2",
                                         UniqueName = "Complex2",
                                         IsActive = true,
-                                        ItemType = newItemType
+                                        ItemType = newItemType,
+                                        SubArea = aSubArea
                                     }
                             };
 
@@ -153,7 +160,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
             // upload dos objetos in-memory
             var allData = new Entity[][]
                               {
-                                  unitsOfMeasure, dimensions, disciplines, propGroups, properties, itemTypeGroups,
+                                  projects, subAreas, unitsOfMeasure, dimensions, disciplines, propGroups, properties, itemTypeGroups,
                                   itemTypes, items
                               };
             allData.ToList().ForEach(ent => AddGroups(ent));
@@ -168,9 +175,8 @@ namespace Chemtech.CPNM.Tests.UnitTests
                 GetNewPropValue(prop3);
             propval2.Value = "215.3";
 
-            var propValues = new[] {propval1, propval2};
+            var propValues = new[] { propval1, propval2 };
             AddGroups(propValues);
         }
     }
 }
-    

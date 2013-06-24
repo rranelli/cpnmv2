@@ -24,5 +24,15 @@ namespace Chemtech.CPNM.Data.Repositories
                         select pval).SingleOrDefault();
             }
         }
+
+        public new void Update(PropValue propValue)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.SaveOrUpdate(propValue);
+                transaction.Commit();
+            }
+        }
     }
 }

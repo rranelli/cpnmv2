@@ -8,9 +8,5 @@
     </id>
     <property name="Name" />
     <property name="Description" />
-    <set name="Items" inverse="true" lazy="true">
-      <key column="Project" />
-      <one-to-many class="Item" />
-    </set>
   </class>
 </hibernate-mapping>

@@ -38,7 +38,7 @@
             this.ltbProperty = new System.Windows.Forms.ListBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cmbSubArea = new System.Windows.Forms.ComboBox();
             this.ltbItem = new System.Windows.Forms.ListBox();
             this.txbValue = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -153,14 +153,15 @@
             this.label9.TabIndex = 19;
             this.label9.Text = "SubArea";
             // 
-            // comboBox3
+            // cmbSubArea
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(191, 29);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(165, 21);
-            this.comboBox3.Sorted = true;
-            this.comboBox3.TabIndex = 18;
+            this.cmbSubArea.DisplayMember = "Name";
+            this.cmbSubArea.FormattingEnabled = true;
+            this.cmbSubArea.Location = new System.Drawing.Point(191, 29);
+            this.cmbSubArea.Name = "cmbSubArea";
+            this.cmbSubArea.Size = new System.Drawing.Size(165, 21);
+            this.cmbSubArea.Sorted = true;
+            this.cmbSubArea.TabIndex = 18;
             // 
             // ltbItem
             // 
@@ -341,7 +342,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.cmbSubArea);
             this.Controls.Add(this.ltbItem);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
@@ -353,7 +354,6 @@
             this.Controls.Add(this.ltbItemType);
             this.Name = "GetReference";
             this.Text = "Seleção de referência";
-
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -375,7 +375,7 @@
         private System.Windows.Forms.ListBox ltbProperty;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cmbSubArea;
         private System.Windows.Forms.ListBox ltbItem;
         private System.Windows.Forms.TextBox txbValue;
         private System.Windows.Forms.Label label1;

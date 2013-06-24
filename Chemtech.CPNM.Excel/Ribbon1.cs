@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Chemtech.CPNM.AppExcel.Forms;
+﻿using Chemtech.CPNM.Presentation.Forms;
 using Microsoft.Office.Tools.Ribbon;
 
 namespace Chemtech.CPNM.Excel
@@ -14,9 +10,15 @@ namespace Chemtech.CPNM.Excel
 
         }
 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
+        private void button3_Click(object sender, RibbonControlEventArgs e)
         {
-            new SetUpExportWorkbook().ShowDialog();
+            new SetUpSession().ShowDialog();
+        }
+
+        private void btnAddRef_Click(object sender, RibbonControlEventArgs e)
+        {
+            //TODO: implementar o excel heimdall
+            new GetReference().ShowDialog();
         }
     }
 }

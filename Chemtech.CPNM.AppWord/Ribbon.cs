@@ -6,6 +6,7 @@
 // Modificado em: 18/06/2013 : 1:52 AM
 
 using Chemtech.CPNM.AppWord.Application;
+using Chemtech.CPNM.Presentation.Forms;
 using Microsoft.Office.Tools.Ribbon;
 
 namespace Chemtech.CPNM.AppWord
@@ -29,6 +30,11 @@ namespace Chemtech.CPNM.AppWord
         private void btnRefReuse_Click(object sender, RibbonControlEventArgs e)
         {
             new WordHeimdall().ReuseReferences();
+        }
+
+        private void button3_Click(object sender, RibbonControlEventArgs e)
+        {
+            new SetUpSession().ShowDialog();
         }
     }
 }

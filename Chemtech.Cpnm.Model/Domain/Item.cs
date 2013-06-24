@@ -13,18 +13,23 @@ namespace Chemtech.CPNM.Model.Domain
 {
     public class Item : Entity, INamed
     {
-        public virtual Project Project { get; set; }
+        
         public virtual ItemType ItemType { get; set; }
         public virtual bool IsActive { get; set; }
         public virtual string UniqueName { get; set; }
         public virtual string Description { get; set; }
+        public virtual SubArea SubArea { get; set; }
         public virtual ICollection<PropValue> PropValues { get; set; }
-
         #region INamed Members
 
         public virtual string Name { get; set; }
 
         #endregion
+
+        public virtual Project Project
+        {
+            get { return SubArea.Project; }
+        }
 
         public new virtual string ToString()
         {

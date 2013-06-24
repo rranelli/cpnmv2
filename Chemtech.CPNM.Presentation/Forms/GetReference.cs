@@ -14,7 +14,7 @@ using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.CPNM.Presentation.Forms
 {
-    public partial class GetReference : Form //TODO: IMPLEMENTE SEARCH NA UI!!!!!!
+    public partial class GetReference : Form 
     {
         private readonly ICollection<ItemTypeGroup> _itemTypeGroups;
         private readonly ICollection<PropertyGroup> _propertyGroups;
@@ -42,6 +42,11 @@ namespace Chemtech.CPNM.Presentation.Forms
 
             _itemTypeGroups.ToList().ForEach(itg => cmbItemTypeGroup.Items.Add(itg));
             _propertyGroups.ToList().ForEach(pg => cmbPropGroup.Items.Add(pg));
+
+            if(CpnmSession.Project!=null)
+                new SubAreaRepository().GetAllByProject(CpnmSession.Project).ToList().ForEach(sb=>cmbSubArea.Items.Add(sb));
+            else
+                new SubAreaRepository().GetAll().ToList().ForEach(sb=>cmbSubArea.Items.Add(sb));
 
             ltbMeta.Hide();
             IsMetaDataSelected = false;
@@ -110,7 +115,7 @@ namespace Chemtech.CPNM.Presentation.Forms
             ltbItemType.Items.Clear();
             if (cmbItemTypeGroup.SelectedItem != null)
             {
-                ICollection<ItemType> itemTypesByGroup =
+                var itemTypesByGroup =
                     new ItemTypeRepository().GetByGroup((ItemTypeGroup) cmbItemTypeGroup.SelectedItem);
                 itemTypesByGroup.ToList().ForEach(it => ltbItemType.Items.Add(it));
             }
@@ -125,7 +130,13 @@ namespace Chemtech.CPNM.Presentation.Forms
                 var selectedItemType = (ItemType) ltbItemType.SelectedItem;
                 selectedItemType.ValidProperties.ToList().ForEach(prop => ltbProperty.Items.Add(prop));
 
-                ICollection<Item> itemsByType = new ItemRepository().GetByType(selectedItemType);
+                // filtrando por projeto
+                ICollection<Item> itemsByType;
+                if (CpnmSession.Project != null)
+                    itemsByType = new ItemRepository().GetByTypeAndProject(selectedItemType, CpnmSession.Project);
+                else
+                    itemsByType = new ItemRepository().GetByType(selectedItemType);
+
                 itemsByType.ToList().ForEach(i => ltbItem.Items.Add(i));
             }
         }

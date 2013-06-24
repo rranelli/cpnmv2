@@ -65,5 +65,25 @@ namespace Chemtech.CPNM.Data.Repositories
                         select i).ToList();
             }
         }
+
+        public ICollection<Item> GetByTypeAndProject(ItemType itemType, Project project)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                return (from i in session.Query<Item>()
+                        where i.ItemType.Id == itemType.Id && i.Project.Id == project.Id 
+                        select i).ToList();
+            }
+        }
+
+        public ICollection<Item> GetByTypeAndSubArea(ItemType itemType, SubArea subArea)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                return (from i in session.Query<Item>()
+                        where i.SubArea.Id == subArea.Id  && i.ItemType.Id == itemType.Id
+                        select i).ToList();
+            }
+        }
     }
 }
