@@ -6,6 +6,7 @@
 // Modificado em: 18/06/2013 : 1:51 AM
 
 using System.Linq;
+using Chemtech.CPNM.BR;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
@@ -16,6 +17,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
     internal class DimensionFixture
     {
         private Configuration _configuration;
+        private IDimensionRepository _repository;
 
         #region Fixture, Setup and Teardown config
 
@@ -29,6 +31,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void SetUp()
         {
             new TestHelper().SetUpDatabaseTestData(_configuration);
+            _repository = new CpnmStart().IocResolve<IDimensionRepository>();
         }
 
         [TestFixtureTearDown]
@@ -42,9 +45,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanGetDimensionByName()
         {
-            var repository = new DimensionRepository();
-
-            Dimension pressao = repository.GetByName("Vazao");
+            var pressao = _repository.GetByName("Vazao");
 
             Assert.IsNotNull(pressao);
             Assert.AreEqual(pressao.Name, "Vazao");
@@ -65,11 +66,10 @@ namespace Chemtech.CPNM.Tests.UnitTests
                                };
 
             var newDimension = new Dimension {Name = "Entalpia", Units = newUnits};
-            var repository = new DimensionRepository();
 
-            repository.Add(newDimension);
+            _repository.Add(newDimension);
 
-            Dimension fromDb = repository.GetById(newDimension.Id);
+            Dimension fromDb = _repository.GetById(newDimension.Id);
 
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(newDimension, fromDb);
@@ -79,23 +79,22 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanRemoveDimension()
         {
-            var repository = new DimensionRepository();
             var unitrepository = new GeneralRepository<UnitOfMeasure>();
             var dumbUnit = new UnitOfMeasure {ConvFactor = 1.1, OffsetFactor = 1.2, Symbol = "1123"};
             var dumbdim = new Dimension {Name = "duuuuumb", Units = new[] {dumbUnit}};
-            repository.Add(dumbdim);
+            _repository.Add(dumbdim);
 
             // asserting que a dimensao e a unidade foram criadas
-            Dimension fromDb = repository.GetById(dumbdim.Id);
-            UnitOfMeasure unitFromDb = unitrepository.GetById(dumbUnit.Id);
+            var fromDb = _repository.GetById(dumbdim.Id);
+            var unitFromDb = unitrepository.GetById(dumbUnit.Id);
             Assert.IsNotNull(fromDb);
             Assert.IsNotNull(unitFromDb);
 
-            Dimension dimensionToRemove = repository.GetByName("duuuuumb");
-            repository.Remove(dimensionToRemove);
+            var dimensionToRemove = _repository.GetByName("duuuuumb");
+            _repository.Remove(dimensionToRemove);
 
             // asserting que a dimensao e a unidade foram criadas
-            fromDb = repository.GetById(dimensionToRemove.Id);
+            fromDb = _repository.GetById(dimensionToRemove.Id);
             unitFromDb = unitrepository.GetById(dumbUnit.Id);
             Assert.IsNotNull(dimensionToRemove);
             Assert.IsNull(fromDb);
@@ -105,16 +104,15 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanUpdateDimension()
         {
-            var repository = new DimensionRepository();
-            Dimension fluxo = repository.GetByName("Vazao");
+            var fluxo = _repository.GetByName("Vazao");
             fluxo.Name = "Fluxo.... Oh god que nome errado.";
-            UnitOfMeasure firstUnit = fluxo.Units.First();
+            var firstUnit = fluxo.Units.First();
 
             fluxo.Units.Remove(fluxo.Units.First());
-            repository.Update(fluxo);
+            _repository.Update(fluxo);
 
-            Dimension fromDb = repository.GetByName(fluxo.Name);
-            Dimension fromDbOld = repository.GetByName("Vazao");
+            var fromDb = _repository.GetByName(fluxo.Name);
+            var fromDbOld = _repository.GetByName("Vazao");
 
             Assert.IsNotNull(fluxo);
             Assert.IsNotNull(fromDb);

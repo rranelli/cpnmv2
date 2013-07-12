@@ -7,6 +7,7 @@
 
 using System;
 using System.Linq;
+using Chemtech.CPNM.BR;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
@@ -42,7 +43,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         {
             new TestHelper().SetUpDatabaseTestData(_configuration);
 
-            Dimension dimension = new DimensionRepository().GetByName("Vazao");
+            Dimension dimension = new CpnmStart().IocResolve<IDimensionRepository>().GetByName("Vazao");
             _unit1 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit1");
             _unit2 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit2");
             _unit3 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit3");

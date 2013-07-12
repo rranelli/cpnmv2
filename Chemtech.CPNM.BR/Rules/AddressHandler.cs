@@ -13,7 +13,19 @@ using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.CPNM.BR.Rules
 {
-    public class AddressHandler
+    public interface IAddressHandler
+    {
+        PropValue PropValue { get; set; }
+        Item Item { get; set; }
+        Property Property { get; set; }
+        PropValue.FormatType FormatType { get; set; }
+        UnitOfMeasure UnitOfMeasure { get; set; }
+        AddressHandler.AddressType ThisAddressType { get; set; }
+        string Address { get; set; }
+        string GetFormatedValue();
+    }
+
+    public class AddressHandler : IAddressHandler
     {
         private const char RouterChar = '/';
         private const string RegexCriteria = @"\/([\w-]*)";
@@ -22,6 +34,11 @@ namespace Chemtech.CPNM.BR.Rules
 
         private static readonly Regex BreakerRegex = new Regex(RegexCriteria);
         private static readonly Regex ValidationRegex = new Regex(RegexValidationCriteria);
+
+        private readonly IPropertyRepository _propertyRepository;
+        private readonly IItemRepository _itemRepository;
+        private readonly IPropValueRepository _propValueRepository;
+        private readonly IUnitOfMeasureRepository _unitOfMeasureRepository;
 
         public enum AddressType
         {
@@ -43,13 +60,30 @@ namespace Chemtech.CPNM.BR.Rules
 
         private string _address;
 
-        public AddressHandler(string address)
+        public AddressHandler(string address,
+            IPropValueRepository propValueRepository,
+            IItemRepository itemRepository,
+            IPropertyRepository propertyRepository,
+            IUnitOfMeasureRepository unitOfMeasureRepository)
         {
             _address = address;
+            _propValueRepository = propValueRepository;
+            _itemRepository = itemRepository;
+            _propertyRepository = propertyRepository;
+            _unitOfMeasureRepository = unitOfMeasureRepository;
             ParseAddress();
         }
 
-        public AddressHandler() { }
+        public AddressHandler(IPropValueRepository propValueRepository,
+            IItemRepository itemRepository,
+            IPropertyRepository propertyRepository,
+            IUnitOfMeasureRepository unitOfMeasureRepository)
+        {
+            _propValueRepository = propValueRepository;
+            _itemRepository = itemRepository;
+            _propertyRepository = propertyRepository;
+            _unitOfMeasureRepository = unitOfMeasureRepository;
+        }
 
         public static bool IsCpnmAddress(string candidate)
         {
@@ -184,22 +218,22 @@ namespace Chemtech.CPNM.BR.Rules
                     break;
 
                 case AddressType.PropNameRef:
-                    Property = new PropertyRepository().GetById(new Guid(ids[0]));
+                    Property = _propertyRepository.GetById(new Guid(ids[0]));
                     break;
                 case AddressType.ItemNameRef:
-                    Item = new ItemRepository().GetById(new Guid(ids[0]));
+                    Item = _itemRepository.GetById(new Guid(ids[0]));
                     break;
                 case AddressType.ItemTypeNameRef:
-                    Item = new ItemRepository().GetById(new Guid(ids[0]));
+                    Item = _itemRepository.GetById(new Guid(ids[0]));
                     break;
                 case AddressType.AreaRef:
-                    Item = new ItemRepository().GetById(new Guid(ids[0]));
+                    Item = _itemRepository.GetById(new Guid(ids[0]));
                     break;
                 case AddressType.SubAreaRef:
-                    Item = new ItemRepository().GetById(new Guid(ids[0]));
+                    Item = _itemRepository.GetById(new Guid(ids[0]));
                     break;
                 case AddressType.ProjectRef:
-                    Item = new ItemRepository().GetById(new Guid(ids[0]));
+                    Item = _itemRepository.GetById(new Guid(ids[0]));
                     break;
             }
         }
@@ -216,12 +250,12 @@ namespace Chemtech.CPNM.BR.Rules
             var itemId = new Guid(itemIdString);
             var propId = new Guid(propIdString);
 
-            Item = new ItemRepository().GetById(itemId);
-            Property = new PropertyRepository().GetById(propId);
-            PropValue = new PropValueRepository().GetByItemAndPropId(itemId, propId);
+            Item = _itemRepository.GetById(itemId);
+            Property = _propertyRepository.GetById(propId);
+            PropValue = _propValueRepository.GetByItemAndPropId(itemId, propId);
 
             UnitOfMeasure = unitIdString != ""
-                                ? new GeneralRepository<UnitOfMeasure>().GetById(new Guid(unitIdString))
+                                ? _unitOfMeasureRepository.GetById(new Guid(unitIdString))
                                 : PropValue.GetProperty.DefaultUnit;
 
             FormatType = (PropValue.FormatType)Enum.Parse(typeof(PropValue.FormatType), formatTypeString);

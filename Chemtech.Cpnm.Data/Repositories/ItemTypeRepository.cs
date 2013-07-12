@@ -5,6 +5,7 @@
 // Criado em: 15/06/2013
 // Modificado em: 18/06/2013 : 1:52 AM
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Chemtech.CPNM.Model.Domain;
@@ -13,8 +14,24 @@ using NHibernate.Linq;
 
 namespace Chemtech.CPNM.Data.Repositories
 {
-    public class ItemTypeRepository : GeneralRepository<ItemType>, INamedRepository<ItemType>
+    public interface IItemTypeRepository
     {
+        ItemType GetByName(string name);
+        ICollection<ItemType> GetByGroup(ItemTypeGroup itemTypeGroup);
+        void Add(ItemType ent);
+        void Update(ItemType ent);
+        void Remove(ItemType ent);
+        ItemType GetById(Guid id);
+        ICollection<ItemType> GetAll();
+        IQueryable GetQueryable();
+    }
+
+    public class ItemTypeRepository : GeneralRepository<ItemType>, INamedRepository<ItemType>, IItemTypeRepository
+    {
+        public ItemTypeRepository(ISession session) : base(session)
+        {
+        }
+
         #region INamedRepository<ItemType> Members
 
         public ItemType GetByName(string name)
@@ -31,12 +48,9 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public ICollection<ItemType> GetByGroup(ItemTypeGroup itemTypeGroup)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                return (from it in session.Query<ItemType>()
+                return (from it in Session.Query<ItemType>()
                         where it.ItemTypeGroup.Id == itemTypeGroup.Id
                         select it).ToList();
-            }
         }
     }
 }

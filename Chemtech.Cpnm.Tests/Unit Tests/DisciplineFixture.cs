@@ -5,6 +5,7 @@
 // Criado em: 10/06/2013
 // Modificado em: 18/06/2013 : 1:51 AM
 
+using Chemtech.CPNM.BR;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
@@ -15,6 +16,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
     internal class DisciplineFixture
     {
         private Configuration _configuration;
+        private IDisciplineRepository _repository;
 
         #region Fixture, Setup and Teardown config
 
@@ -28,6 +30,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void SetUp()
         {
             new TestHelper().SetUpDatabaseTestData(_configuration);
+            _repository = new CpnmStart().IocResolve<IDisciplineRepository>();
         }
 
         [TestFixtureTearDown]
@@ -41,10 +44,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanGetDisciplineByName()
         {
-            var repository = new DisciplineRepository();
-
-            Discipline processo = repository.GetByName("Processo");
-
+            var processo = _repository.GetByName("Processo");
             Assert.IsNotNull(processo);
             Assert.AreEqual(processo.Name, "Processo");
         }
@@ -53,11 +53,10 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void CanAddDiscipline()
         {
             var newDiscipline = new Discipline {Name = "Planejamento"};
-            var repository = new DisciplineRepository();
 
-            repository.Add(newDiscipline);
+            _repository.Add(newDiscipline);
 
-            Discipline fromDb = repository.GetById(newDiscipline.Id);
+            var fromDb = _repository.GetById(newDiscipline.Id);
 
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(newDiscipline, fromDb);
@@ -66,11 +65,10 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanRemoveDiscipline()
         {
-            var repository = new DisciplineRepository();
-            Discipline disciplineToRemove = repository.GetByName("Eletrica");
-            repository.Remove(disciplineToRemove);
+            var disciplineToRemove = _repository.GetByName("Eletrica");
+            _repository.Remove(disciplineToRemove);
 
-            Discipline fromDb = repository.GetById(disciplineToRemove.Id);
+            var fromDb = _repository.GetById(disciplineToRemove.Id);
 
             Assert.IsNotNull(disciplineToRemove);
             Assert.IsNull(fromDb);
@@ -79,13 +77,12 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanUpdateDiscipline()
         {
-            var repository = new DisciplineRepository();
-            Discipline tubulacao = repository.GetByName("Tubulacao");
+            var tubulacao = _repository.GetByName("Tubulacao");
             tubulacao.Name = "Tubulação";
-            repository.Update(tubulacao);
+            _repository.Update(tubulacao);
 
-            Discipline fromDb = repository.GetByName(tubulacao.Name);
-            Discipline fromDbOld = repository.GetByName("Tubulacao");
+            var fromDb = _repository.GetByName(tubulacao.Name);
+            var fromDbOld = _repository.GetByName("Tubulacao");
 
             Assert.IsNotNull(tubulacao);
             Assert.IsNotNull(fromDb);
