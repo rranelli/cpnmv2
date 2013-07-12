@@ -30,12 +30,23 @@ namespace Chemtech.CPNM.Tests.UnitTests
         private UnitOfMeasure _unit2;
         private UnitOfMeasure _unit3;
 
+        private IDimensionRepository _dimensionRepository;
+        private IItemRepository _itemRepository;
+        private IPropertyRepository _propertyRepository;
+        private IXrefRepository _xrefRepository;
+        private IPropValueRepository _propValueRepository;
+
         #region Fixture, Setup and Teardown config
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
             _configuration = new TestHelper().MakeConfiguration();
+            _dimensionRepository = new CpnmStart().IocResolve<IDimensionRepository>();
+            _itemRepository = new CpnmStart().IocResolve<IItemRepository>();
+            _propertyRepository = new CpnmStart().IocResolve<IPropertyRepository>();
+            _xrefRepository = new CpnmStart().IocResolve<IXrefRepository>();
+            _propValueRepository = new CpnmStart().IocResolve<IPropValueRepository>();
         }
 
         [SetUp]
@@ -43,21 +54,19 @@ namespace Chemtech.CPNM.Tests.UnitTests
         {
             new TestHelper().SetUpDatabaseTestData(_configuration);
 
-            Dimension dimension = new CpnmStart().IocResolve<IDimensionRepository>().GetByName("Vazao");
+            var dimension = _dimensionRepository.GetByName("Vazao");
             _unit1 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit1");
             _unit2 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit2");
             _unit3 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit3");
 
             _thisproperty = new Property {Dimension = dimension, DefaultUnit = _unit3};
-            _parentId1 = new ItemRepository().GetAll().SingleOrDefault(i => i.Name == "Complex").Id;
-            _parentId2 = new ItemRepository().GetAll().SingleOrDefault(i => i.Name == "P-101").Id;
+            _parentId1 = _itemRepository.GetAll().SingleOrDefault(i => i.Name == "Complex").Id;
+            _parentId2 = _itemRepository.GetAll().SingleOrDefault(i => i.Name == "P-101").Id;
             _thispropvalue = new PropValue {Xref = _newXref, Value = "100", ItemId = _parentId1};
 
             _newXref = new Xref {Property = _thisproperty};
-            var propRepo = new PropertyRepository();
-            var xrefRepo = new XrefRepository();
-            propRepo.Add(_thisproperty);
-            xrefRepo.Add(_newXref);
+            _propertyRepository.Add(_thisproperty);
+            _xrefRepository.Add(_newXref);
 
             _propValue1 = new PropValue {Value = "new value1", Xref = _newXref, ItemId = _parentId1};
             _propValue2 = new PropValue {Value = "A Hell Of A Value!", Xref = _newXref, ItemId = _parentId2};
@@ -76,10 +85,9 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void CanAddPropValue()
         {
             var propValueToAdd = new PropValue {Value = "new value", Xref = _newXref, ItemId = _parentId1};
-            var repository = new PropValueRepository();
 
-            repository.Add(propValueToAdd);
-            PropValue fromDb = repository.GetById(propValueToAdd.Id);
+            _propValueRepository.Add(propValueToAdd);
+            var fromDb = _propValueRepository.GetById(propValueToAdd.Id);
 
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(fromDb, propValueToAdd);
@@ -88,21 +96,19 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanAddSharedValue()
         {
-            var repository = new PropValueRepository();
+            _propValueRepository.Add(_propValue1);
+            _propValueRepository.Add(_propValue2);
 
-            repository.Add(_propValue1);
-            repository.Add(_propValue2);
-
-            PropValue fromDb1 = repository.GetById(_propValue1.Id);
-            PropValue fromDb2 = repository.GetById(_propValue2.Id);
+            var fromDb1 = _propValueRepository.GetById(_propValue1.Id);
+            var fromDb2 = _propValueRepository.GetById(_propValue2.Id);
 
             Assert.AreNotEqual(fromDb1.Value, fromDb2.Value);
 
             _propValue1.MakeShare(_propValue2);
-            repository.Update(_propValue1);
+            _propValueRepository.Update(_propValue1);
 
-            fromDb1 = repository.GetById(_propValue1.Id);
-            fromDb2 = repository.GetById(_propValue2.Id);
+            fromDb1 = _propValueRepository.GetById(_propValue1.Id);
+            fromDb2 = _propValueRepository.GetById(_propValue2.Id);
 
             Assert.AreEqual(fromDb1.Value, fromDb2.Value);
         }
@@ -110,17 +116,16 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void ShareUpdatesCorrectly()
         {
-            var repository = new PropValueRepository();
 
             _propValue1.MakeShare(_propValue2);
-            repository.Add(_propValue1);
-            repository.Add(_propValue2);
+            _propValueRepository.Add(_propValue1);
+            _propValueRepository.Add(_propValue2);
 
             _propValue2.Value = "Tada! A new value";
-            repository.Update(_propValue2);
+            _propValueRepository.Update(_propValue2);
 
-            PropValue fromDb1 = repository.GetById(_propValue1.Id);
-            PropValue fromDb2 = repository.GetById(_propValue2.Id);
+            var fromDb1 = _propValueRepository.GetById(_propValue1.Id);
+            var fromDb2 = _propValueRepository.GetById(_propValue2.Id);
 
             Assert.AreEqual(fromDb1.Value, fromDb2.Value);
             Assert.AreNotEqual(fromDb1.Id, fromDb2.Id);
@@ -129,35 +134,33 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanRemovePropValue()
         {
-            var repository = new PropValueRepository();
-            repository.Add(_propValue1);
-            Assert.IsNotNull(repository.GetById(_propValue1.Id));
+            _propValueRepository.Add(_propValue1);
+            Assert.IsNotNull(_propValueRepository.GetById(_propValue1.Id));
 
-            repository.Remove(_propValue1);
-            Assert.IsNull(repository.GetById(_propValue1.Id));
+            _propValueRepository.Remove(_propValue1);
+            Assert.IsNull(_propValueRepository.GetById(_propValue1.Id));
         }
 
         [Test]
         public void BreaksShareCorrecly()
         {
-            var repository = new PropValueRepository();
             _propValue1.MakeShare(_propValue2);
-            PropValue propValueSharedWith2 = _propValue1;
+            var propValueSharedWith2 = _propValue1;
 
-            repository.Add(_propValue2);
-            repository.Add(propValueSharedWith2);
+            _propValueRepository.Add(_propValue2);
+            _propValueRepository.Add(propValueSharedWith2);
 
-            PropValue fromDbShared1 = repository.GetById(propValueSharedWith2.Id);
-            PropValue fromDbShared2 = repository.GetById(propValueSharedWith2.Id);
+            var fromDbShared1 = _propValueRepository.GetById(propValueSharedWith2.Id);
+            var fromDbShared2 = _propValueRepository.GetById(propValueSharedWith2.Id);
 
             Assert.AreEqual(fromDbShared1.Value, fromDbShared2.Value);
 
             propValueSharedWith2.BreakShare(_propValue2);
             propValueSharedWith2.Value = "I BROKE FREE!!";
-            repository.Update(propValueSharedWith2);
+            _propValueRepository.Update(propValueSharedWith2);
 
-            PropValue fromDbNotSharedAnymore = repository.GetById(propValueSharedWith2.Id);
-            PropValue fromDb2 = repository.GetById(_propValue2.Id);
+            var fromDbNotSharedAnymore = _propValueRepository.GetById(propValueSharedWith2.Id);
+            var fromDb2 = _propValueRepository.GetById(_propValue2.Id);
 
             Assert.AreNotEqual(fromDb2.Value, fromDbNotSharedAnymore.Value);
             Assert.AreNotEqual(fromDb2, fromDbNotSharedAnymore);
@@ -241,13 +244,13 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanShowValueCorrectly()
         {
-            string valueOnly1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.Value);
-            string valueAndSymbol1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.ValueAndUnit);
-            string symbolOnly1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.Unit);
+            var valueOnly1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.Value);
+            var valueAndSymbol1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.ValueAndUnit);
+            var symbolOnly1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.Unit);
 
-            string valueOnly2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.Value);
-            string valueAndSymbol2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.ValueAndUnit);
-            string symbolOnly2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.Unit);
+            var valueOnly2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.Value);
+            var valueAndSymbol2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.ValueAndUnit);
+            var symbolOnly2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.Unit);
 
             Assert.AreEqual(valueOnly1, "303");
             Assert.AreEqual(valueAndSymbol1, "303 Unit1");
@@ -261,8 +264,8 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanShowDefaultUnit()
         {
-            string valueAndSymbolDefault = _thispropvalue.FormatedValue(_unit3, PropValue.FormatType.ValueAndUnit);
-            string symbolDefault = _thispropvalue.FormatedValue(PropValue.FormatType.Unit);
+            var valueAndSymbolDefault = _thispropvalue.FormatedValue(_unit3, PropValue.FormatType.ValueAndUnit);
+            var symbolDefault = _thispropvalue.FormatedValue(PropValue.FormatType.Unit);
 
             Assert.AreEqual(symbolDefault, "Unit3");
             Assert.AreEqual(valueAndSymbolDefault, "30.3 Unit3");

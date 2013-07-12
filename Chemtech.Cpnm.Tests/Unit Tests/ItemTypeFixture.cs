@@ -6,6 +6,7 @@
 // Modificado em: 18/06/2013 : 1:52 AM
 
 using System.Collections.Generic;
+using Chemtech.CPNM.BR;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
@@ -16,6 +17,9 @@ namespace Chemtech.CPNM.Tests.UnitTests
     internal class ItemTypeFixture
     {
         private Configuration _configuration;
+        private IItemTypeRepository _itemTypeRepository;
+        private IItemTypeGroupRepository _itemTypeGroupRepository;
+        private IPropertyRepository _propertyRepository;
 
         #region Fixture, Setup and Teardown config
 
@@ -29,6 +33,9 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void SetUp()
         {
             new TestHelper().SetUpDatabaseTestData(_configuration);
+            _itemTypeRepository = new CpnmStart().IocResolve<IItemTypeRepository>();
+            _propertyRepository = new CpnmStart().IocResolve<IPropertyRepository>();
+            _itemTypeGroupRepository = new CpnmStart().IocResolve<IItemTypeGroupRepository>();
         }
 
         [TestFixtureTearDown]
@@ -43,11 +50,10 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void CanAddItemType()
         {
             var itemType = new ItemType();
-            var repository = new ItemTypeRepository();
             itemType.Name = "Tanque";
 
-            repository.Add(itemType);
-            ItemType fromDb = repository.GetById(itemType.Id);
+            _itemTypeRepository.Add(itemType);
+            ItemType fromDb = _itemTypeRepository.GetById(itemType.Id);
 
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(fromDb, itemType);
@@ -57,25 +63,23 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanRemoveItemType()
         {
-            var repository = new ItemTypeRepository();
-            ItemType typeToBeRemoved = repository.GetByName("Transmissor");
-            repository.Remove(typeToBeRemoved);
+            ItemType typeToBeRemoved = _itemTypeRepository.GetByName("Transmissor");
+            _itemTypeRepository.Remove(typeToBeRemoved);
             Assert.IsNotNull(typeToBeRemoved);
 
-            ItemType fromDb = repository.GetById(typeToBeRemoved.Id);
+            ItemType fromDb = _itemTypeRepository.GetById(typeToBeRemoved.Id);
             Assert.IsNull(fromDb);
         }
 
         [Test]
         public void CanUpdateItemType()
         {
-            var repository = new ItemTypeRepository();
-            ItemType typeToBeUpdated = repository.GetByName("Bomba");
+            ItemType typeToBeUpdated = _itemTypeRepository.GetByName("Bomba");
             typeToBeUpdated.Name = "Bombalove";
-            repository.Update(typeToBeUpdated);
+            _itemTypeRepository.Update(typeToBeUpdated);
 
-            ItemType fromDb = repository.GetById(typeToBeUpdated.Id);
-            ItemType fromDbOld = repository.GetByName("Bomba");
+            ItemType fromDb = _itemTypeRepository.GetById(typeToBeUpdated.Id);
+            ItemType fromDbOld = _itemTypeRepository.GetByName("Bomba");
 
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(fromDb, typeToBeUpdated);
@@ -104,9 +108,8 @@ namespace Chemtech.CPNM.Tests.UnitTests
             var prop2 = new Property {Name = "Prop2"};
             var prop3 = new Property {Name = "Prop3"};
 
-            var propRepo = new PropertyRepository();
-            propRepo.Add(prop2);
-            propRepo.Add(prop3);
+            _propertyRepository.Add(prop2);
+            _propertyRepository.Add(prop3);
 
             var newItemType = new ItemType
                                   {
@@ -118,36 +121,30 @@ namespace Chemtech.CPNM.Tests.UnitTests
                                                        }
                                   };
 
-            var repository = new ItemTypeRepository();
-            repository.Add(newItemType);
+            _itemTypeRepository.Add(newItemType);
         }
 
         [Test]
         public void CanGetWholeGroup()
         {
-            var itemgroupRepo = new ItemTypeGroupRepository();
-            var itemtyperepo = new ItemTypeRepository();
-
             var theGroup = new[]
                                {
-                                   itemtyperepo.GetByName("Tanque"),
-                                   itemtyperepo.GetByName("Transmissor"),
-                                   itemtyperepo.GetByName("Bomba"),
-                                   itemtyperepo.GetByName("Linha"),
-                                   itemtyperepo.GetByName("Cantoneira"),
+                                   _itemTypeRepository.GetByName("Tanque"),
+                                   _itemTypeRepository.GetByName("Transmissor"),
+                                   _itemTypeRepository.GetByName("Bomba"),
+                                   _itemTypeRepository.GetByName("Linha"),
+                                   _itemTypeRepository.GetByName("Cantoneira"),
                                };
 
 
-            ItemTypeGroup fromDbGroup = itemgroupRepo.GetByName("Estaticos");
+            var fromDbGroup = _itemTypeGroupRepository.GetByName("Estaticos");
             Assert.IsNotNull(fromDbGroup);
 
-            ICollection<ItemType> fromDb = itemtyperepo.GetByGroup(fromDbGroup);
+            var fromDb = _itemTypeRepository.GetByGroup(fromDbGroup);
             Assert.IsNotNull(fromDb);
 
-            foreach (ItemType thisItemType in theGroup)
-            {
+            foreach (var thisItemType in theGroup)
                 Assert.IsTrue(fromDb.Contains(thisItemType));
-            }
         }
     }
 }

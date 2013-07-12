@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Chemtech.CPNM.BR;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 
@@ -18,6 +19,14 @@ namespace Chemtech.CPNM.Presentation.Forms
     {
         private readonly ICollection<ItemTypeGroup> _itemTypeGroups;
         private readonly ICollection<PropertyGroup> _propertyGroups;
+
+        private readonly IItemRepository _itemRepository;
+        private readonly IItemTypeGroupRepository _itemTypeGroupRepository;
+        private readonly IItemTypeRepository _itemTypeRepository;
+        private readonly IPropertyRepository _propertyRepository;
+        private readonly IPropertyGroupRepository _propertyGroupRepository;
+        private readonly ISubAreaRepository _subAreaRepository;
+
         public PropValue.FormatType SelectedFormat;
         public PropValue SelectedPropValue;
         public Item SelectedItem;
@@ -32,21 +41,29 @@ namespace Chemtech.CPNM.Presentation.Forms
             }
         }
 
-        public GetReference()
+        public GetReference(IItemRepository itemRepository, IItemTypeGroupRepository itemTypeGroupRepository, IItemTypeRepository itemTypeRepository, IPropertyRepository propertyRepository, IPropertyGroupRepository propertyGroupRepository, ISubAreaRepository subAreaRepository)
         {
             InitializeComponent();
             GetSelectedFormat();
 
-            _itemTypeGroups = new ItemTypeGroupRepository().GetAll();
-            _propertyGroups = new PropertyGroupRepository().GetAll();
+            // inject repos
+            _itemRepository = itemRepository;
+            _itemTypeGroupRepository = itemTypeGroupRepository;
+            _itemTypeRepository = itemTypeRepository;
+            _propertyRepository = propertyRepository;
+            _propertyGroupRepository = propertyGroupRepository;
+            _subAreaRepository = subAreaRepository;
+
+            _itemTypeGroups = _itemTypeGroupRepository.GetAll();
+            _propertyGroups = _propertyGroupRepository.GetAll();
 
             _itemTypeGroups.ToList().ForEach(itg => cmbItemTypeGroup.Items.Add(itg));
             _propertyGroups.ToList().ForEach(pg => cmbPropGroup.Items.Add(pg));
 
             if(CpnmSession.Project!=null)
-                new SubAreaRepository().GetAllByProject(CpnmSession.Project).ToList().ForEach(sb=>cmbSubArea.Items.Add(sb));
+                _subAreaRepository.GetAllByProject(CpnmSession.Project).ToList().ForEach(sb => cmbSubArea.Items.Add(sb));
             else
-                new SubAreaRepository().GetAll().ToList().ForEach(sb=>cmbSubArea.Items.Add(sb));
+                _subAreaRepository.GetAll().ToList().ForEach(sb => cmbSubArea.Items.Add(sb));
 
             ltbMeta.Hide();
             IsMetaDataSelected = false;
@@ -116,7 +133,7 @@ namespace Chemtech.CPNM.Presentation.Forms
             if (cmbItemTypeGroup.SelectedItem != null)
             {
                 var itemTypesByGroup =
-                    new ItemTypeRepository().GetByGroup((ItemTypeGroup) cmbItemTypeGroup.SelectedItem);
+                    _itemTypeRepository.GetByGroup((ItemTypeGroup) cmbItemTypeGroup.SelectedItem);
                 itemTypesByGroup.ToList().ForEach(it => ltbItemType.Items.Add(it));
             }
         }
@@ -133,9 +150,9 @@ namespace Chemtech.CPNM.Presentation.Forms
                 // filtrando por projeto
                 ICollection<Item> itemsByType;
                 if (CpnmSession.Project != null)
-                    itemsByType = new ItemRepository().GetByTypeAndProject(selectedItemType, CpnmSession.Project);
+                    itemsByType = _itemRepository.GetByTypeAndProject(selectedItemType, CpnmSession.Project);
                 else
-                    itemsByType = new ItemRepository().GetByType(selectedItemType);
+                    itemsByType = _itemRepository.GetByType(selectedItemType);
 
                 itemsByType.ToList().ForEach(i => ltbItem.Items.Add(i));
             }

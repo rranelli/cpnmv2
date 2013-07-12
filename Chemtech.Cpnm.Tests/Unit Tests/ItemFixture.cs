@@ -5,6 +5,7 @@
 // Criado em: 06/06/2013
 // Modificado em: 18/06/2013 : 1:52 AM
 
+using Chemtech.CPNM.BR;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
@@ -15,6 +16,8 @@ namespace Chemtech.CPNM.Tests.UnitTests
     internal class ItemFixture
     {
         private Configuration _configuration;
+        private IItemRepository _itemRepository;
+        private IPropertyRepository _propertyRepository;
 
         #region Fixture, Setup and Teardown config
 
@@ -28,6 +31,8 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void SetUp()
         {
             new TestHelper().SetUpDatabaseTestData(_configuration);
+            _itemRepository = new CpnmStart().IocResolve<IItemRepository>();
+            _propertyRepository = new CpnmStart().IocResolve<IPropertyRepository>();
         }
 
         [TestFixtureTearDown]
@@ -42,10 +47,9 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void CanAddItem()
         {
             var simpleItem = new Item {Name = "1112", UniqueName = "11123_1"};
-            var repository = new ItemRepository();
-            repository.Add(simpleItem);
+            _itemRepository.Add(simpleItem);
 
-            Item fromDb = repository.GetById(simpleItem.Id);
+            var fromDb = _itemRepository.GetById(simpleItem.Id);
 
             Assert.AreEqual(fromDb, simpleItem);
         }
@@ -53,8 +57,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanGetItemByName()
         {
-            var repository = new ItemRepository();
-            Item simpleItem = repository.GetByName("P-101");
+            var simpleItem = _itemRepository.GetByName("P-101");
             Assert.IsNotNull(simpleItem);
         }
 
@@ -62,25 +65,22 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void CanUpdatePropValueInsideItem()
         {
             // TODO: This test tests too many things at once. Should refactor it.
-            var repository = new ItemRepository();
-            var proprepository = new PropertyRepository();
-
-            Item complexItem = repository.GetByName("Complex");
+            var complexItem = _itemRepository.GetByName("Complex");
             Assert.IsNotNull(complexItem);
 
-            Property property = proprepository.GetByName("Prop2");
+            var property = _propertyRepository.GetByName("Prop2");
             Assert.IsNotNull(property);
 
-            PropValue pval = complexItem.GetPropValue(property);
+            var pval = complexItem.GetPropValue(property);
             Assert.IsNull(pval);
 
             pval = complexItem.GetNewPropValue(property);
             pval.Value = "112.34";
 
             complexItem.SetPropValue(pval);
-            repository.Update(complexItem);
+            _itemRepository.Update(complexItem);
 
-            Item fromDb = repository.GetById(complexItem.Id);
+            var fromDb = _itemRepository.GetById(complexItem.Id);
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(fromDb.GetPropValue(property), complexItem.GetPropValue(property));
         }
@@ -90,8 +90,8 @@ namespace Chemtech.CPNM.Tests.UnitTests
         {
             var repository = new ItemRepository();
 
-            Item complexItem1 = repository.GetByName("Complex");
-            Item complexItem2 = repository.GetByName("Complex2");
+            var complexItem1 = repository.GetByName("Complex");
+            var complexItem2 = repository.GetByName("Complex2");
             Assert.IsNotNull(complexItem1);
             Assert.IsNotNull(complexItem2);
 

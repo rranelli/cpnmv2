@@ -2,8 +2,6 @@
 using Castle.Windsor;
 using Chemtech.CPNM.BR.Rules;
 using Chemtech.CPNM.Data.Repositories;
-using Chemtech.Cpnm.AppExcel.ExportImport.Forms;
-using Chemtech.Cpnm.AppExcel.ExportImport.Logic;
 using NHibernate;
 
 namespace Chemtech.CPNM.BR
@@ -33,10 +31,10 @@ namespace Chemtech.CPNM.BR
             _container.Register(Component.For<IPropValueRepository>().ImplementedBy<PropValueRepository>());
             _container.Register(Component.For<ISubAreaRepository>().ImplementedBy<SubAreaRepository>());
             _container.Register(Component.For<IXrefRepository>().ImplementedBy<XrefRepository>());
-            _container.Register(Component.For<IExportSheetHandler>().ImplementedBy<ExportSheetHandler>());
+            //_container.Register(Component.For<IExportSheetHandler>().ImplementedBy<ExportSheetHandler>());
 
             // appExcel
-            _container.Register(Component.For<ISetUpExportWorkbook>().ImplementedBy<SetUpExportWorkbook>());
+            //_container.Register(Component.For<ISetUpExportWorkbook>().ImplementedBy<SetUpExportWorkbook>());
 
             // Business logic
             _container.Register(Component.For<IAddressHandler>().ImplementedBy<AddressHandler>());

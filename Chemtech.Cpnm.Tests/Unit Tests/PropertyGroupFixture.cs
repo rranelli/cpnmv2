@@ -5,6 +5,7 @@
 // Criado em: 06/06/2013
 // Modificado em: 18/06/2013 : 1:52 AM
 
+using Chemtech.CPNM.BR;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
@@ -15,6 +16,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
     internal class PropertyGroupFixture
     {
         private Configuration _configuration;
+        private IPropertyGroupRepository _propertyGroupRepository;
 
         #region Fixture, Setup and Teardown config
 
@@ -22,6 +24,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void TestFixtureSetUp()
         {
             _configuration = new TestHelper().MakeConfiguration();
+            _propertyGroupRepository = new CpnmStart().IocResolve<IPropertyGroupRepository>();
         }
 
         [SetUp]
@@ -42,12 +45,11 @@ namespace Chemtech.CPNM.Tests.UnitTests
         public void CanAddPropertyGroup()
         {
             var propertyGroup = new PropertyGroup();
-            string groupName = "A New Group";
+            var groupName = "A New Group";
             propertyGroup.Name = groupName;
 
-            var repository = new PropertyGroupRepository();
-            repository.Add(propertyGroup);
-            PropertyGroup fromDb = repository.GetById(propertyGroup.Id);
+            _propertyGroupRepository.Add(propertyGroup);
+            PropertyGroup fromDb = _propertyGroupRepository.GetById(propertyGroup.Id);
 
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(fromDb.Id, propertyGroup.Id);
@@ -57,13 +59,12 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanRemovePropertyGroup()
         {
-            var repository = new PropertyGroupRepository();
-            repository.Add(new PropertyGroup {Name = "grupo baguncado"});
-            PropertyGroup propGroupToRemove = repository.GetByName("grupo baguncado");
+            _propertyGroupRepository.Add(new PropertyGroup {Name = "grupo baguncado"});
+            var propGroupToRemove = _propertyGroupRepository.GetByName("grupo baguncado");
             Assert.IsNotNull(propGroupToRemove);
 
-            repository.Remove(propGroupToRemove);
-            PropertyGroup fromDb = repository.GetById(propGroupToRemove.Id);
+            _propertyGroupRepository.Remove(propGroupToRemove);
+            var fromDb = _propertyGroupRepository.GetById(propGroupToRemove.Id);
             Assert.IsNotNull(propGroupToRemove);
             Assert.IsNull(fromDb);
         }
@@ -71,13 +72,12 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanUpdatePropertyGroup()
         {
-            var repository = new PropertyGroupRepository();
-            PropertyGroup propGroupToUpdate = repository.GetByName("Dados de Fornecedor");
+            var propGroupToUpdate = _propertyGroupRepository.GetByName("Dados de Fornecedor");
             propGroupToUpdate.Name = "Dados da WEG";
-            repository.Update(propGroupToUpdate);
+            _propertyGroupRepository.Update(propGroupToUpdate);
 
-            PropertyGroup fromDbOld = repository.GetByName("Dados de Fornecedor");
-            PropertyGroup fromDb = repository.GetById(propGroupToUpdate.Id);
+            var fromDbOld = _propertyGroupRepository.GetByName("Dados de Fornecedor");
+            var fromDb = _propertyGroupRepository.GetById(propGroupToUpdate.Id);
 
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(fromDb, propGroupToUpdate);

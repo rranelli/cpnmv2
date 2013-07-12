@@ -6,6 +6,11 @@ using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.Cpnm.AppExcel.ExportImport.Forms
 {
+    public interface ISetUpExportWorkbook
+    {
+        void btnRedefWorksheet_Click(object sender, System.EventArgs e);
+    }
+
     public partial class SetUpExportWorkbook : Form
     {
         public ICollection<ItemType> SelectedItemTypes;
@@ -13,33 +18,35 @@ namespace Chemtech.Cpnm.AppExcel.ExportImport.Forms
         public bool FetchAllItems;
         public SubArea SelectedSubArea;
 
-        public SetUpExportWorkbook()
+        private readonly IPropertyGroupRepository _propertyGroupRepository;
+        private readonly IItemTypeRepository _itemTypeRepository;
+        private readonly IItemTypeGroupRepository _itemTypeGroupRepository;
+
+        public SetUpExportWorkbook(IPropertyGroupRepository propertyGroupRepository, IItemTypeRepository itemTypeRepository, IItemTypeGroupRepository itemTypeGroupRepository)
         {
+            _propertyGroupRepository = propertyGroupRepository;
+            _itemTypeRepository = itemTypeRepository;
+            _itemTypeGroupRepository = itemTypeGroupRepository;
             InitializeComponent();
 
-            var itemTypeGroupRepository = new ItemTypeGroupRepository();
-            var propertyGroupRepository = new PropertyGroupRepository();
-            var itemTypeRepository = new ItemTypeRepository();
-
-            var itemtypegroups = itemTypeGroupRepository.GetAll();
+            var itemtypegroups = _itemTypeGroupRepository.GetAll();
 
             itemtypegroups.ToList().ForEach(itg => cmbItemTypeGroup.Items.Add(itg));
-            propertyGroupRepository.GetAll().ToList().ForEach(pg => cmbPropGroup.Items.Add(pg));
-            itemTypeRepository.GetAll().ToList().ForEach(it => ltbItemType.Items.Add(it));
+            _propertyGroupRepository.GetAll().ToList().ForEach(pg => cmbPropGroup.Items.Add(pg));
+            _itemTypeRepository.GetAll().ToList().ForEach(it => ltbItemType.Items.Add(it));
         }
 
         private void cmbItemTypeGroup_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             ltbItemType.Items.Clear();
-            var itemTypeRepository = new ItemTypeRepository();
             if (cmbItemTypeGroup.SelectedItem != null)
             {
-                itemTypeRepository.GetByGroup((ItemTypeGroup)cmbItemTypeGroup.SelectedItem).ToList().ToList().
+                _itemTypeRepository.GetByGroup((ItemTypeGroup)cmbItemTypeGroup.SelectedItem).ToList().ToList().
                     ForEach(it => ltbItemType.Items.Add(it));
             }
             else
             {
-                itemTypeRepository.GetAll().ToList().ForEach(it => ltbItemType.Items.Add(it));
+                _itemTypeRepository.GetAll().ToList().ForEach(it => ltbItemType.Items.Add(it));
             }
         }
 

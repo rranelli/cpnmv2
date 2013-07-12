@@ -14,6 +14,12 @@ namespace Chemtech.Cpnm.AppExcel.ExportImport.Logic
 
         private static ICollection<ItemType> _itemTypes;
         private static SubArea _subArea;
+        private readonly IItemRepository _itemRepository;
+
+        public ExportDefinition(IItemRepository itemRepository)
+        {
+            _itemRepository = itemRepository;
+        }
 
         public ICollection<ItemType> ItemTypes
         {
@@ -21,12 +27,11 @@ namespace Chemtech.Cpnm.AppExcel.ExportImport.Logic
             set
             {
                 _itemTypes = value;
-                var itemRepository = new ItemRepository();
 
                 if (SubArea != null)
-                    Items = (from itp in _itemTypes select itemRepository.GetByTypeAndSubArea(itp, SubArea)).SelectMany(x => x).ToList();
+                    Items = (from itp in _itemTypes select _itemRepository.GetByTypeAndSubArea(itp, SubArea)).SelectMany(x => x).ToList();
                 else
-                    Items = (from itp in _itemTypes select itemRepository.GetByType(itp)).SelectMany(x => x).ToList();
+                    Items = (from itp in _itemTypes select _itemRepository.GetByType(itp)).SelectMany(x => x).ToList();
             }
         }
 

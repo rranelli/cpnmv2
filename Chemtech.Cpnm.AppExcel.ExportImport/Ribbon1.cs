@@ -12,6 +12,10 @@ namespace Chemtech.Cpnm.AppExcel.ExportImport
 {
     public partial class Ribbon1
     {
+        private IExportSheetHandler exportSheetHandler;
+        private SetUpExportWorkbook setUpForm;
+        private ExportDefinition exportDefinition;
+
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
 
@@ -19,30 +23,28 @@ namespace Chemtech.Cpnm.AppExcel.ExportImport
 
         private void btnConfig_Click(object sender, RibbonControlEventArgs e)
         {
-            var setUpForm = new SetUpExportWorkbook();
             setUpForm.ShowDialog();
             if(setUpForm.DialogResult == DialogResult.OK)
             {
-                var exportDefinition = new ExportDefinition()
+                var exportDefinition = exportDefinition
                                            {
-                                               
                                                Properties = setUpForm.SelectedProperties,
                                                SubArea = setUpForm.SelectedSubArea,
                                                FetchAllItems = setUpForm.FetchAllItems
                                            };
                 exportDefinition.ItemTypes = setUpForm.SelectedItemTypes;
-                ExportSheetHandler.FormatExport((Worksheet)Globals.ThisWorkbook.ActiveSheet, exportDefinition);
+                exportSheetHandler.FormatExport((Worksheet)Globals.ThisWorkbook.ActiveSheet, exportDefinition);
             }
         }
 
         private void btnUploadData_Click(object sender, RibbonControlEventArgs e)
         {
-            ExportSheetHandler.ExportData((Worksheet) Globals.ThisWorkbook.ActiveSheet);
+            exportSheetHandler.ExportData((Worksheet)Globals.ThisWorkbook.ActiveSheet);
         }
 
         private void btnDownloadData_Click(object sender, RibbonControlEventArgs e)
         {
-            ExportSheetHandler.ImportData((Worksheet)Globals.ThisWorkbook.ActiveSheet);
+            exportSheetHandler.ImportData((Worksheet)Globals.ThisWorkbook.ActiveSheet);
         }
     }
 }
