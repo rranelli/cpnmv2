@@ -2,7 +2,7 @@
 
 namespace Chemtech.Cpnm.AppExcel.ExportImport.Forms
 {
-    partial class SetUpExportWorkbook : ISetUpExportWorkbook
+    partial class SetUpExportWorkbook : Form
     {
         /// <summary>
         /// Required designer variable.

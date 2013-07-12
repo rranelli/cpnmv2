@@ -28,7 +28,8 @@ namespace Chemtech.CPNM.Data.Repositories
 
     public class ItemTypeRepository : GeneralRepository<ItemType>, INamedRepository<ItemType>, IItemTypeRepository
     {
-        public ItemTypeRepository(ISession session) : base(session)
+        public ItemTypeRepository(ISession session)
+            : base(session)
         {
         }
 
@@ -36,21 +37,18 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public ItemType GetByName(string name)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                return (from it in session.Query<ItemType>()
-                        where it.Name == name
-                        select it).SingleOrDefault();
-            }
+            return (from it in Session.Query<ItemType>()
+                    where it.Name == name
+                    select it).SingleOrDefault();
         }
 
         #endregion
 
         public ICollection<ItemType> GetByGroup(ItemTypeGroup itemTypeGroup)
         {
-                return (from it in Session.Query<ItemType>()
-                        where it.ItemTypeGroup.Id == itemTypeGroup.Id
-                        select it).ToList();
+            return (from it in Session.Query<ItemType>()
+                    where it.ItemTypeGroup.Id == itemTypeGroup.Id
+                    select it).ToList();
         }
     }
 }

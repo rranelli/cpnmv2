@@ -27,22 +27,16 @@ namespace Chemtech.CPNM.Data.Repositories
 
     public class ItemTypeGroupRepository : GeneralRepository<ItemTypeGroup>, INamedRepository<ItemTypeGroup>, IItemTypeGroupRepository
     {
-        public ItemTypeGroupRepository(ISession session) : base(session)
+        public ItemTypeGroupRepository(ISession session)
+            : base(session)
         {
         }
-
-        #region INamedRepository<ItemTypeGroup> Members
 
         public ItemTypeGroup GetByName(string name)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                return (from ig in session.Query<ItemTypeGroup>()
-                        where ig.Name == name
-                        select ig).SingleOrDefault();
-            }
+            return (from ig in Session.Query<ItemTypeGroup>()
+                    where ig.Name == name
+                    select ig).SingleOrDefault();
         }
-
-        #endregion
     }
 }

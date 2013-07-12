@@ -36,12 +36,9 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public PropertyGroup GetByName(string name)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                return (from ig in session.Query<PropertyGroup>()
-                        where ig.Name == name
-                        select ig).SingleOrDefault();
-            }
+            return (from ig in Session.Query<PropertyGroup>()
+                    where ig.Name == name
+                    select ig).SingleOrDefault();
         }
 
         #endregion

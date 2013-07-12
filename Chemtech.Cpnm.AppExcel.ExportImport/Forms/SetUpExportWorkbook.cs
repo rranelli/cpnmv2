@@ -8,10 +8,9 @@ namespace Chemtech.Cpnm.AppExcel.ExportImport.Forms
 {
     public interface ISetUpExportWorkbook
     {
-        void btnRedefWorksheet_Click(object sender, System.EventArgs e);
     }
 
-    public partial class SetUpExportWorkbook : Form
+    public partial class SetUpExportWorkbook : ISetUpExportWorkbook
     {
         public ICollection<ItemType> SelectedItemTypes;
         public ICollection<Property> SelectedProperties;

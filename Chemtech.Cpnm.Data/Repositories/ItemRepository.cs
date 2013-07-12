@@ -40,20 +40,16 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public Item GetByName(string itemName)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                return (from i in session.Query<Item>()
+                return (from i in Session.Query<Item>()
                         where i.UniqueName == itemName
                         select i).SingleOrDefault();
-            }
         }
 
         #endregion
 
         public ICollection<PropValue> GetAllPropValues(Item item)
         {
-            Item fromDb = GetById(item.Id);
-            NHibernateUtil.Initialize(fromDb);
+            var fromDb = GetById(item.Id);
             return fromDb.PropValues;
         }
 
