@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Chemtech.CPNM.Model.Domain;
 using Chemtech.Cpnm.AppExcel.ExportImport.Forms;
 using Chemtech.Cpnm.AppExcel.ExportImport.Logic;
 using Microsoft.Office.Interop.Excel;

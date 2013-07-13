@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Chemtech.CPNM.BR;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 

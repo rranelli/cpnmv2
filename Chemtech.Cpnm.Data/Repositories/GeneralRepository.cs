@@ -40,7 +40,7 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public void Add(T ent)
         {
-            using (ITransaction transaction = Session.BeginTransaction())
+            using (var transaction = Session.BeginTransaction())
             {
                 Session.Save(ent);
                 transaction.Commit();
@@ -49,7 +49,7 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public void Update(T ent)
         {
-            using (ITransaction transaction = Session.BeginTransaction())
+            using (var transaction = Session.BeginTransaction())
             {
                 Session.Update(ent);
                 transaction.Commit();
@@ -58,7 +58,7 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public void Remove(T ent)
         {
-            using (ITransaction transaction = Session.BeginTransaction())
+            using (var transaction = Session.BeginTransaction())
             {
                 Session.Delete(ent);
                 transaction.Commit();

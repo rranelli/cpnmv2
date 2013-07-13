@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.DTOs;
-
+/*
 namespace Chemtech.CPNM.Presentation.Forms
 {
     public partial class SetUpReuse : Form
@@ -86,4 +86,4 @@ namespace Chemtech.CPNM.Presentation.Forms
             if (ltbStack.SelectedItem != null) ltbStack.Items.Remove(ltbStack.SelectedItem);
         }
     }
-}
+}*/

@@ -11,11 +11,12 @@ namespace Chemtech.CPNM.Presentation.Forms
         public SetUpSession()
         {
             InitializeComponent();
-            
+            /*
             new GeneralRepository<Project>().
                 GetAll().
                 ToList().
-                ForEach(prj => cmbProjects.Items.Add(prj));
+                ForEach(prj => cmbProjects.Items.Add(prj));*/ 
+            // TODO: Refactor this.
         }
 
         private void btnCommitConfig_Click(object sender, EventArgs e)
