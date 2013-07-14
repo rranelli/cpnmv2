@@ -1,0 +1,108 @@
+diff a/Chemtech.Cpnm.AppExcel.ExportImport/Forms/SetUpExportWorkbook.Designer.cs b/Chemtech.Cpnm.AppExcel.ExportImport/Forms/SetUpExportWorkbook.Designer.cs	(rejected hunks)
+@@ -1,105 +1,105 @@
+ ﻿using System.Windows.Forms;
+ 
+ namespace Chemtech.Cpnm.AppExcel.ExportImport.Forms
+ {
+-    partial class SetUpExportWorkbook : ISetUpExportWorkbook
++    partial class SetUpExportWorkbook : Form
+     {
+         /// <summary>
+         /// Required designer variable.
+         /// </summary>
+         private System.ComponentModel.IContainer components = null;
+ 
+         /// <summary>
+         /// Clean up any resources being used.
+         /// </summary>
+         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+         protected override void Dispose(bool disposing)
+         {
+             if (disposing && (components != null))
+             {
+                 components.Dispose();
+             }
+             base.Dispose(disposing);
+         }
+ 
+         #region Windows Form Designer generated code
+ 
+         /// <summary>
+         /// Required method for Designer support - do not modify
+         /// the contents of this method with the code editor.
+         /// </summary>
+         private void InitializeComponent()
+         {
+             this.btnRedefWorksheet = new System.Windows.Forms.Button();
+             this.clbProperties = new System.Windows.Forms.CheckedListBox();
+             this.label5 = new System.Windows.Forms.Label();
+             this.label4 = new System.Windows.Forms.Label();
+             this.cmbItemTypeGroup = new System.Windows.Forms.ComboBox();
+             this.label1 = new System.Windows.Forms.Label();
+             this.label7 = new System.Windows.Forms.Label();
+             this.cmbPropGroup = new System.Windows.Forms.ComboBox();
+             this.label2 = new System.Windows.Forms.Label();
+             this.cmbSubArea = new System.Windows.Forms.ComboBox();
+             this.ltbItemType = new System.Windows.Forms.ListBox();
+             this.ckbFetchAllProperties = new System.Windows.Forms.CheckBox();
+             this.ckbFetchAllItems = new System.Windows.Forms.CheckBox();
+             this.SuspendLayout();
+             // 
+             // btnRedefWorksheet
+             // 
+             this.btnRedefWorksheet.Location = new System.Drawing.Point(201, 509);
+             this.btnRedefWorksheet.Name = "btnRedefWorksheet";
+             this.btnRedefWorksheet.Size = new System.Drawing.Size(164, 39);
+             this.btnRedefWorksheet.TabIndex = 0;
+             this.btnRedefWorksheet.Text = "Redefinir Planilha";
+             this.btnRedefWorksheet.UseVisualStyleBackColor = true;
+             this.btnRedefWorksheet.Click += new System.EventHandler(this.btnRedefWorksheet_Click);
+             // 
+             // clbProperties
+             // 
+             this.clbProperties.DisplayMember = "Name";
+             this.clbProperties.FormattingEnabled = true;
+             this.clbProperties.Location = new System.Drawing.Point(201, 80);
+             this.clbProperties.Name = "clbProperties";
+             this.clbProperties.Size = new System.Drawing.Size(164, 364);
+             this.clbProperties.Sorted = true;
+             this.clbProperties.TabIndex = 1;
+             // 
+             // label5
+             // 
+             this.label5.AutoSize = true;
+             this.label5.Location = new System.Drawing.Point(9, 62);
+             this.label5.Name = "label5";
+             this.label5.Size = new System.Drawing.Size(66, 13);
+             this.label5.TabIndex = 16;
+             this.label5.Text = "Tipo de Item";
+             // 
+             // label4
+             // 
+             this.label4.AutoSize = true;
+             this.label4.Location = new System.Drawing.Point(9, 10);
+             this.label4.Name = "label4";
+             this.label4.Size = new System.Drawing.Size(157, 13);
+             this.label4.TabIndex = 15;
+             this.label4.Text = "Agrupamento de Tipos de Items";
+             // 
+             // cmbItemTypeGroup
+             // 
+             this.cmbItemTypeGroup.DisplayMember = "Name";
+             this.cmbItemTypeGroup.FormattingEnabled = true;
+             this.cmbItemTypeGroup.Location = new System.Drawing.Point(12, 28);
+             this.cmbItemTypeGroup.Name = "cmbItemTypeGroup";
+             this.cmbItemTypeGroup.Size = new System.Drawing.Size(165, 21);
+             this.cmbItemTypeGroup.Sorted = true;
+             this.cmbItemTypeGroup.TabIndex = 14;
+             this.cmbItemTypeGroup.SelectedIndexChanged += new System.EventHandler(this.cmbItemTypeGroup_SelectedIndexChanged);
+             // 
+             // label1
+             // 
+             this.label1.AutoSize = true;
+             this.label1.Location = new System.Drawing.Point(199, 62);
+             this.label1.Name = "label1";
+             this.label1.Size = new System.Drawing.Size(122, 13);
+             this.label1.TabIndex = 17;
+             this.label1.Text = "Propriedades Desejadas";
+             // 
