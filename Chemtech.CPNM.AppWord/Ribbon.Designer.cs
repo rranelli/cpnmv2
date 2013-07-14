@@ -67,19 +67,16 @@
             // 
             this.btnAddRef.Label = "Adicionar Referência";
             this.btnAddRef.Name = "btnAddRef";
-            this.btnAddRef.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnAddRef_Click);
             // 
             // btnRefReuse
             // 
             this.btnRefReuse.Label = "Reuso de Referências";
             this.btnRefReuse.Name = "btnRefReuse";
-            this.btnRefReuse.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnRefReuse_Click);
             // 
             // btnFetchAll
             // 
             this.btnFetchAll.Label = "Carregar do banco";
             this.btnFetchAll.Name = "btnFetchAll";
-            this.btnFetchAll.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnFetchAll_Click);
             // 
             // group2
             // 
@@ -98,7 +95,6 @@
             // 
             this.button3.Label = "Configurar Ambiente";
             this.button3.Name = "button3";
-            this.button3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button3_Click);
             // 
             // checkBox1
             // 
@@ -110,7 +106,6 @@
             this.Name = "Ribbon";
             this.RibbonType = "Microsoft.Word.Document";
             this.Tabs.Add(this.tab1);
-            this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.Ribbon_Load);
             this.tab1.ResumeLayout(false);
             this.tab1.PerformLayout();
             this.Group1.ResumeLayout(false);

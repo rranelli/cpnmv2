@@ -16,8 +16,6 @@ namespace Chemtech.CPNM.AppWord
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
             //TODO: Codigo para tests apenas. REMOVER.
-            var testHelper = new TestHelper();
-            testHelper.SetUpDatabaseTestData(testHelper.MakeConfiguration());
         }
 
         private void ThisAddIn_Shutdown(object sender, EventArgs e)
