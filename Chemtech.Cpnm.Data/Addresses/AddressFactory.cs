@@ -7,8 +7,8 @@ using Chemtech.CPNM.Model.Domain;
 namespace Chemtech.Cpnm.Data.Addresses
 {
     public interface IAddressFactory {
-        IGeneralAddress Create(string candidateAddress);
-        IGeneralAddress Create();
+        IAddress Create(string candidateAddress);
+        IAddress Create(IAddressDefiner addressDefiner);
     }
 
     public class AddressFactory : IAddressFactory
@@ -32,14 +32,14 @@ namespace Chemtech.Cpnm.Data.Addresses
             _propertyRepository = propertyRepository;
         }
 
-        public IGeneralAddress Create(string candidateAddress)
+        public IAddress Create(string candidateAddress)
         {
             if (!IsCpnmAddress(candidateAddress)) throw new ArgumentException();
             
             return ParseStringIntoAddressObject(candidateAddress);
         }
 
-        public IGeneralAddress Create()
+        public IAddress Create(IAddressDefiner addressDefiner)
         {
             return null;
         }
@@ -68,13 +68,13 @@ namespace Chemtech.Cpnm.Data.Addresses
             return ValidationRegex.IsMatch(candidate);
         }
 
-        private GeneralAddress.AddressType GetAddressType(string candidateAddress)
+        private AddressDefiner.AddressType GetAddressType(string candidateAddress)
         {
             var matches = ValidationRegex.Matches(candidateAddress);
-            return (GeneralAddress.AddressType)Enum.Parse(typeof(GeneralAddress.AddressType), matches[0].Groups[1].Value);
+            return (AddressDefiner.AddressType)Enum.Parse(typeof(AddressDefiner.AddressType), matches[0].Groups[1].Value);
         }
 
-        private IGeneralAddress ParseStringIntoAddressObject(string candidateAddress)
+        private IAddress ParseStringIntoAddressObject(string candidateAddress)
         //jesus, eu sou muito desatento. Gastei 2 horas por que nao percebi que estava com a regex (\/[\w-]*) ao inves de \/([\w-]*)
         {
             if (candidateAddress == null) throw new Exception("No address to parse!");
@@ -82,19 +82,19 @@ namespace Chemtech.Cpnm.Data.Addresses
 
             switch (thisAddressType)
             {
-                case GeneralAddress.AddressType.ValueRef:
+                case AddressDefiner.AddressType.ValueRef:
                     return ParsePropValAddress(candidateAddress);
-                case GeneralAddress.AddressType.PropNameRef:
+                case AddressDefiner.AddressType.PropNameRef:
                     return null;
-                case GeneralAddress.AddressType.ItemNameRef:
+                case AddressDefiner.AddressType.ItemNameRef:
                     return null;
-                case GeneralAddress.AddressType.ItemTypeNameRef:
+                case AddressDefiner.AddressType.ItemTypeNameRef:
                     return null;
-                case GeneralAddress.AddressType.AreaRef:
+                case AddressDefiner.AddressType.AreaRef:
                     return null;
-                case GeneralAddress.AddressType.SubAreaRef:
+                case AddressDefiner.AddressType.SubAreaRef:
                     return null;
-                case GeneralAddress.AddressType.ProjectRef:
+                case AddressDefiner.AddressType.ProjectRef:
                     return null;
                 default:
                     throw new ArgumentException();

@@ -11,10 +11,16 @@ using System.Linq;
 using System.Windows.Forms;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
+using Chemtech.Cpnm.Data.Addresses;
 
 namespace Chemtech.CPNM.Presentation.Forms
 {
-    public partial class GetReference : Form 
+    public interface IAddressDefinitionSupplier
+    {
+        IAddressDefiner GetAddressDefiner();
+    }
+
+    public partial class GetReference : Form, IAddressDefinitionSupplier
     {
         private readonly ICollection<ItemTypeGroup> _itemTypeGroups;
         private readonly ICollection<PropertyGroup> _propertyGroups;
@@ -22,21 +28,23 @@ namespace Chemtech.CPNM.Presentation.Forms
         private readonly IItemRepository _itemRepository;
         private readonly IItemTypeGroupRepository _itemTypeGroupRepository;
         private readonly IItemTypeRepository _itemTypeRepository;
-        private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyGroupRepository _propertyGroupRepository;
         private readonly ISubAreaRepository _subAreaRepository;
 
-        public PropValue.FormatType SelectedFormat;
-        public PropValue SelectedPropValue;
-        public Item SelectedItem;
-        public UnitOfMeasure SelectedUnit;
-        public bool IsMetaDataSelected { get; internal set; }
-        public string SelectedMetaData
+        private PropValue.FormatType _selectedFormat;
+        private PropValue _selectedPropValue;
+        private Item _selectedItem;
+        private UnitOfMeasure _selectedUnit;
+
+        private bool _isMetadataSelected ;
+
+        public AddressDefiner.AddressType SelectedMetaData
         {
             get
             {
-                if(rbMetadata.Checked) return ltbMeta.SelectedItem.ToString();
-                return null;
+                if(rbMetadata.Checked)
+                    return (AddressDefiner.AddressType)Enum.Parse(typeof(AddressDefiner.AddressType), ltbMeta.SelectedItem.ToString());
+                return AddressDefiner.AddressType.ValueRef;
             }
         }
 
@@ -49,7 +57,6 @@ namespace Chemtech.CPNM.Presentation.Forms
             _itemRepository = itemRepository;
             _itemTypeGroupRepository = itemTypeGroupRepository;
             _itemTypeRepository = itemTypeRepository;
-            _propertyRepository = propertyRepository;
             _propertyGroupRepository = propertyGroupRepository;
             _subAreaRepository = subAreaRepository;
 
@@ -65,7 +72,21 @@ namespace Chemtech.CPNM.Presentation.Forms
                 _subAreaRepository.GetAll().ToList().ForEach(sb => cmbSubArea.Items.Add(sb));
 
             ltbMeta.Hide();
-            IsMetaDataSelected = false;
+            _isMetadataSelected = false;
+        }
+
+        public IAddressDefiner GetAddressDefiner()
+        {
+            return new AddressDefiner()
+                       {
+                           FormatType = _selectedFormat,
+                           Item = _selectedItem,
+                           Property = _selectedPropValue.GetProperty,
+                           PropValue = _selectedPropValue,
+                           UnitOfMeasure = _selectedUnit,
+                           IsMetadata = _isMetadataSelected,
+                           ThisAddressType = SelectedMetaData
+                       };
         }
 
         private void GetSelectedPropValue()
@@ -74,28 +95,28 @@ namespace Chemtech.CPNM.Presentation.Forms
             {
                 var selectedItem = ((Item) ltbItem.SelectedItem);
                 var selectedProperty = (Property) ltbProperty.SelectedItem;
-                SelectedPropValue = selectedItem.GetPropValue(selectedProperty) ??
+                _selectedPropValue = selectedItem.GetPropValue(selectedProperty) ??
                                     selectedItem.GetNewPropValue(selectedProperty);
             }
             else
             {
-                SelectedPropValue = null;
+                _selectedPropValue = null;
             }
         }
 
         private void GetSelectedFormat()
         {
             if (rbValueAndUnit.Checked)
-                SelectedFormat = PropValue.FormatType.ValueAndUnit;
+                _selectedFormat = PropValue.FormatType.ValueAndUnit;
             if (rbValueOnly.Checked)
-                SelectedFormat = PropValue.FormatType.Value;
+                _selectedFormat = PropValue.FormatType.Value;
             if (rbUnitOnly.Checked)
-                SelectedFormat = PropValue.FormatType.Unit;
+                _selectedFormat = PropValue.FormatType.Unit;
         }
 
         private void GetSelectedUnit()
         {
-            SelectedUnit = (UnitOfMeasure) ltbUnit.SelectedItem;
+            _selectedUnit = (UnitOfMeasure) ltbUnit.SelectedItem;
         }
 
         private void SetTextboxCurrentValue()
@@ -103,19 +124,19 @@ namespace Chemtech.CPNM.Presentation.Forms
             GetSelectedFormat();
             txbValue.Text = null;
 
-            if (SelectedPropValue != null)
+            if (_selectedPropValue != null)
             {
-                txbValue.Text = SelectedPropValue.FormatedValue(SelectedUnit, SelectedFormat);
+                txbValue.Text = _selectedPropValue.FormatedValue(_selectedUnit, _selectedFormat);
             }
         }
 
-        private void btnFinishSelection_Click(object sender, EventArgs e)
+        private void BtnFinishSelectionClick(object sender, EventArgs e)
         {
             GetSelectedPropValue();
             GetSelectedFormat();
             GetSelectedUnit();
 
-            if (SelectedPropValue != null || (SelectedMetaData != null && ltbItem.SelectedItem != null))
+            if (_selectedPropValue != null || (SelectedMetaData != null && ltbItem.SelectedItem != null))
             {
                 DialogResult = DialogResult.OK;
                 Close();
@@ -126,7 +147,7 @@ namespace Chemtech.CPNM.Presentation.Forms
             }
         }
 
-        private void cmbItemTypeGroup_SelectedIndexChanged(object sender, EventArgs e)
+        private void CmbItemTypeGroupSelectedIndexChanged(object sender, EventArgs e)
         {
             ltbItemType.Items.Clear();
             if (cmbItemTypeGroup.SelectedItem != null)
@@ -137,7 +158,7 @@ namespace Chemtech.CPNM.Presentation.Forms
             }
         }
 
-        private void ltbItemType_SelectedIndexChanged(object sender, EventArgs e)
+        private void LtbItemTypeSelectedIndexChanged(object sender, EventArgs e)
         {
             ltbItem.Items.Clear();
             ltbProperty.Items.Clear();
@@ -157,7 +178,7 @@ namespace Chemtech.CPNM.Presentation.Forms
             }
         }
 
-        private void ltbProperty_SelectedIndexChanged(object sender, EventArgs e)
+        private void LtbPropertySelectedIndexChanged(object sender, EventArgs e)
         {
             GetSelectedPropValue();
             SetTextboxCurrentValue();
@@ -171,47 +192,47 @@ namespace Chemtech.CPNM.Presentation.Forms
             }
         }
 
-        private void ltbUnit_SelectedIndexChanged(object sender, EventArgs e)
+        private void LtbUnitSelectedIndexChanged(object sender, EventArgs e)
         {
             GetSelectedUnit();
             SetTextboxCurrentValue();
         }
 
-        private void ltbItem_SelectedIndexChanged(object sender, EventArgs e)
+        private void LtbItemSelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectedItem = (Item) ltbItem.SelectedItem;
+            _selectedItem = (Item) ltbItem.SelectedItem;
             GetSelectedPropValue();
             SetTextboxCurrentValue();
         }
 
-        private void rbValueOnly_CheckedChanged(object sender, EventArgs e)
+        private void RbValueOnlyCheckedChanged(object sender, EventArgs e)
         {
             SetTextboxCurrentValue();
         }
 
-        private void rbValueAndUnit_CheckedChanged(object sender, EventArgs e)
+        private void RbValueAndUnitCheckedChanged(object sender, EventArgs e)
         {
             SetTextboxCurrentValue();
         }
 
-        private void rbUnitOnly_CheckedChanged(object sender, EventArgs e)
+        private void RbUnitOnlyCheckedChanged(object sender, EventArgs e)
         {
             SetTextboxCurrentValue();
         }
 
-        private void rbValueRef_CheckedChanged(object sender, EventArgs e)
+        private void RbValueRefCheckedChanged(object sender, EventArgs e)
         {
             ltbProperty.Show();
             ltbMeta.Hide();
-            IsMetaDataSelected = false;
+            _isMetadataSelected = false;
         }
 
-        private void rbMetadata_CheckedChanged(object sender, EventArgs e)
+        private void RbMetadataCheckedChanged(object sender, EventArgs e)
         {
             ltbMeta.Show();
             ltbProperty.Hide();
             ltbProperty.SelectedItem = null;
-            IsMetaDataSelected = true;
+            _isMetadataSelected = true;
         }
     }
 }

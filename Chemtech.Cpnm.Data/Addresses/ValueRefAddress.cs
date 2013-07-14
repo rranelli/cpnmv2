@@ -2,7 +2,7 @@
 
 namespace Chemtech.Cpnm.Data.Addresses
 {
-    public class ValueRefAddress : GeneralAddress
+    public class ValueRefAddress : Address
     {
         private readonly PropValue _propValue;
         private readonly UnitOfMeasure _unitOfMeasure;
@@ -24,7 +24,7 @@ namespace Chemtech.Cpnm.Data.Addresses
 
         private string MakeAddress() // TODO : move routerchar as a resource.
         {
-            return GetPreffix(AddressType.ValueRef) + RouterChar + _propValue.ItemId + RouterChar +
+            return GetPreffix(AddressDefiner.AddressType.ValueRef) + RouterChar + _propValue.ItemId + RouterChar +
                        _propValue.GetProperty.Id + RouterChar +
                        (_unitOfMeasure != null
                             ? _unitOfMeasure.Id.ToString()

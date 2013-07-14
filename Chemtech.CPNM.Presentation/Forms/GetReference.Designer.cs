@@ -66,7 +66,7 @@
             this.ltbItemType.Size = new System.Drawing.Size(166, 368);
             this.ltbItemType.Sorted = true;
             this.ltbItemType.TabIndex = 0;
-            this.ltbItemType.SelectedIndexChanged += new System.EventHandler(this.ltbItemType_SelectedIndexChanged);
+            this.ltbItemType.SelectedIndexChanged += new System.EventHandler(this.LtbItemTypeSelectedIndexChanged);
             // 
             // cmbItemTypeGroup
             // 
@@ -77,7 +77,7 @@
             this.cmbItemTypeGroup.Size = new System.Drawing.Size(165, 21);
             this.cmbItemTypeGroup.Sorted = true;
             this.cmbItemTypeGroup.TabIndex = 1;
-            this.cmbItemTypeGroup.SelectedIndexChanged += new System.EventHandler(this.cmbItemTypeGroup_SelectedIndexChanged);
+            this.cmbItemTypeGroup.SelectedIndexChanged += new System.EventHandler(this.CmbItemTypeGroupSelectedIndexChanged);
             // 
             // label4
             // 
@@ -133,7 +133,7 @@
             this.ltbProperty.Size = new System.Drawing.Size(166, 368);
             this.ltbProperty.Sorted = true;
             this.ltbProperty.TabIndex = 13;
-            this.ltbProperty.SelectedIndexChanged += new System.EventHandler(this.ltbProperty_SelectedIndexChanged);
+            this.ltbProperty.SelectedIndexChanged += new System.EventHandler(this.LtbPropertySelectedIndexChanged);
             // 
             // label8
             // 
@@ -172,7 +172,7 @@
             this.ltbItem.Size = new System.Drawing.Size(165, 368);
             this.ltbItem.Sorted = true;
             this.ltbItem.TabIndex = 17;
-            this.ltbItem.SelectedIndexChanged += new System.EventHandler(this.ltbItem_SelectedIndexChanged);
+            this.ltbItem.SelectedIndexChanged += new System.EventHandler(this.LtbItemSelectedIndexChanged);
             // 
             // txbValue
             // 
@@ -198,7 +198,7 @@
             this.btnFinishSelection.TabIndex = 23;
             this.btnFinishSelection.Text = "Inserir Referência";
             this.btnFinishSelection.UseVisualStyleBackColor = true;
-            this.btnFinishSelection.Click += new System.EventHandler(this.btnFinishSelection_Click);
+            this.btnFinishSelection.Click += new System.EventHandler(this.BtnFinishSelectionClick);
             // 
             // label3
             // 
@@ -229,7 +229,7 @@
             this.rbMetadata.TabIndex = 22;
             this.rbMetadata.Text = "Valor de Metadado";
             this.rbMetadata.UseVisualStyleBackColor = true;
-            this.rbMetadata.CheckedChanged += new System.EventHandler(this.rbMetadata_CheckedChanged);
+            this.rbMetadata.CheckedChanged += new System.EventHandler(this.RbMetadataCheckedChanged);
             // 
             // rbValueRef
             // 
@@ -242,7 +242,7 @@
             this.rbValueRef.TabStop = true;
             this.rbValueRef.Text = "Valor de Propriedade";
             this.rbValueRef.UseVisualStyleBackColor = true;
-            this.rbValueRef.CheckedChanged += new System.EventHandler(this.rbValueRef_CheckedChanged);
+            this.rbValueRef.CheckedChanged += new System.EventHandler(this.RbValueRefCheckedChanged);
             // 
             // ltbMeta
             // 
@@ -269,7 +269,7 @@
             this.rbValueOnly.TabIndex = 21;
             this.rbValueOnly.Text = "Apenas Valor";
             this.rbValueOnly.UseVisualStyleBackColor = true;
-            this.rbValueOnly.CheckedChanged += new System.EventHandler(this.rbValueOnly_CheckedChanged);
+            this.rbValueOnly.CheckedChanged += new System.EventHandler(this.RbValueOnlyCheckedChanged);
             // 
             // rbValueAndUnit
             // 
@@ -282,7 +282,7 @@
             this.rbValueAndUnit.TabStop = true;
             this.rbValueAndUnit.Text = "Valor e Unidade";
             this.rbValueAndUnit.UseVisualStyleBackColor = true;
-            this.rbValueAndUnit.CheckedChanged += new System.EventHandler(this.rbValueAndUnit_CheckedChanged);
+            this.rbValueAndUnit.CheckedChanged += new System.EventHandler(this.RbValueAndUnitCheckedChanged);
             // 
             // rbUnitOnly
             // 
@@ -293,7 +293,7 @@
             this.rbUnitOnly.TabIndex = 23;
             this.rbUnitOnly.Text = "Apenas Unidade";
             this.rbUnitOnly.UseVisualStyleBackColor = true;
-            this.rbUnitOnly.CheckedChanged += new System.EventHandler(this.rbUnitOnly_CheckedChanged);
+            this.rbUnitOnly.CheckedChanged += new System.EventHandler(this.RbUnitOnlyCheckedChanged);
             // 
             // groupBox1
             // 
@@ -315,7 +315,7 @@
             this.ltbUnit.Size = new System.Drawing.Size(166, 121);
             this.ltbUnit.Sorted = true;
             this.ltbUnit.TabIndex = 26;
-            this.ltbUnit.SelectedIndexChanged += new System.EventHandler(this.ltbUnit_SelectedIndexChanged);
+            this.ltbUnit.SelectedIndexChanged += new System.EventHandler(this.LtbUnitSelectedIndexChanged);
             // 
             // label2
             // 
