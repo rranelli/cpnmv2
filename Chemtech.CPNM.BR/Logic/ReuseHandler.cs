@@ -10,15 +10,15 @@ using System.Linq;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.DTOs;
 
-namespace Chemtech.CPNM.BR.Rules
+namespace Chemtech.CPNM.BR.Logic
 {
     public class ReuseHandler
     {
         private Dictionary<string, string> _mapOldToNew;
-        private ICollection<ReusePair> _reusePairs;
+        private ICollection<ItemReusePair> _reusePairs;
         public bool IsSelectionRestricted { get; set; }
 
-        public ICollection<ReusePair> ReusePairs
+        public ICollection<ItemReusePair> ReusePairs
         {
             get { return _reusePairs; }
             set

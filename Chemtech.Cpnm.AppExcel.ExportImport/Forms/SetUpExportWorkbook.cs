@@ -73,7 +73,7 @@ namespace Chemtech.Cpnm.AppExcel.ExportImport.Forms
                     SelectedProperties = clbProperties.SelectedItems.Cast<Property>().ToList();
 
                 DialogResult = DialogResult.OK;
-                this.Close();
+                Close();
             }
             else
             {

@@ -10,8 +10,7 @@
     <property name="Description" />
     <many-to-one name="OwnerDiscipline" cascade="none" />
     <many-to-one name="ItemTypeGroup" cascade="none" />
-    <!--TODO: Make ValidXRefs LAZY!!!! -->
-    <set name="ValidXrefs" cascade="all" table="PropertyItemTypeXref" lazy="false">
+    <set name="ValidXrefs" cascade="all" table="PropertyItemTypeXref">
       <key column="ItemType" />
       <one-to-many class="Xref" />
     </set>

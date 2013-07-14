@@ -2,6 +2,7 @@
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Chemtech.CPNM.Data.Repositories;
+using Chemtech.Cpnm.Data.Addresses;
 using NHibernate;
 using NHibernate.Cfg;
 
@@ -23,16 +24,22 @@ namespace Chemtech.Cpnm.Data
         {
             // repositories
             container.Register(Component.For<IDimensionRepository>().ImplementedBy<DimensionRepository>());
+            container.Register(Component.For<IDisciplineRepository>().ImplementedBy<DisciplineRepository>());
             container.Register(Component.For<IItemRepository>().ImplementedBy<ItemRepository>());
             container.Register(Component.For<IItemTypeGroupRepository>().ImplementedBy<ItemTypeGroupRepository>());
             container.Register(Component.For<IItemTypeRepository>().ImplementedBy<ItemTypeRepository>());
-            container.Register(Component.For<IPropertyRepository>().ImplementedBy<PropertyRepository>());
             container.Register(Component.For<IPropertyGroupRepository>().ImplementedBy<PropertyGroupRepository>());
+            container.Register(Component.For<IPropertyRepository>().ImplementedBy<PropertyRepository>());
             container.Register(Component.For<IPropValueRepository>().ImplementedBy<PropValueRepository>());
             container.Register(Component.For<ISubAreaRepository>().ImplementedBy<SubAreaRepository>());
+            container.Register(Component.For<IUnitOfMeasureRepository>().ImplementedBy<UnitOfMeasureRepository>());
             container.Register(Component.For<IXrefRepository>().ImplementedBy<XrefRepository>());
+
             container.Register(Component.For(typeof(IGeneralRepository<>)).ImplementedBy(typeof(GeneralRepository<>)).LifeStyle.Transient);
             
+            // Address handling
+            container.Register(Component.For<IAddressFactory>().ImplementedBy<AddressFactory>());
+
             // other
             container.Register(Component.For<ISession>().UsingFactoryMethod(_sessionFactory.OpenSession));
         }

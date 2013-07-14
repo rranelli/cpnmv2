@@ -7,38 +7,37 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Chemtech.CPNM.Model.Domain
 {
     public class Item : Entity, INamed
     {
-        
+        private ICollection<PropValue> _propValues;
+
         public virtual ItemType ItemType { get; set; }
         public virtual bool IsActive { get; set; }
         public virtual string UniqueName { get; set; }
         public virtual string Description { get; set; }
         public virtual SubArea SubArea { get; set; }
-        public virtual ICollection<PropValue> PropValues { get; set; }
+        
         #region INamed Members
 
         public virtual string Name { get; set; }
 
         #endregion
-
-        public virtual Project Project
+        public virtual Project Project { get { return SubArea.Project; } }
+        public new virtual string ToString() { return Name; }
+        public virtual ICollection<PropValue> PropValues
         {
-            get { return SubArea.Project; }
+            get { return _propValues; }
+            set { _propValues = value; }
         }
 
-        public new virtual string ToString()
+        public Item()
         {
-            return Name;
-        }
-
-        public virtual void SetPropValue(PropValue propValue)
-        {
-            PropValues.Add(propValue);
+            _propValues = new Collection<PropValue>();
         }
 
         public virtual PropValue GetPropValue(Property property)

@@ -55,7 +55,7 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public new void Update(Item item)
         {
-            using (ITransaction transaction = Session.BeginTransaction())
+            using (var transaction = Session.BeginTransaction())
             {
                 Session.SaveOrUpdate(item);
                 transaction.Commit();

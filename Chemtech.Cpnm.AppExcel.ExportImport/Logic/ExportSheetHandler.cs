@@ -86,7 +86,6 @@ namespace Chemtech.Cpnm.AppExcel.ExportImport.Logic
         public void ExportData(Worksheet exportWorksheet)
         {
             // TODO: Tratar casos para a exportacao quando o item nao existe no DB. Como faremos?
-
             var j = ItemColStart;
             while (exportWorksheet.Cells[HeaderRow, j].Text != "")
             {

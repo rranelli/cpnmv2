@@ -9,7 +9,7 @@ using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.CPNM.Data.DTOs
 {
-    public class ReusePair
+    public class ItemReusePair
     {
         public Item OldItem { get; set; }
         public Item NewItem { get; set; }

@@ -1,15 +1,15 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using Chemtech.CPNM.BR.Rules;
+using Chemtech.CPNM.Tests.UnitTests;
 
-namespace Chemtech.CPNM.BR
+namespace Chemtech.CPNM.Tests
 {
-    public class DiInstaller : IWindsorInstaller
+    public class InstallerTests : IWindsorInstaller
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<IAddressHandler>().ImplementedBy<AddressHandler>());
+            container.Register(Component.For<ITestHelper>().ImplementedBy<TestHelper>());
         }
     }
 }

@@ -10,9 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Chemtech.CPNM.BR.Rules;
+using Chemtech.CPNM.BR.Logic;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Presentation.Forms;
+using Chemtech.Cpnm.Data.Addresses;
 using Microsoft.Office.Interop.Word;
 
 namespace Chemtech.CPNM.AppWord.Application
@@ -26,6 +27,8 @@ namespace Chemtech.CPNM.AppWord.Application
         private static readonly Regex IsFromCpnmRegex = new Regex("^" + CpnmCriteria + @"(\d*)$");
         private readonly Document _activeDocument;
         private readonly Range _range;
+
+        private IAddressFactory addressFactory;
 
         public WordHeimdall()
         {
