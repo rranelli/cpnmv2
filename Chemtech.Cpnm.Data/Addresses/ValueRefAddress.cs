@@ -13,8 +13,11 @@ namespace Chemtech.Cpnm.Data.Addresses
             _propValue = propValue;
             _unitOfMeasure = unitOfMeasure;
             _formatType = formatType;
+        }
 
-            AddressString = MakeAddress();
+        public override string GetAddressString()
+        {
+            return MakeAddress();
         }
 
         public override string GetValue()

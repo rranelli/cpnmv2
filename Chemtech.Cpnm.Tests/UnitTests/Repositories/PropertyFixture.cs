@@ -5,14 +5,13 @@
 // Criado em: 10/06/2013
 // Modificado em: 18/06/2013 : 1:52 AM
 
-using Chemtech.CPNM.BR;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Presentation;
 using NHibernate.Cfg;
 using NUnit.Framework;
 
-namespace Chemtech.CPNM.Tests.UnitTests
+namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
     internal class PropertyFixture
     {
@@ -47,7 +46,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanAddProperty()
         {
-            var property = new Property() {Name = "Prop115"};
+            var property = new Property {Name = "Prop115"};
 
             _propertyRepository.Add(property);
             var fromDb = _propertyRepository.GetById(property.Id);

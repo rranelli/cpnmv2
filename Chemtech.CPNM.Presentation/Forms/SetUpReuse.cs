@@ -16,7 +16,7 @@ using Chemtech.CPNM.Data.DTOs;
 
 namespace Chemtech.CPNM.Presentation.Forms
 {
-    public partial class SetUpReuse : Form
+    public partial class SetUpReuse
     {
         private readonly IItemRepository _itemRepository;
 
@@ -57,7 +57,11 @@ namespace Chemtech.CPNM.Presentation.Forms
 
         private void BtnAddToStackClick(object sender, EventArgs e)
         {
-            if (ltbCandidateItems.SelectedItem != null && ltbExistantItems.SelectedItem != null)
+            if (ltbCandidateItems.SelectedItem == null || ltbExistantItems.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione um Item origem e um item destino");
+            }
+            else
             {
                 var oldItem = (Item) ltbExistantItems.SelectedItem;
                 var newItem = (Item) ltbCandidateItems.SelectedItem;
@@ -67,16 +71,12 @@ namespace Chemtech.CPNM.Presentation.Forms
                       where rp.OldItem.Equals(oldItem)
                       select rp.OldItem).ToList().Any();
 
-                if (newInStack)
-                    ltbStack.Items.Add(new ItemReusePair {OldItem = oldItem, NewItem = newItem});
-                else
+                if (!newInStack)
                 {
                     MessageBox.Show("Voce nao pode adicionar o mesmo item origem 2 vezes.");
                 }
-            }
-            else
-            {
-                MessageBox.Show("Selecione um Item origem e um item destino");
+
+                else ltbStack.Items.Add(new ItemReusePair {OldItem = oldItem, NewItem = newItem});
             }
         }
 

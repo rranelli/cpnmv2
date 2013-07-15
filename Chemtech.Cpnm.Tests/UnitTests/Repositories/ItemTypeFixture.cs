@@ -5,15 +5,13 @@
 // Criado em: 11/06/2013
 // Modificado em: 18/06/2013 : 1:52 AM
 
-using System.Collections.Generic;
-using Chemtech.CPNM.BR;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Presentation;
 using NHibernate.Cfg;
 using NUnit.Framework;
 
-namespace Chemtech.CPNM.Tests.UnitTests
+namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
     internal class ItemTypeFixture
     {
@@ -136,7 +134,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
                                    _itemTypeRepository.GetByName("Transmissor"),
                                    _itemTypeRepository.GetByName("Bomba"),
                                    _itemTypeRepository.GetByName("Linha"),
-                                   _itemTypeRepository.GetByName("Cantoneira"),
+                                   _itemTypeRepository.GetByName("Cantoneira")
                                };
 
 

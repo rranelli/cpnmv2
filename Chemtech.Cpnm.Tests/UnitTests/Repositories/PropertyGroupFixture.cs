@@ -9,7 +9,7 @@ using Chemtech.CPNM.Presentation;
 using NHibernate.Cfg;
 using NUnit.Framework;
 
-namespace Chemtech.CPNM.Tests.UnitTests
+namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
     internal class PropertyGroupFixture
     {
@@ -44,7 +44,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
         [Test]
         public void CanAddPropertyGroup()
         {
-            var propertyGroup = new PropertyGroup() {Name = "A New Groupz"};
+            var propertyGroup = new PropertyGroup {Name = "A New Groupz"};
 
             _propertyGroupRepository.Add(propertyGroup);
             var fromDb = _propertyGroupRepository.GetById(propertyGroup.Id);

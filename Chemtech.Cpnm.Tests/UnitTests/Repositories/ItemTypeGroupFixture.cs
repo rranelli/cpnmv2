@@ -11,7 +11,7 @@ using Chemtech.CPNM.Presentation;
 using NHibernate.Cfg;
 using NUnit.Framework;
 
-namespace Chemtech.CPNM.Tests.UnitTests
+namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
     internal class ItemTypeGroupFixture
     {

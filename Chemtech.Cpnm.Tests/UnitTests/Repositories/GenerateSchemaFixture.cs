@@ -11,7 +11,7 @@ using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
-namespace Chemtech.CPNM.Tests.UnitTests
+namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
     [TestFixture]
     public class GenerateSchemaFixture

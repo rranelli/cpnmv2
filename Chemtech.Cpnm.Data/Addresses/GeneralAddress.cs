@@ -16,12 +16,8 @@
 
 
         public AddressDefiner.AddressType ThisAddressType { get; protected set; }
+        public abstract string GetAddressString();
         public abstract string GetValue();
-
-        public string GetAddressString()
-        {
-            return AddressString;
-        }
 
         public static string GetPreffix(AddressDefiner.AddressType thisAddressType)
         {

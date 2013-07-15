@@ -89,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addresses\AddressDefiner.cs" />
-    <Compile Include="Addresses\AddressFactory.cs" />
+    <Compile Include="Addresses\AddressObjFactory.cs" />
     <Compile Include="DI\DataInstaller.cs" />
     <Compile Include="Addresses\GeneralAddress.cs" />
     <Compile Include="Addresses\ValueRefAddress.cs" />

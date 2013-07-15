@@ -38,7 +38,7 @@ namespace Chemtech.Cpnm.Data
             container.Register(Component.For(typeof(IGeneralRepository<>)).ImplementedBy(typeof(GeneralRepository<>)).LifeStyle.Transient);
             
             // Address handling
-            container.Register(Component.For<IAddressFactory>().ImplementedBy<AddressFactory>());
+            container.Register(Component.For<IAddressFactory>().ImplementedBy<AddressObjFactory>());
 
             // other
             container.Register(Component.For<ISession>().UsingFactoryMethod(_sessionFactory.OpenSession));

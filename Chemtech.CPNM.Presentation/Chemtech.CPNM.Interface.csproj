@@ -89,6 +89,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\GetAddressController.cs" />
     <Compile Include="DI\DIResolver.cs" />
     <Compile Include="Document\AddressGetter.cs" />
     <Compile Include="Forms\CreateShareTemplate.cs">
@@ -109,6 +110,7 @@
     <Compile Include="Forms\SetUpSession.Designer.cs">
       <DependentUpon>SetUpSession.cs</DependentUpon>
     </Compile>
+    <Compile Include="IViews\IGetAddressView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\SetUpReuse.cs">
       <SubType>Form</SubType>

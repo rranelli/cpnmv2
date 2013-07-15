@@ -161,6 +161,7 @@ namespace Chemtech.CPNM.Presentation.Forms
             this.ltbExistantItems.Size = new System.Drawing.Size(146, 303);
             this.ltbExistantItems.Sorted = true;
             this.ltbExistantItems.TabIndex = 1;
+            this.ltbExistantItems.SelectedIndexChanged += new System.EventHandler(this.ltbExistantItems_SelectedIndexChanged);
             // 
             // txbSearchCriteria1
             // 

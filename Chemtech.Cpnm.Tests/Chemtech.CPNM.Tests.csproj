@@ -100,15 +100,17 @@
   <ItemGroup>
     <Compile Include="DI\TestsInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTests\DimensionFixture.cs" />
-    <Compile Include="UnitTests\DisciplineFixture.cs" />
-    <Compile Include="UnitTests\GenerateSchemaFixture.cs" />
-    <Compile Include="UnitTests\ItemFixture.cs" />
-    <Compile Include="UnitTests\ItemTypeFixture.cs" />
-    <Compile Include="UnitTests\ItemTypeGroupFixture.cs" />
-    <Compile Include="UnitTests\PropertyFixture.cs" />
-    <Compile Include="UnitTests\PropertyGroupFixture.cs" />
-    <Compile Include="UnitTests\PropValueFixture.cs" />
+    <Compile Include="UnitTests\Address\AddressObjFactoryFixture.cs" />
+    <Compile Include="UnitTests\Address\ValueRefAddressFixture.cs" />
+    <Compile Include="UnitTests\Repositories\DimensionFixture.cs" />
+    <Compile Include="UnitTests\Repositories\DisciplineFixture.cs" />
+    <Compile Include="UnitTests\Repositories\GenerateSchemaFixture.cs" />
+    <Compile Include="UnitTests\Repositories\ItemFixture.cs" />
+    <Compile Include="UnitTests\Repositories\ItemTypeFixture.cs" />
+    <Compile Include="UnitTests\Repositories\ItemTypeGroupFixture.cs" />
+    <Compile Include="UnitTests\Repositories\PropertyFixture.cs" />
+    <Compile Include="UnitTests\Repositories\PropertyGroupFixture.cs" />
+    <Compile Include="UnitTests\Repositories\PropValueFixture.cs" />
     <Compile Include="UnitTests\TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +134,7 @@
       <Name>Chemtech.CPNM.Interface</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

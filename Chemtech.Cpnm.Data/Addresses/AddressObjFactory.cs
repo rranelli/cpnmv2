@@ -6,12 +6,13 @@ using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.Cpnm.Data.Addresses
 {
-    public interface IAddressFactory {
+    public interface IAddressFactory
+    {
         IAddress Create(string candidateAddress);
         IAddress Create(IAddressDefiner addressDefiner);
     }
 
-    public class AddressFactory : IAddressFactory
+    public class AddressObjFactory : IAddressFactory
     {
         private const string RegexCriteria = @"\/([\w-]*)";
         private const string RegexValidationCriteria = @"^CPNM_(\w*):";
@@ -24,7 +25,7 @@ namespace Chemtech.Cpnm.Data.Addresses
         private readonly IUnitOfMeasureRepository _unitOfMeasureRepository;
         private readonly IPropertyRepository _propertyRepository;
 
-        public AddressFactory(IItemRepository itemRepository, IPropValueRepository propValueRepository, IUnitOfMeasureRepository unitOfMeasureRepository, IPropertyRepository propertyRepository)
+        public AddressObjFactory(IItemRepository itemRepository, IPropValueRepository propValueRepository, IUnitOfMeasureRepository unitOfMeasureRepository, IPropertyRepository propertyRepository)
         {
             _itemRepository = itemRepository;
             _propValueRepository = propValueRepository;
@@ -35,13 +36,33 @@ namespace Chemtech.Cpnm.Data.Addresses
         public IAddress Create(string candidateAddress)
         {
             if (!IsCpnmAddress(candidateAddress)) throw new ArgumentException();
-            
+
             return ParseStringIntoAddressObject(candidateAddress);
         }
 
         public IAddress Create(IAddressDefiner addressDefiner)
         {
-            return null;
+            if (addressDefiner == null) throw new ArgumentNullException();
+
+            switch (addressDefiner.ThisAddressType)
+            {
+                case AddressDefiner.AddressType.ValueRef:
+                    return new ValueRefAddress(addressDefiner.PropValue, addressDefiner.UnitOfMeasure, addressDefiner.FormatType);
+                case AddressDefiner.AddressType.ProjectRef:
+                    throw new NotImplementedException();
+                case AddressDefiner.AddressType.AreaRef:
+                    throw new NotImplementedException();
+                case AddressDefiner.AddressType.ItemTypeNameRef:
+                    throw new NotImplementedException();
+                case AddressDefiner.AddressType.SubAreaRef:
+                    throw new NotImplementedException();
+                case AddressDefiner.AddressType.PropNameRef:
+                    throw new NotImplementedException();
+                case AddressDefiner.AddressType.ItemNameRef:
+                    throw new NotImplementedException();
+                default:
+                    throw new ArgumentException();
+            }
         }
 
         // Helper Functions to handle the address thing.
