@@ -5,234 +5,34 @@
 // Criado em: 16/06/2013
 // Modificado em: 18/06/2013 : 1:52 AM
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
+using Chemtech.CPNM.Presentation.IViews;
 using Chemtech.Cpnm.Data.Addresses;
 
 namespace Chemtech.CPNM.Presentation.Forms
 {
-    public interface IAddressDefinitionSupplier
+    public partial class GetReference : Form, IGetAddressView
     {
-        IAddressDefiner GetAddressDefiner();
-    }
-
-    public partial class GetReference : Form, IAddressDefinitionSupplier
-    {
-        private readonly ICollection<ItemTypeGroup> _itemTypeGroups;
-        private readonly ICollection<PropertyGroup> _propertyGroups;
-
-        private readonly IItemRepository _itemRepository;
-        private readonly IItemTypeGroupRepository _itemTypeGroupRepository;
-        private readonly IItemTypeRepository _itemTypeRepository;
-        private readonly IPropertyGroupRepository _propertyGroupRepository;
-        private readonly ISubAreaRepository _subAreaRepository;
-
-        private PropValue.FormatType _selectedFormat;
-        private PropValue _selectedPropValue;
-        private Item _selectedItem;
-        private UnitOfMeasure _selectedUnit;
-
-        private bool _isMetadataSelected ;
-
-        public AddressDefiner.AddressType SelectedMetaData
+        public void Open()
         {
-            get
-            {
-                if(rbMetadata.Checked)
-                    return (AddressDefiner.AddressType)Enum.Parse(typeof(AddressDefiner.AddressType), ltbMeta.SelectedItem.ToString());
-                return AddressDefiner.AddressType.ValueRef;
-            }
+            ShowDialog();
         }
 
-        public GetReference(IItemRepository itemRepository, IItemTypeGroupRepository itemTypeGroupRepository, IItemTypeRepository itemTypeRepository, IPropertyRepository propertyRepository, IPropertyGroupRepository propertyGroupRepository, ISubAreaRepository subAreaRepository)
+        public bool ResultOk()
         {
-            InitializeComponent();
-            GetSelectedFormat();
-
-            // inject repos
-            _itemRepository = itemRepository;
-            _itemTypeGroupRepository = itemTypeGroupRepository;
-            _itemTypeRepository = itemTypeRepository;
-            _propertyGroupRepository = propertyGroupRepository;
-            _subAreaRepository = subAreaRepository;
-
-            _itemTypeGroups = _itemTypeGroupRepository.GetAll();
-            _propertyGroups = _propertyGroupRepository.GetAll();
-
-            _itemTypeGroups.ToList().ForEach(itg => cmbItemTypeGroup.Items.Add(itg));
-            _propertyGroups.ToList().ForEach(pg => cmbPropGroup.Items.Add(pg));
-
-            if(CpnmSession.Project!=null)
-                _subAreaRepository.GetAllByProject(CpnmSession.Project).ToList().ForEach(sb => cmbSubArea.Items.Add(sb));
-            else
-                _subAreaRepository.GetAll().ToList().ForEach(sb => cmbSubArea.Items.Add(sb));
-
-            ltbMeta.Hide();
-            _isMetadataSelected = false;
+            return DialogResult == DialogResult.OK;
         }
 
-        public IAddressDefiner GetAddressDefiner()
-        {
-            return new AddressDefiner()
-                       {
-                           FormatType = _selectedFormat,
-                           Item = _selectedItem,
-                           Property = _selectedPropValue.GetProperty,
-                           PropValue = _selectedPropValue,
-                           UnitOfMeasure = _selectedUnit,
-                           IsMetadata = _isMetadataSelected,
-                           ThisAddressType = SelectedMetaData
-                       };
-        }
-
-        private void GetSelectedPropValue()
-        {
-            if (ltbItem.SelectedItem != null && ltbProperty.SelectedItem != null)
-            {
-                var selectedItem = ((Item) ltbItem.SelectedItem);
-                var selectedProperty = (Property) ltbProperty.SelectedItem;
-                _selectedPropValue = selectedItem.GetPropValue(selectedProperty) ??
-                                    selectedItem.GetNewPropValue(selectedProperty);
-            }
-            else
-            {
-                _selectedPropValue = null;
-            }
-        }
-
-        private void GetSelectedFormat()
-        {
-            if (rbValueAndUnit.Checked)
-                _selectedFormat = PropValue.FormatType.ValueAndUnit;
-            if (rbValueOnly.Checked)
-                _selectedFormat = PropValue.FormatType.Value;
-            if (rbUnitOnly.Checked)
-                _selectedFormat = PropValue.FormatType.Unit;
-        }
-
-        private void GetSelectedUnit()
-        {
-            _selectedUnit = (UnitOfMeasure) ltbUnit.SelectedItem;
-        }
-
-        private void SetTextboxCurrentValue()
-        {
-            GetSelectedFormat();
-            txbValue.Text = null;
-
-            if (_selectedPropValue != null)
-            {
-                txbValue.Text = _selectedPropValue.FormatedValue(_selectedUnit, _selectedFormat);
-            }
-        }
-
-        private void BtnFinishSelectionClick(object sender, EventArgs e)
-        {
-            GetSelectedPropValue();
-            GetSelectedFormat();
-            GetSelectedUnit();
-
-            if (_selectedPropValue != null || (SelectedMetaData != null && ltbItem.SelectedItem != null))
-            {
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            else
-            {
-                MessageBox.Show("Selecione um Item e uma propriedade.");
-            }
-        }
-
-        private void CmbItemTypeGroupSelectedIndexChanged(object sender, EventArgs e)
-        {
-            ltbItemType.Items.Clear();
-            if (cmbItemTypeGroup.SelectedItem != null)
-            {
-                var itemTypesByGroup =
-                    _itemTypeRepository.GetByGroup((ItemTypeGroup) cmbItemTypeGroup.SelectedItem);
-                itemTypesByGroup.ToList().ForEach(it => ltbItemType.Items.Add(it));
-            }
-        }
-
-        private void LtbItemTypeSelectedIndexChanged(object sender, EventArgs e)
-        {
-            ltbItem.Items.Clear();
-            ltbProperty.Items.Clear();
-            if (ltbItemType.SelectedItem != null)
-            {
-                var selectedItemType = (ItemType) ltbItemType.SelectedItem;
-                selectedItemType.ValidProperties.ToList().ForEach(prop => ltbProperty.Items.Add(prop));
-
-                // filtrando por projeto
-                ICollection<Item> itemsByType;
-                if (CpnmSession.Project != null)
-                    itemsByType = _itemRepository.GetByTypeAndProject(selectedItemType, CpnmSession.Project);
-                else
-                    itemsByType = _itemRepository.GetByType(selectedItemType);
-
-                itemsByType.ToList().ForEach(i => ltbItem.Items.Add(i));
-            }
-        }
-
-        private void LtbPropertySelectedIndexChanged(object sender, EventArgs e)
-        {
-            GetSelectedPropValue();
-            SetTextboxCurrentValue();
-            ltbUnit.Items.Clear();
-
-            if (ltbProperty.SelectedItem != null)
-            {
-                var property = ((Property) ltbProperty.SelectedItem);
-                if (property.ValidUnits != null)
-                    property.ValidUnits.ToList().ForEach(uni => ltbUnit.Items.Add(uni));
-            }
-        }
-
-        private void LtbUnitSelectedIndexChanged(object sender, EventArgs e)
-        {
-            GetSelectedUnit();
-            SetTextboxCurrentValue();
-        }
-
-        private void LtbItemSelectedIndexChanged(object sender, EventArgs e)
-        {
-            _selectedItem = (Item) ltbItem.SelectedItem;
-            GetSelectedPropValue();
-            SetTextboxCurrentValue();
-        }
-
-        private void RbValueOnlyCheckedChanged(object sender, EventArgs e)
-        {
-            SetTextboxCurrentValue();
-        }
-
-        private void RbValueAndUnitCheckedChanged(object sender, EventArgs e)
-        {
-            SetTextboxCurrentValue();
-        }
-
-        private void RbUnitOnlyCheckedChanged(object sender, EventArgs e)
-        {
-            SetTextboxCurrentValue();
-        }
-
-        private void RbValueRefCheckedChanged(object sender, EventArgs e)
-        {
-            ltbProperty.Show();
-            ltbMeta.Hide();
-            _isMetadataSelected = false;
-        }
-
-        private void RbMetadataCheckedChanged(object sender, EventArgs e)
-        {
-            ltbMeta.Show();
-            ltbProperty.Hide();
-            ltbProperty.SelectedItem = null;
-            _isMetadataSelected = true;
-        }
+        public ICollection<Item> Items { get; set; }
+        public ICollection<Property> Properties { get; set; }
+        public ICollection<UnitOfMeasure> UnitOfMeasures { get; set; }
+        public ICollection<ItemTypeGroup> ItemTypeGroups { get; set; }
+        public ICollection<PropertyGroup> PropertyGroups { get; set; }
+        public ICollection<SubArea> Collection { get; set; }
+        public PropValue.FormatType FormatType { get; set; }
+        public AddressDefiner.AddressType AddressType { get; set; }
+        public bool MetaSelected { get; set; }
     }
 }
