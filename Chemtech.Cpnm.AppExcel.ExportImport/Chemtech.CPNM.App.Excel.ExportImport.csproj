@@ -109,18 +109,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logic\ExportDefinition.cs" />
-    <Compile Include="Logic\ExportSheetHandler.cs" />
+    <Compile Include="Logic - obsoleto\ExportDefinition.cs" />
+    <Compile Include="Logic - obsoleto\ExportSheetHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ribbon.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Ribbon.Designer.cs">
       <DependentUpon>Ribbon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\SetUpExportWorkbook.cs" />
-    <Compile Include="Forms\SetUpExportWorkbook.Designer.cs">
-      <DependentUpon>SetUpExportWorkbook.cs</DependentUpon>
     </Compile>
     <Compile Include="Sheet1.cs">
       <DependentUpon>Chemtech.Cpnm.AppExcel.ExportImport.xlsm</DependentUpon>
@@ -158,9 +154,6 @@
     </Compile>
     <EmbeddedResource Include="Ribbon.resx">
       <DependentUpon>Ribbon.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SetUpExportWorkbook.resx">
-      <DependentUpon>SetUpExportWorkbook.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Chemtech.Cpnm.AppExcel.ExportImport.xlsm" />
     <None Include="Chemtech.Cpnm.AppExcel.ExportImport_TemporaryKey.pfx" />

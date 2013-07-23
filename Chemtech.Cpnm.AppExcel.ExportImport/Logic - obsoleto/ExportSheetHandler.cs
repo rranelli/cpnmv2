@@ -6,6 +6,8 @@ using Microsoft.Office.Interop.Excel;
 
 namespace Chemtech.Cpnm.AppExcel.ExportImport.Logic
 {
+    // TODO : Eliminar essa classe horrenda.
+
     public interface IExportSheetHandler
     {
         void FormatExport(Worksheet exportWorksheet, ExportDefinition exportDefinition);

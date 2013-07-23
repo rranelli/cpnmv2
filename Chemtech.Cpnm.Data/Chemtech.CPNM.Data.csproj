@@ -93,6 +93,7 @@
     <Compile Include="DI\DataInstaller.cs" />
     <Compile Include="Addresses\GeneralAddress.cs" />
     <Compile Include="Addresses\ValueRefAddress.cs" />
+    <Compile Include="DTOs\ItemGrid.cs" />
     <Compile Include="DTOs\ItemReusePair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\UnitOfMeasureRepository.cs" />

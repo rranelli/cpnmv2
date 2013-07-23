@@ -44,6 +44,7 @@ namespace Chemtech.CPNM.Presentation.Forms
             this.ltbExistantItems = new System.Windows.Forms.ListBox();
             this.txbSearchCriteria1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +54,7 @@ namespace Chemtech.CPNM.Presentation.Forms
             this.ltbStack.FormattingEnabled = true;
             this.ltbStack.Location = new System.Drawing.Point(459, 57);
             this.ltbStack.Name = "ltbStack";
-            this.ltbStack.Size = new System.Drawing.Size(146, 225);
+            this.ltbStack.Size = new System.Drawing.Size(146, 212);
             this.ltbStack.TabIndex = 2;
             // 
             // ltbCandidateItems
@@ -124,12 +125,13 @@ namespace Chemtech.CPNM.Presentation.Forms
             // ckbSelectionOnly
             // 
             this.ckbSelectionOnly.AutoSize = true;
-            this.ckbSelectionOnly.Location = new System.Drawing.Point(459, 297);
+            this.ckbSelectionOnly.Location = new System.Drawing.Point(458, 275);
             this.ckbSelectionOnly.Name = "ckbSelectionOnly";
             this.ckbSelectionOnly.Size = new System.Drawing.Size(127, 17);
             this.ckbSelectionOnly.TabIndex = 16;
             this.ckbSelectionOnly.Text = "Restringir à Seleção?";
             this.ckbSelectionOnly.UseVisualStyleBackColor = true;
+            this.ckbSelectionOnly.CheckedChanged += new System.EventHandler(this.ckbSelectionOnly_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -161,7 +163,6 @@ namespace Chemtech.CPNM.Presentation.Forms
             this.ltbExistantItems.Size = new System.Drawing.Size(146, 303);
             this.ltbExistantItems.Sorted = true;
             this.ltbExistantItems.TabIndex = 1;
-            this.ltbExistantItems.SelectedIndexChanged += new System.EventHandler(this.ltbExistantItems_SelectedIndexChanged);
             // 
             // txbSearchCriteria1
             // 
@@ -182,11 +183,22 @@ namespace Chemtech.CPNM.Presentation.Forms
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Item Destino";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(458, 298);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(108, 17);
+            this.checkBox1.TabIndex = 19;
+            this.checkBox1.Text = "Colorir Alteracoes";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // SetUpReuse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(626, 389);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ckbSelectionOnly);
@@ -222,5 +234,6 @@ namespace Chemtech.CPNM.Presentation.Forms
         private System.Windows.Forms.ListBox ltbExistantItems;
         private System.Windows.Forms.TextBox txbSearchCriteria1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private CheckBox checkBox1;
     }
 }

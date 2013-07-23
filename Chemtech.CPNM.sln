@@ -11,11 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.BR", "Chemtec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.Tests", "Chemtech.CPNM.Tests\Chemtech.CPNM.Tests.csproj", "{220B1C4B-E18F-44A7-B0B2-564D5A6B3BF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.AppWord", "Chemtech.CPNM.AppWord\Chemtech.CPNM.AppWord.csproj", "{7CC60560-E36A-4D99-8EBA-491E761F9CA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.App.Word", "Chemtech.CPNM.AppWord\Chemtech.CPNM.App.Word.csproj", "{7CC60560-E36A-4D99-8EBA-491E761F9CA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.AppExcel", "Chemtech.Cpnm.AppExcel\Chemtech.CPNM.AppExcel.csproj", "{06CEC686-7BED-4234-A1D1-0BAAA671DB5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.App.Excel", "Chemtech.Cpnm.AppExcel\Chemtech.CPNM.App.Excel.csproj", "{06CEC686-7BED-4234-A1D1-0BAAA671DB5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.AppExcel.ExportImport", "Chemtech.Cpnm.AppExcel.ExportImport\Chemtech.CPNM.AppExcel.ExportImport.csproj", "{A09EBAA0-2EE8-4154-B4D1-745EF9B99030}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.App.Excel.ExportImport", "Chemtech.Cpnm.AppExcel.ExportImport\Chemtech.CPNM.App.Excel.ExportImport.csproj", "{A09EBAA0-2EE8-4154-B4D1-745EF9B99030}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

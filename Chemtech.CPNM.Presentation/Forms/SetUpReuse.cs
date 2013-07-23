@@ -90,5 +90,10 @@ namespace Chemtech.CPNM.Presentation.Forms
         {
             if (ltbStack.SelectedItem != null) ltbStack.Items.Remove(ltbStack.SelectedItem);
         }
+
+        private void ckbSelectionOnly_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

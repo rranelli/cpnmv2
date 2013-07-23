@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DI\InstallerBR.cs" />
+    <Compile Include="ICPNMApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logic\CpnmSession.cs" />
     <Compile Include="Logic\ReuseHandler.cs" />

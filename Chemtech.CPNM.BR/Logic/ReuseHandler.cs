@@ -9,46 +9,48 @@ using System.Collections.Generic;
 using System.Linq;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.DTOs;
+using Chemtech.Cpnm.Data.Addresses;
 
 namespace Chemtech.CPNM.BR.Logic
 {
     public class ReuseHandler
     {
-        private Dictionary<string, string> _mapOldToNew;
-        private ICollection<ItemReusePair> _reusePairs;
-        public bool IsSelectionRestricted { get; set; }
+        private readonly Dictionary<string, string> _mapOldToNew;
+        private readonly ICollection<ItemReusePair> _reusePairs;
+        private readonly IAddressFactory _addressFactory;
 
-        public ICollection<ItemReusePair> ReusePairs
+        public ReuseHandler(ICollection<ItemReusePair> itemReusePairs, IAddressFactory addressFactory)
         {
-            get { return _reusePairs; }
-            set
-            {
-                _reusePairs = value;
+            _reusePairs = itemReusePairs;
+            _addressFactory = addressFactory;
 
-                _mapOldToNew = new Dictionary<string, string>();
-                _reusePairs.ToList().
-                    ForEach(rp =>
-                            _mapOldToNew.Add(rp.OldItem.Id.ToString(), rp.NewItem.Id.ToString()));
-            }
+            _mapOldToNew = new Dictionary<string, string>();
+            _reusePairs.ToList().
+                ForEach(rp =>
+                        _mapOldToNew.Add(rp.OldItem.Id.ToString(), rp.NewItem.Id.ToString()));
         }
 
         public ICollection<Item> OldItems
         {
-            get { return (from pair in ReusePairs select pair.OldItem).ToList(); }
+            get { return (from pair in _reusePairs select pair.OldItem).ToList(); }
         }
 
         public ICollection<Item> NewItems
         {
-            get { return (from pair in ReusePairs select pair.NewItem).ToList(); }
+            get { return (from pair in _reusePairs select pair.NewItem).ToList(); }
         }
 
-        public string SwapAddress(string addressToSwap)
+        public IDictionary<int, IAddress> MapReferenceDic(IDictionary<int, IAddress> oldReferences)
         {
-            if (_mapOldToNew == null) return null;
+            return oldReferences.ToDictionary
+                (kvp => kvp.Key, kvp => _addressFactory.Create(SwapAddress(kvp.Value.GetAddressString())));
+        }
 
-            foreach (var keyvalpair in _mapOldToNew)
-                addressToSwap = addressToSwap.Replace(keyvalpair.Key, keyvalpair.Value);
-            return addressToSwap;
+        private string SwapAddress(string addressToSwap)
+        {
+            return _mapOldToNew == null
+                ? null
+                : _mapOldToNew.Aggregate(addressToSwap, (current, keyvalpair) => current.Replace(keyvalpair.Key, keyvalpair.Value));
         }
     }
 }
