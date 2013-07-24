@@ -1,7 +1,7 @@
-﻿using Castle.Windsor;
+using Castle.Windsor;
 using Castle.Windsor.Installer;
 
-namespace Chemtech.CPNM.Presentation
+namespace Chemtech.CPNM.BR.DI
 {
     public static class DiResolver
     {

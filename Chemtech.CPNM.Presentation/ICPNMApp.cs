@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
-using Chemtech.Cpnm.Data.Addresses;
-using Chemtech.Cpnm.Data.DTOs;
+using Chemtech.CPNM.App.Excel.Data.DTOs;
 
-namespace Chemtech.CPNM.BR
+namespace Chemtech.CPNM.Presentation
 {
     public interface ICPNMApp
     {
@@ -16,8 +16,11 @@ namespace Chemtech.CPNM.BR
         // All references must be stored in the document with a numerical index.
         IDictionary<int, IAddress> GetIndexedReferences(bool isRestrictedToSelection);
 
-        // updates all references in the document using the indexed addresses.
+        // maps all references in the document using the indexed addresses into new addresses (item ref reuse).
         void ApplyMapping(IDictionary<int, IAddress> newMapping, bool isColorChanges); 
+
+        // updates all values referenced into the document
+        void UpdateAllReferences();
     }
 
     public interface ICPNMAppCad : ICPNMApp

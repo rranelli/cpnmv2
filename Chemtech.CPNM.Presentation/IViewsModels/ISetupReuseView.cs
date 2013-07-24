@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Chemtech.CPNM.BR.Logic;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.Presentation.IViews
+namespace Chemtech.CPNM.Presentation.IViewsModels
 {
     public interface ISetupReuseView
     {
@@ -14,5 +15,7 @@ namespace Chemtech.CPNM.Presentation.IViews
         ICollection<Item> ItemStack { get; set; }
         bool IsRestrictedToSelection { get; set; }
         bool IsColorChanges { get; set; }
+
+        IReuseHandler GetReuseDefinition();
     }
 }

@@ -7,7 +7,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Excel;
 
-namespace AppExcel
+namespace Chemtech.CPNM.App.Excel
 {
     public partial class ThisAddIn
     {

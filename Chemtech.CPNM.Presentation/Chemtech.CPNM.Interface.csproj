@@ -93,12 +93,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AppControllerFactory.cs" />
     <Compile Include="Controllers\AppExcelImportExportController.cs" />
-    <Compile Include="Controllers\AppWordController.cs" />
+    <Compile Include="Controllers\AppOfficeController.cs" />
     <Compile Include="Controllers\AutoCadAppController.cs" />
-    <Compile Include="Controllers\CPNMAppController.cs" />
-    <Compile Include="Controllers\AppExcelController.cs" />
-    <Compile Include="DI\DIResolver.cs" />
+    <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="DI\Installer.cs" />
     <Compile Include="Forms\CreateShareTemplate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +126,7 @@
     <Compile Include="Forms\SetUpSession.Designer.cs">
       <DependentUpon>SetUpSession.cs</DependentUpon>
     </Compile>
+    <Compile Include="ICPNMApp.cs" />
     <Compile Include="IViewsModels\IGetAddressView.cs" />
     <Compile Include="IViewsModels\IGridSetupView.cs" />
     <Compile Include="IViewsModels\ISetupReuseView.cs" />

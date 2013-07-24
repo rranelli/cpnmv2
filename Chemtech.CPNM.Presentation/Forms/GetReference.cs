@@ -7,9 +7,10 @@
 
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Presentation.IViews;
-using Chemtech.Cpnm.Data.Addresses;
+using Chemtech.CPNM.Presentation.IViewsModels;
 
 namespace Chemtech.CPNM.Presentation.Forms
 {

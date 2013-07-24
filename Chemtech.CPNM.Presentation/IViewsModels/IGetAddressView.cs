@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
-using Chemtech.Cpnm.Data.Addresses;
 
-namespace Chemtech.CPNM.Presentation.IViews
+namespace Chemtech.CPNM.Presentation.IViewsModels
 {
     public interface IGetAddressView
     {
@@ -16,8 +16,11 @@ namespace Chemtech.CPNM.Presentation.IViews
         ICollection<ItemTypeGroup> ItemTypeGroups { get; set; }
         ICollection<PropertyGroup> PropertyGroups { get; set; }
         ICollection<SubArea> Collection { get; set; }
+
         PropValue.FormatType FormatType { get; set; }
         AddressDefiner.AddressType AddressType { get; set; }
         bool MetaSelected { get; set; }
+
+        AddressDefiner GetAddressDefiner();
     }
 }

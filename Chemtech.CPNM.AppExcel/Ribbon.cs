@@ -1,16 +1,17 @@
-﻿using Microsoft.Office.Tools.Ribbon;
+﻿// Ribbon.cs
+// Projeto: Chemtech.CPNM.AppWord
+// Solution: Chemtech.CPNM
+// Implementado por: Renan
+// Criado em: 16/06/2013
+// Modificado em: 18/06/2013 : 1:52 AM
 
-namespace AppExcel
+using Chemtech.CPNM.Presentation.Forms;
+using Microsoft.Office.Tools.Ribbon;
+
+namespace Chemtech.CPNM.AppWord
 {
     public partial class Ribbon
     {
-        private void Ribbon_Load(object sender, RibbonUIEventArgs e)
-        {
 
-        }
-
-        private void button1_Click(object sender, RibbonControlEventArgs e)
-        {
-        }
     }
 }

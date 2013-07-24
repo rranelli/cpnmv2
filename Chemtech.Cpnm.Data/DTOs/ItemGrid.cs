@@ -2,7 +2,7 @@
 using System.Linq;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.Cpnm.Data.DTOs
+namespace Chemtech.CPNM.App.Excel.Data.DTOs
 {
     public interface IItemGrid
     {

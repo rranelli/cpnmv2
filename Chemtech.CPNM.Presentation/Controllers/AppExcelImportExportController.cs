@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Chemtech.CPNM.BR;
+﻿using Chemtech.CPNM.App.Excel.Data.Repositories;
+using Chemtech.CPNM.Presentation.IViewsModels;
 
 namespace Chemtech.CPNM.Presentation.Controllers
 {
-    public class AppExcelImportExportController : AppExcelController
+    public class AppExcelImportExportController : AppOfficeController
     {
-        public AppExcelImportExportController(ICPNMApp cpnmApp) : base(cpnmApp) {}
+        public AppExcelImportExportController(ICPNMApp cpnmApp, IGetAddressView addressView, IAddressFactory addressFactory, ISetupReuseView setupReuseView)
+            : base(cpnmApp, addressView, addressFactory, setupReuseView) {}
     }
 }

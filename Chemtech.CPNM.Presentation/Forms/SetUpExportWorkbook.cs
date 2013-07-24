@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.Cpnm.AppExcel.ExportImport.Forms
+namespace Chemtech.CPNM.App.Excel.AppExcel.ExportImport.Forms
 {
     public interface ISetUpExportWorkbook
     {

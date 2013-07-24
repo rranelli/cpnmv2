@@ -1,4 +1,4 @@
-﻿namespace Chemtech.Cpnm.Data.Addresses
+namespace Chemtech.CPNM.Model.Addresses
 {
     public interface IAddress {
         AddressDefiner.AddressType ThisAddressType { get; }

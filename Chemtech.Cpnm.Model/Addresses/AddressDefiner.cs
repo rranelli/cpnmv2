@@ -1,6 +1,6 @@
-﻿using Chemtech.CPNM.Model.Domain;
+using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.Cpnm.Data.Addresses
+namespace Chemtech.CPNM.Model.Addresses
 {
     public interface IAddressDefiner {
         Item Item { get; set; }

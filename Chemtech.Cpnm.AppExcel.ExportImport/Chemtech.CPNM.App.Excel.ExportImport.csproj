@@ -109,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\AppExcelImportExport.cs" />
     <Compile Include="Logic - obsoleto\ExportDefinition.cs" />
     <Compile Include="Logic - obsoleto\ExportSheetHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -188,6 +189,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Chemtech.Cpnm.AppExcel\Chemtech.CPNM.App.Excel.csproj">
+      <Project>{06CEC686-7BED-4234-A1D1-0BAAA671DB5D}</Project>
+      <Name>Chemtech.CPNM.App.Excel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Chemtech.Cpnm.Data\Chemtech.CPNM.Data.csproj">
       <Project>{6C355B16-F0C0-4B0A-9184-43136534AD36}</Project>
       <Name>Chemtech.CPNM.Data</Name>
@@ -201,6 +206,7 @@
       <Name>Chemtech.CPNM.Interface</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\OfficeTools\Microsoft.VisualStudio.Tools.Office.targets" />
   <ProjectExtensions>

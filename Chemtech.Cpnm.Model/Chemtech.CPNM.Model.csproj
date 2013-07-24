@@ -94,6 +94,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Addresses\Address.cs" />
+    <Compile Include="Addresses\AddressDefiner.cs" />
+    <Compile Include="Addresses\ValueRefAddress.cs" />
     <Compile Include="Domain\Dimension.cs" />
     <Compile Include="Domain\Discipline.cs" />
     <Compile Include="Domain\Entity.cs" />

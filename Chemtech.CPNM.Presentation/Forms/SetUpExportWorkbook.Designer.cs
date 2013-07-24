@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Chemtech.Cpnm.AppExcel.ExportImport.Forms
+namespace Chemtech.CPNM.App.Excel.AppExcel.ExportImport.Forms
 {
     partial class SetUpExportWorkbook 
     {

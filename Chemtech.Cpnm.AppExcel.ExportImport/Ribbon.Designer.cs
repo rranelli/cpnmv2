@@ -1,6 +1,6 @@
-﻿using Chemtech.Cpnm.AppExcel.ExportImport.Logic;
+﻿using Chemtech.CPNM.App.Excel.AppExcel.ExportImport.Logic;
 
-namespace Chemtech.Cpnm.AppExcel.ExportImport
+namespace Chemtech.CPNM.App.Excel.AppExcel.ExportImport
 {
     partial class Ribbon : Microsoft.Office.Tools.Ribbon.RibbonBase
     {

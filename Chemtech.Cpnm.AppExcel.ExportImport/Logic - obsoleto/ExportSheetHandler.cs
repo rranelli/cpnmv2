@@ -4,7 +4,7 @@ using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.Repositories;
 using Microsoft.Office.Interop.Excel;
 
-namespace Chemtech.Cpnm.AppExcel.ExportImport.Logic
+namespace Chemtech.CPNM.App.Excel.AppExcel.ExportImport.Logic
 {
     // TODO : Eliminar essa classe horrenda.
 

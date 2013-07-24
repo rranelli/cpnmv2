@@ -5,9 +5,10 @@
 // Criado em: 10/06/2013
 // Modificado em: 18/06/2013 : 1:51 AM
 
+using Chemtech.CPNM.BR;
+using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
-using Chemtech.CPNM.Presentation;
 using NHibernate.Cfg;
 using NUnit.Framework;
 

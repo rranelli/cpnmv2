@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chemtech.Cpnm.AppExcel.ExportImport.Properties {
+namespace Chemtech.CPNM.App.Excel.AppExcel.ExportImport.Properties {
     using System;
     
     

@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 #pragma warning disable 414
-namespace Chemtech.Cpnm.AppExcel.ExportImport {
+namespace Chemtech.CPNM.App.Excel.AppExcel.ExportImport {
     
     
     /// 

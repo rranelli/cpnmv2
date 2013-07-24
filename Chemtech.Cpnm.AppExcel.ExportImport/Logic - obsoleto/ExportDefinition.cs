@@ -4,7 +4,7 @@ using System.Linq;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.Cpnm.AppExcel.ExportImport.Logic
+namespace Chemtech.CPNM.App.Excel.AppExcel.ExportImport.Logic
 {
     public class ExportDefinition
     {

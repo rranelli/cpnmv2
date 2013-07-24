@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Chemtech.CPNM.Data.Repositories;
+using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.Cpnm.Data.Addresses
+namespace Chemtech.CPNM.App.Excel.Data.Repositories
 {
     public interface IAddressFactory
     {
@@ -14,9 +15,10 @@ namespace Chemtech.Cpnm.Data.Addresses
 
     public class AddressObjFactory : IAddressFactory
     {
+        // todo: factories should be static. make it static.
+
         private const string RegexCriteria = @"\/([\w-]*)";
         private const string RegexValidationCriteria = @"^CPNM_(\w*):";
-        private const string CpnmAddressPreffix = "CPNM_#:";
         private static readonly Regex BreakerRegex = new Regex(RegexCriteria);
         private static readonly Regex ValidationRegex = new Regex(RegexValidationCriteria);
 

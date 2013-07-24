@@ -1,4 +1,4 @@
-﻿namespace AppExcel
+﻿namespace Chemtech.CPNM.AppWord
 {
     partial class Ribbon : Microsoft.Office.Tools.Ribbon.RibbonBase
     {
@@ -35,64 +35,97 @@
         private void InitializeComponent()
         {
             this.tab1 = this.Factory.CreateRibbonTab();
-            this.group1 = this.Factory.CreateRibbonGroup();
-            this.button1 = this.Factory.CreateRibbonButton();
-            this.button2 = this.Factory.CreateRibbonButton();
+            this.Group1 = this.Factory.CreateRibbonGroup();
+            this.btnAddRef = this.Factory.CreateRibbonButton();
+            this.btnRefReuse = this.Factory.CreateRibbonButton();
+            this.btnFetchAll = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
+            this.button6 = this.Factory.CreateRibbonButton();
             this.button3 = this.Factory.CreateRibbonButton();
+            this.checkBox1 = this.Factory.CreateRibbonCheckBox();
             this.tab1.SuspendLayout();
-            this.group1.SuspendLayout();
+            this.Group1.SuspendLayout();
+            this.group2.SuspendLayout();
             // 
             // tab1
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
-            this.tab1.Groups.Add(this.group1);
-            this.tab1.Label = "TabAddIns";
+            this.tab1.Groups.Add(this.Group1);
+            this.tab1.Groups.Add(this.group2);
+            this.tab1.Label = "Copy&PasteNuncaMais";
             this.tab1.Name = "tab1";
             // 
-            // group1
+            // Group1
             // 
-            this.group1.Items.Add(this.button1);
-            this.group1.Items.Add(this.button2);
-            this.group1.Items.Add(this.button3);
-            this.group1.Label = "Exportacao & Importacao";
-            this.group1.Name = "group1";
+            this.Group1.Items.Add(this.btnAddRef);
+            this.Group1.Items.Add(this.btnRefReuse);
+            this.Group1.Items.Add(this.btnFetchAll);
+            this.Group1.Label = "Ações";
+            this.Group1.Name = "Group1";
             // 
-            // button1
+            // btnAddRef
             // 
-            this.button1.Label = "Configurar Planilha";
-            this.button1.Name = "button1";
-            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
+            this.btnAddRef.Label = "Adicionar Referência";
+            this.btnAddRef.Name = "btnAddRef";
             // 
-            // button2
+            // btnRefReuse
             // 
-            this.button2.Label = "Download";
-            this.button2.Name = "button2";
+            this.btnRefReuse.Label = "Reuso de Referências";
+            this.btnRefReuse.Name = "btnRefReuse";
+            // 
+            // btnFetchAll
+            // 
+            this.btnFetchAll.Label = "Carregar do banco";
+            this.btnFetchAll.Name = "btnFetchAll";
+            // 
+            // group2
+            // 
+            this.group2.Items.Add(this.button6);
+            this.group2.Items.Add(this.button3);
+            this.group2.Items.Add(this.checkBox1);
+            this.group2.Label = "Configuração";
+            this.group2.Name = "group2";
+            // 
+            // button6
+            // 
+            this.button6.Label = "Aplicar Compartilhamento";
+            this.button6.Name = "button6";
             // 
             // button3
             // 
-            this.button3.Label = "Upload";
+            this.button3.Label = "Configurar Ambiente";
             this.button3.Name = "button3";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Label = "Ativar Inspeção";
+            this.checkBox1.Name = "checkBox1";
             // 
             // Ribbon
             // 
             this.Name = "Ribbon";
-            this.RibbonType = "Microsoft.Excel.Workbook";
+            this.RibbonType = "Microsoft.Word.Document";
             this.Tabs.Add(this.tab1);
-            this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.Ribbon_Load);
             this.tab1.ResumeLayout(false);
             this.tab1.PerformLayout();
-            this.group1.ResumeLayout(false);
-            this.group1.PerformLayout();
+            this.Group1.ResumeLayout(false);
+            this.Group1.PerformLayout();
+            this.group2.ResumeLayout(false);
+            this.group2.PerformLayout();
 
         }
 
         #endregion
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup Group1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnAddRef;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnRefReuse;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnFetchAll;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button6;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox1;
     }
 
     partial class ThisRibbonCollection

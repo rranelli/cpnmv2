@@ -177,6 +177,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Application\AppExcel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -229,7 +230,12 @@
       <Project>{CBCF5650-193E-40C7-872C-61C5F95F6014}</Project>
       <Name>Chemtech.CPNM.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Chemtech.CPNM.Presentation\Chemtech.CPNM.Interface.csproj">
+      <Project>{C0C58F56-0A41-4339-912F-C17EB443E2EC}</Project>
+      <Name>Chemtech.CPNM.Interface</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- Include additional build rules for an Office application add-in. -->
