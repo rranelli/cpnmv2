@@ -8,11 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-<<<<<<< HEAD:Chemtech.CPNM.Interface/Properties/Settings.Designer.cs
-namespace Chemtech.CPNM.Interface.Properties {
-=======
-namespace Chemtech.CPNM.App.Excel.App.Excel.Properties {
->>>>>>> 5267e163de70384897acb9bb67abbbd054ebd0a7:Chemtech.CPNM.AppExcel/Properties/Settings.Designer.cs
+namespace Chemtech.CPNM.App.Excel.AppExcel.ExportImport.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

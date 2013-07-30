@@ -3,10 +3,18 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Chemtech.CPNM.App.Excel.Data.Repositories;
 using Chemtech.CPNM.Data.Repositories;
+<<<<<<< HEAD
 using NHibernate;
 using NHibernate.Cfg;
 
 namespace Chemtech.Cpnm.Data.DI
+=======
+using Chemtech.CPNM.Model.Addresses;
+using NHibernate;
+using NHibernate.Cfg;
+
+namespace Chemtech.CPNM.App.Excel.Data
+>>>>>>> 5267e163de70384897acb9bb67abbbd054ebd0a7
 {
     public class DataInstaller : IWindsorInstaller
     {
