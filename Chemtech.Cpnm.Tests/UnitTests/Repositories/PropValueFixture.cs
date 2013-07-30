@@ -7,10 +7,6 @@
 
 using System;
 using System.Linq;
-<<<<<<< HEAD
-=======
-using Chemtech.CPNM.BR;
->>>>>>> 5267e163de70384897acb9bb67abbbd054ebd0a7
 using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
