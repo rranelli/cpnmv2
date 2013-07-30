@@ -77,11 +77,11 @@ namespace Chemtech.CPNM.Model.Domain
             switch (formatType)
             {
                 case FormatType.ValueAndUnit:
-                    return ConvertValue(desiredUnit) + " " + desiredUnit.Symbol;
+                    return ConvertValue(desiredUnit) + " " + desiredUnit.Name;
                 case FormatType.Value:
                     return ConvertValue(desiredUnit);
                 case FormatType.Unit:
-                    return desiredUnit.Symbol;
+                    return desiredUnit.Name;
                 default:
                     throw new Exception("Opção para unidade inválida");
             }

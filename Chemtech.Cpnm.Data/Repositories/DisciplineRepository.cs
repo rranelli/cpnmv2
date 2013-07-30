@@ -25,22 +25,11 @@ namespace Chemtech.CPNM.Data.Repositories
         IQueryable GetQueryable();
     }
 
-    public class DisciplineRepository : GeneralRepository<Discipline>, INamedRepository<Discipline>, IDisciplineRepository
+    public class DisciplineRepository : GeneralNamedRepository<Discipline>, IDisciplineRepository
     {
         public DisciplineRepository(ISession session)
             : base(session)
         {
         }
-
-        #region INamedRepository<Discipline> Members
-
-        public Discipline GetByName(string name)
-        {
-            return (from disc in Session.Query<Discipline>()
-                    where disc.Name == name
-                    select disc).SingleOrDefault();
-        }
-
-        #endregion
     }
 }

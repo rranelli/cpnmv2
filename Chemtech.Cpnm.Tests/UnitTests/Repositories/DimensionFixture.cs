@@ -6,9 +6,9 @@
 // Modificado em: 18/06/2013 : 1:51 AM
 
 using System.Linq;
+using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
-using Chemtech.CPNM.Presentation;
 using NHibernate.Cfg;
 using NUnit.Framework;
 
@@ -65,7 +65,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
                                        {
                                            ConvFactor = 1.2,
                                            OffsetFactor = 0,
-                                           Symbol = "Symb"
+                                           Name = "Symb"
                                        }
                                };
 
@@ -83,7 +83,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [Test]
         public void CanRemoveDimension()
         {
-            var dumbUnit = new UnitOfMeasure { ConvFactor = 1.1, OffsetFactor = 1.2, Symbol = "1123" };
+            var dumbUnit = new UnitOfMeasure { ConvFactor = 1.1, OffsetFactor = 1.2, Name = "1123" };
             var dumbdim = new Dimension { Name = "duuuuumb", Units = new[] { dumbUnit } };
             _dimensionRepository.Add(dumbdim);
 

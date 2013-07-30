@@ -1,12 +1,12 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using Chemtech.CPNM.App.Excel.Data.Repositories;
 using Chemtech.CPNM.Data.Repositories;
-using Chemtech.Cpnm.Data.Addresses;
 using NHibernate;
 using NHibernate.Cfg;
 
-namespace Chemtech.Cpnm.Data
+namespace Chemtech.Cpnm.Data.DI
 {
     public class DataInstaller : IWindsorInstaller
     {
@@ -14,7 +14,7 @@ namespace Chemtech.Cpnm.Data
 
         public DataInstaller()
         {
-            var configuration = new Configuration();
+            var configuration = new NHibernate.Cfg.Configuration();
             configuration.Configure();
             configuration.AddAssembly(typeof(DimensionRepository).Assembly);
             _sessionFactory = configuration.BuildSessionFactory();

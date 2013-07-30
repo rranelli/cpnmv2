@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Chemtech.CPNM.Model.Domain
 {
-    public class Property : Entity, INamed
+    public class Property : NamedEntity
     {
         public virtual UnitOfMeasure DefaultUnit { get; set; }
         public virtual PropertyGroup PropertyGroup { get; set; }
@@ -25,12 +25,6 @@ namespace Chemtech.CPNM.Model.Domain
                 return Dimension.Units;
             }
         }
-
-        #region INamed Members
-
-        public virtual string Name { get; set; }
-
-        #endregion
 
         public virtual bool IsConvertible()
         {

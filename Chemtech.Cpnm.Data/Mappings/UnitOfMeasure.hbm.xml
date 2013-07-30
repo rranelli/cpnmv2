@@ -6,7 +6,7 @@
     <id name="Id">
       <generator class="guid" />
     </id>
-    <property name="Symbol" not-null="true" />
+    <property name="Name" not-null="true" />
     <property name="ConvFactor" not-null="true" />
     <property name="OffsetFactor" not-null="true" />
   </class>

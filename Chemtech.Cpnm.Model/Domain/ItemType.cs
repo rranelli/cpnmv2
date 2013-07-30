@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Chemtech.CPNM.Model.Domain
 {
-    public class ItemType : Entity, INamed
+    public class ItemType : NamedEntity
     {
         public virtual ItemTypeGroup ItemTypeGroup { get; set; }
         public virtual Discipline OwnerDiscipline { get; set; }
@@ -21,12 +21,6 @@ namespace Chemtech.CPNM.Model.Domain
         {
             get { return ValidXrefs.ToList().Select(x => x.Property).ToList(); }
         }
-
-        #region INamed Members
-
-        public virtual string Name { get; set; }
-
-        #endregion
 
         public virtual Xref GetXref(Property property)
         {

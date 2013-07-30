@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Chemtech.CPNM.Model.Domain
 {
-    public class Item : Entity, INamed
+    public class Item : NamedEntity
     {
         private ICollection<PropValue> _propValues;
 
@@ -22,11 +22,6 @@ namespace Chemtech.CPNM.Model.Domain
         public virtual string Description { get; set; }
         public virtual SubArea SubArea { get; set; }
         
-        #region INamed Members
-
-        public virtual string Name { get; set; }
-
-        #endregion
         public virtual Project Project { get { return SubArea.Project; } }
         public new virtual string ToString() { return Name; }
         public virtual ICollection<PropValue> PropValues

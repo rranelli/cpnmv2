@@ -22,9 +22,21 @@ namespace Chemtech.CPNM.Data.Repositories
         T1 GetById(Guid id);
     }
 
-    public interface INamedRepository<out T>
+    internal interface INamedRepository<out T>
     {
         T GetByName(string name);
+    }
+
+    public class GeneralNamedRepository<T> : GeneralRepository<T>, INamedRepository<T> where T : NamedEntity
+    {
+        public GeneralNamedRepository(ISession session) : base(session) {}
+
+        public T GetByName(string name)
+        {
+            return (from i in Session.Query<T>()
+                    where i.Name == name
+                    select i).SingleOrDefault();
+        }
     }
 
     public class GeneralRepository<T> : IGeneralRepository<T> where T : Entity

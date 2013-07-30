@@ -17,7 +17,16 @@ namespace Chemtech.CPNM.Model.Domain
         }
     }
 
-    public interface INamed
+    public abstract class NamedEntity : Entity, INamed
+    {
+        public virtual string Name { get; set; }
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
+    internal interface INamed
     {
         string Name { get; set; }
     }

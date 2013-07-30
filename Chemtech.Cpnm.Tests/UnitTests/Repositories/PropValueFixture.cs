@@ -7,9 +7,9 @@
 
 using System;
 using System.Linq;
+using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
-using Chemtech.CPNM.Presentation;
 using NHibernate.Cfg;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -58,9 +58,9 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
             _testHelper.SetUpDatabaseTestData(_configuration);
 
             var dimension = _dimensionRepository.GetByName("Vazao");
-            _unit1 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit1");
-            _unit2 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit2");
-            _unit3 = dimension.Units.ToList().SingleOrDefault(x => x.Symbol == "Unit3");
+            _unit1 = dimension.Units.ToList().SingleOrDefault(x => x.Name == "Unit1");
+            _unit2 = dimension.Units.ToList().SingleOrDefault(x => x.Name == "Unit2");
+            _unit3 = dimension.Units.ToList().SingleOrDefault(x => x.Name == "Unit3");
 
             _thisproperty = new Property {Dimension = dimension, DefaultUnit = _unit3};
             _parentId1 = _itemRepository.GetAll().SingleOrDefault(i => i.Name == "Complex").Id;

@@ -9,14 +9,8 @@ using System.Collections.Generic;
 
 namespace Chemtech.CPNM.Model.Domain
 {
-    public class Dimension : Entity, INamed
+    public class Dimension : NamedEntity
     {
         public virtual ICollection<UnitOfMeasure> Units { get; set; }
-
-        #region INamed Members
-
-        public virtual string Name { get; set; }
-
-        #endregion
     }
 }

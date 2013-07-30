@@ -7,14 +7,8 @@
 
 namespace Chemtech.CPNM.Model.Domain
 {
-    public class ItemTypeGroup : Entity, INamed
+    public class ItemTypeGroup : NamedEntity
     {
         public virtual string Description { get; set; }
-
-        #region INamed Members
-
-        public virtual string Name { get; set; }
-
-        #endregion
     }
 }

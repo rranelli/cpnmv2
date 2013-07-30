@@ -1,6 +1,6 @@
 ﻿using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.Presentation
+namespace Chemtech.CPNM.Interface
 {
     public static class CpnmSession
     {

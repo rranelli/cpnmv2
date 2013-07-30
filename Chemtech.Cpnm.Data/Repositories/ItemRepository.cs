@@ -30,22 +30,18 @@ namespace Chemtech.CPNM.Data.Repositories
         IQueryable GetQueryable();
     }
 
-    public class ItemRepository : GeneralRepository<Item>, INamedRepository<Item>, IItemRepository
+    public class ItemRepository : GeneralNamedRepository<Item>, IItemRepository
     {
         public ItemRepository(ISession session) : base(session)
         {
         }
 
-        #region INamedRepository<Item> Members
-
-        public Item GetByName(string itemName)
+        public new Item GetByName(string itemName)
         {
                 return (from i in Session.Query<Item>()
                         where i.UniqueName == itemName
                         select i).SingleOrDefault();
         }
-
-        #endregion
 
         public ICollection<PropValue> GetAllPropValues(Item item)
         {

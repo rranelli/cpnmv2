@@ -7,13 +7,21 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.DTOs;
-using Chemtech.Cpnm.Data.Addresses;
+using Chemtech.CPNM.App.Excel.Data.Repositories;
 
 namespace Chemtech.CPNM.BR.Logic
 {
-    public class ReuseHandler
+    public interface IReuseHandler 
+    {
+        ICollection<Item> OldItems { get; }
+        ICollection<Item> NewItems { get; }
+        IDictionary<int, IAddress> MapReferenceDic(IDictionary<int, IAddress> oldReferences);
+    }
+
+    public class ReuseHandler : IReuseHandler
     {
         private readonly Dictionary<string, string> _mapOldToNew;
         private readonly ICollection<ItemReusePair> _reusePairs;

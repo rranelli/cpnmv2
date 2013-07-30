@@ -25,18 +25,11 @@ namespace Chemtech.CPNM.Data.Repositories
         IQueryable GetQueryable();
     }
 
-    public class PropertyRepository : GeneralRepository<Property>, IPropertyRepository
+    public class PropertyRepository : GeneralNamedRepository<Property>, IPropertyRepository
     {
         public PropertyRepository(ISession session)
             : base(session)
         {
-        }
-
-        public Property GetByName(string name)
-        {
-            return (from ig in Session.Query<Property>()
-                    where ig.Name == name
-                    select ig).SingleOrDefault();
         }
     }
 }

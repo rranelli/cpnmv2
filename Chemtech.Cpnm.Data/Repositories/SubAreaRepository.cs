@@ -26,23 +26,12 @@ namespace Chemtech.CPNM.Data.Repositories
         IQueryable GetQueryable();
     }
 
-    public class SubAreaRepository : GeneralRepository<SubArea>, INamedRepository<SubArea>, ISubAreaRepository
+    public class SubAreaRepository : GeneralNamedRepository<SubArea>, ISubAreaRepository
     {
         public SubAreaRepository(ISession session)
             : base(session)
         {
         }
-
-        #region INamedRepository<ItemTypeGroup> Members
-
-        public SubArea GetByName(string name)
-        {
-                return (from ig in Session.Query<SubArea>()
-                        where ig.Name == name
-                        select ig).SingleOrDefault();
-        }
-
-        #endregion
 
         public ICollection<SubArea> GetAllByProject(Project project)
         {

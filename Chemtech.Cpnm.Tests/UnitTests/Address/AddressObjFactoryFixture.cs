@@ -7,9 +7,10 @@
 
 using System;
 using Chemtech.CPNM.Data.Repositories;
+using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
-using Chemtech.CPNM.Presentation;
-using Chemtech.Cpnm.Data.Addresses;
+using Chemtech.CPNM.Interface;
+using Chemtech.CPNM.App.Excel.Data.Repositories;
 using NHibernate.Cfg;
 using NUnit.Framework;
 using Rhino.Mocks;

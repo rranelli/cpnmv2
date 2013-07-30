@@ -25,21 +25,10 @@ namespace Chemtech.CPNM.Data.Repositories
         IQueryable GetQueryable();
     }
 
-    public class DimensionRepository : GeneralRepository<Dimension>, INamedRepository<Dimension>, IDimensionRepository
+    public class DimensionRepository : GeneralNamedRepository<Dimension>, IDimensionRepository
     {
         public DimensionRepository(ISession session) : base(session)
         {
         }
-
-        #region INamedRepository<Dimension> Members
-
-        public Dimension GetByName(string name)
-        {
-            return (from ig in Session.Query<Dimension>()
-                    where ig.Name == name
-                    select ig).SingleOrDefault();
-        }
-
-        #endregion
     }
 }

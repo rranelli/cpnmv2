@@ -5,9 +5,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
-using Chemtech.CPNM.Presentation;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 
@@ -58,12 +58,12 @@ namespace Chemtech.CPNM.Tests.UnitTests
             // criando in-memory data.
             var unitsOfMeasure = new[]
                                      {
-                                         new UnitOfMeasure {ConvFactor = 1, OffsetFactor = 0, Symbol = "K"},
-                                         new UnitOfMeasure {ConvFactor = 2, OffsetFactor = 0, Symbol = "C"},
-                                         new UnitOfMeasure {ConvFactor = 3, OffsetFactor = 1, Symbol = "T"},
-                                         new UnitOfMeasure {ConvFactor = 3, OffsetFactor = 1, Symbol = "Unit1"},
-                                         new UnitOfMeasure {ConvFactor = 2, Symbol = "Unit2"},
-                                         new UnitOfMeasure {ConvFactor = 0.3, OffsetFactor = 1, Symbol = "Unit3"}
+                                         new UnitOfMeasure {ConvFactor = 1, OffsetFactor = 0, Name = "K"},
+                                         new UnitOfMeasure {ConvFactor = 2, OffsetFactor = 0, Name = "C"},
+                                         new UnitOfMeasure {ConvFactor = 3, OffsetFactor = 1, Name = "T"},
+                                         new UnitOfMeasure {ConvFactor = 3, OffsetFactor = 1, Name = "Unit1"},
+                                         new UnitOfMeasure {ConvFactor = 2, Name = "Unit2"},
+                                         new UnitOfMeasure {ConvFactor = 0.3, OffsetFactor = 1, Name = "Unit3"}
                                      };
 
             var dimensions = new[]

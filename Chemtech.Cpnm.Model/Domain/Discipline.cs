@@ -7,12 +7,7 @@
 
 namespace Chemtech.CPNM.Model.Domain
 {
-    public class Discipline : Entity, INamed
+    public class Discipline : NamedEntity
     {
-        #region INamed Members
-
-        public virtual string Name { get; set; }
-
-        #endregion
     }
 }

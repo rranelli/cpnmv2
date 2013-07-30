@@ -25,18 +25,11 @@ namespace Chemtech.CPNM.Data.Repositories
         IQueryable GetQueryable();
     }
 
-    public class UnitOfMeasureRepository : GeneralRepository<UnitOfMeasure>, INamedRepository<UnitOfMeasure>, IUnitOfMeasureRepository
+    public class UnitOfMeasureRepository : GeneralNamedRepository<UnitOfMeasure>, IUnitOfMeasureRepository
     {
         public UnitOfMeasureRepository(ISession session)
             : base(session)
         {
-        }
-
-        public UnitOfMeasure GetByName(string name)
-        {
-            return (from uom in Session.Query<UnitOfMeasure>()
-                    where uom.Symbol == name
-                    select uom).SingleOrDefault();
         }
     }
 }

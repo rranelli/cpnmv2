@@ -7,20 +7,9 @@
 
 namespace Chemtech.CPNM.Model.Domain
 {
-    public class UnitOfMeasure : Entity, INamed
+    public class UnitOfMeasure : NamedEntity
     {
-        public virtual string Symbol { get; set; }
         public virtual double ConvFactor { get; set; }
         public virtual double OffsetFactor { get; set; }
-
-        #region INamed Members
-
-        public virtual string Name
-        {
-            get { return Symbol; }
-            set { Symbol = value; }
-        }
-
-        #endregion
     }
 }

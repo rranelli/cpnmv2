@@ -6,8 +6,8 @@
 // Modificado em: 18/06/2013 : 1:51 AM
 
 using System;
+using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
-using Chemtech.Cpnm.Data.Addresses;
 using NUnit.Framework;
 using Rhino.Mocks;
 
