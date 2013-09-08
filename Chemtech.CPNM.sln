@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.BR", "Chemtec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.Tests", "Chemtech.CPNM.Tests\Chemtech.CPNM.Tests.csproj", "{220B1C4B-E18F-44A7-B0B2-564D5A6B3BF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.Interface.WPF", "Chemtech.CPNM.Interface.WPF\Chemtech.CPNM.Interface.WPF.csproj", "{C3C98CBC-D531-4A7D-84B3-12DC6719F64D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2924B859-28C6-4AF6-8DA2-26C36B100FEE}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -46,10 +44,6 @@ Global
 		{220B1C4B-E18F-44A7-B0B2-564D5A6B3BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{220B1C4B-E18F-44A7-B0B2-564D5A6B3BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{220B1C4B-E18F-44A7-B0B2-564D5A6B3BF9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C3C98CBC-D531-4A7D-84B3-12DC6719F64D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3C98CBC-D531-4A7D-84B3-12DC6719F64D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C3C98CBC-D531-4A7D-84B3-12DC6719F64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C3C98CBC-D531-4A7D-84B3-12DC6719F64D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

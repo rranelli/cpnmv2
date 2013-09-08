@@ -5,7 +5,7 @@ namespace Chemtech.CPNM.Interface.Controllers
     public class AutoCadAppControllerBase : AppControllerBase
     {
         public AutoCadAppControllerBase(ICPNMApp cpnmApp) : base(cpnmApp) {}
-        public override void InsertReferneceAction()
+        public override void InsertReferenceAction()
         {
             throw new NotImplementedException();
         }

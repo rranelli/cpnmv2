@@ -5,7 +5,7 @@ using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.App.Excel.Data.Repositories
+namespace Chemtech.Cpnm.Data.Repositories
 {
     public interface IAddressFactory
     {

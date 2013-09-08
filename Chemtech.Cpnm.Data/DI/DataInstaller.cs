@@ -1,8 +1,8 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using Chemtech.CPNM.App.Excel.Data.Repositories;
 using Chemtech.CPNM.Data.Repositories;
+using Chemtech.Cpnm.Data.Repositories;
 using NHibernate;
 
 namespace Chemtech.Cpnm.Data.DI

@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.Interface.IViewsModels
+namespace Chemtech.CPNM.Interface.Views
 {
-    public interface IGridSetupView
+    public interface IGridSetupView : IView
     {
-        void Open();
-        void Close();
-        bool ResultOk();
-
         ICollection<ItemTypeGroup> ItemTypeGroups { get; set; }
         ICollection<PropertyGroup> PropertyGroups { get; set; }
         ICollection<ItemType> ItemTypes { get; set; }

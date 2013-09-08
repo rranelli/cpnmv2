@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Chemtech.CPNM.BR.Logic;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.Interface.ViewModels
+namespace Chemtech.CPNM.Interface.Views
 {
-    public interface ISetupReuseView
+    public interface ISetupReuseView : IView
     {
-        void Open();
-        void Close();
-        bool ResultOk();
-
         ICollection<Item> ExistantItems { set; get; }
         ICollection<Item> CandidateItems { get; set; }
         ICollection<Item> ItemStack { get; set; }

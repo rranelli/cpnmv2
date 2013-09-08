@@ -2,9 +2,8 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using Chemtech.CPNM.Interface.Controllers;
 using Chemtech.CPNM.Interface.ViewModels;
-using Chemtech.CPNM.Interface.WPF.Views;
+using GetAddressView = Chemtech.CPNM.Interface.Views.GetAddressView;
 
 namespace Chemtech.CPNM.Interface.DI
 {

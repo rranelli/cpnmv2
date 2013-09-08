@@ -10,7 +10,7 @@ using System.Linq;
 using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.DTOs;
-using Chemtech.CPNM.App.Excel.Data.Repositories;
+using Chemtech.Cpnm.Data.Repositories;
 
 namespace Chemtech.CPNM.BR.Logic
 {

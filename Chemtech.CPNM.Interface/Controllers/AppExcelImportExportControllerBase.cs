@@ -1,6 +1,6 @@
-﻿using Chemtech.CPNM.App.Excel.Data.Repositories;
-using Chemtech.CPNM.Interface.IViewsModels;
-using Chemtech.CPNM.Interface.ViewModels;
+﻿using Chemtech.CPNM.Interface.ViewModels;
+using Chemtech.CPNM.Interface.Views;
+using Chemtech.Cpnm.Data.Repositories;
 
 namespace Chemtech.CPNM.Interface.Controllers
 {

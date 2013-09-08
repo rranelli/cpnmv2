@@ -6,6 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C0C58F56-0A41-4339-912F-C17EB443E2EC}</ProjectGuid>
+	<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Chemtech.CPNM.Interface</RootNamespace>
@@ -65,13 +66,21 @@
     <Compile Include="Controllers\AppOfficeControllerBase.cs" />
     <Compile Include="Controllers\AutoCadAppControllerBase.cs" />
     <Compile Include="Controllers\AppControllerBase.cs" />
-    <Compile Include="DI\Installer.cs" />
-    <Compile Include="ICPNMApp.cs" />
+    <Compile Include="Controllers\IAppController.cs" />
+    <Compile Include="DI\UIInstaller.cs" />
+    <Compile Include="IApps\ICPNMApp.cs" />
+    <Compile Include="IApps\ICPNMAppCad.cs" />
+    <Compile Include="IApps\ICPNMImportExport.cs" />
     <Compile Include="ViewModels\GetAddressViewModel.cs" />
-    <Compile Include="ViewModels\GridSetupViewModel.cs" />
-    <Compile Include="ViewModels\SetupReuseViewModel.cs" />
+    <Compile Include="ViewModels\IGetAddressViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\IGridSetupView.cs" />
+    <Compile Include="Views\ISetupReuseView.cs" />
+    <Compile Include="Views\IView.cs" />
+    <Compile Include="Views\GetAddressView.xaml.cs">
+      <DependentUpon>GetAddressView.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -102,10 +111,6 @@
       <Project>{6C355B16-F0C0-4B0A-9184-43136534AD36}</Project>
       <Name>Chemtech.CPNM.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Chemtech.CPNM.Interface.WPF\Chemtech.CPNM.Interface.WPF.csproj">
-      <Project>{C3C98CBC-D531-4A7D-84B3-12DC6719F64D}</Project>
-      <Name>Chemtech.CPNM.Interface.WPF</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Chemtech.Cpnm.Model\Chemtech.CPNM.Model.csproj">
       <Project>{CBCF5650-193E-40C7-872C-61C5F95F6014}</Project>
       <Name>Chemtech.CPNM.Model</Name>
@@ -113,6 +118,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\GetAddressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

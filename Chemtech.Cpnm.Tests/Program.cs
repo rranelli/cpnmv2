@@ -1,7 +1,5 @@
 ﻿using System;
 using Chemtech.CPNM.BR.DI;
-using Chemtech.CPNM.Interface.ViewModels;
-using Chemtech.CPNM.Interface.WPF.Views;
 using Chemtech.CPNM.Tests.UnitTests;
 
 namespace Chemtech.CPNM.Tests
@@ -15,9 +13,9 @@ namespace Chemtech.CPNM.Tests
             var configuration = testHelper.MakeConfiguration();
             testHelper.SetUpDatabaseTestData(configuration);
 
-            var b = DiResolver.IocResolve<IGetAddressViewModel>();
+            //var b = DiResolver.IocResolve<IGetAddressViewModel>();
 
-            b.Open();
+            //b.Open();
         }
     }
 }
