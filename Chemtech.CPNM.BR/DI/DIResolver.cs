@@ -16,7 +16,6 @@ namespace Chemtech.CPNM.BR.DI
             Container.Install(FromAssembly.Named("Chemtech.CPNM.Model"));
             Container.Install(FromAssembly.Named("Chemtech.CPNM.Tests"));
             Container.Install(FromAssembly.Named("Chemtech.CPNM.Interface"));
-            Container.Install(FromAssembly.Named("Chemtech.CPNM.Interface.WPF"));
         }
 
         public static T IocResolve<T> (string name = null)

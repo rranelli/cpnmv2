@@ -3,11 +3,11 @@
 namespace Chemtech.CPNM.Interface.Views
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class UserControl1 : Window
+    public partial class GetAddressView : Window
     {
-        public UserControl1()
+        public GetAddressView()
         {
             InitializeComponent();
         }

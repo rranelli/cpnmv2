@@ -171,6 +171,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 
         // ###########################
         // Testes de funcionalidade
+
         [Test]
         public void CanShare()
         {

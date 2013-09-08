@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Chemtech.CPNM.Model.Addresses;
 
-namespace Chemtech.CPNM.Interface
+namespace Chemtech.CPNM.Interface.IApps
 {
     public interface ICPNMApp
     {
@@ -15,7 +15,7 @@ namespace Chemtech.CPNM.Interface
         IDictionary<int, IAddress> GetIndexedReferences(bool isRestrictedToSelection);
 
         // maps all references in the document using the indexed addresses into new addresses (item ref reuse).
-        void ApplyMapping(IDictionary<int, IAddress> newMapping, bool isColorChanges); 
+        void ApplyMapping(IDictionary<int, IAddress> newMapping, bool isColorChanges);
 
         // updates all values referenced into the document
         void UpdateAllReferences();

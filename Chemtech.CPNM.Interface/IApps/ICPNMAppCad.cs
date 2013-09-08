@@ -1,3 +1,4 @@
+using Chemtech.CPNM.Interface.IApps;
 using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.CPNM.Interface
