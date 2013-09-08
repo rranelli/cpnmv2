@@ -2,7 +2,6 @@
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Chemtech.CPNM.Data.Repositories;
-using Chemtech.Cpnm.Data.Repositories;
 using NHibernate;
 
 namespace Chemtech.Cpnm.Data.DI

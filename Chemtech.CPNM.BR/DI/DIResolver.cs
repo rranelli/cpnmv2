@@ -14,7 +14,7 @@ namespace Chemtech.CPNM.BR.DI
             Container.Install(FromAssembly.Named("Chemtech.CPNM.BR"));
             Container.Install(FromAssembly.Named("Chemtech.CPNM.Data"));
             Container.Install(FromAssembly.Named("Chemtech.CPNM.Model"));
-            Container.Install(FromAssembly.Named("Chemtech.CPNM.Tests"));
+            //Container.Install(FromAssembly.Named("Chemtech.CPNM.Tests"));
             Container.Install(FromAssembly.Named("Chemtech.CPNM.Interface"));
         }
 

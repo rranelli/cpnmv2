@@ -72,6 +72,7 @@
     <Compile Include="IApps\ICPNMAppCad.cs" />
     <Compile Include="IApps\ICPNMImportExport.cs" />
     <Compile Include="ViewModels\GetAddressViewModel.cs" />
+    <Compile Include="ViewModels\ISetupReuseViewModel.cs" />
     <Compile Include="ViewModels\IGetAddressViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

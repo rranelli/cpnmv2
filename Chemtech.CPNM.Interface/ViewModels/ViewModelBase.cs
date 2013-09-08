@@ -2,7 +2,13 @@
 
 namespace Chemtech.CPNM.Interface.ViewModels
 {
-    public abstract class ViewModelBase
+    public interface IViewModelBase {
+        void Open();
+        void Close();
+        bool ResultOk();
+    }
+
+    public abstract class ViewModelBase : IViewModelBase
     {
         protected Window View;
         protected ViewModelBase(Window view)

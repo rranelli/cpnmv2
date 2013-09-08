@@ -7,10 +7,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
 using Chemtech.CPNM.Data.DTOs;
-using Chemtech.Cpnm.Data.Repositories;
 
 namespace Chemtech.CPNM.BR.Logic
 {

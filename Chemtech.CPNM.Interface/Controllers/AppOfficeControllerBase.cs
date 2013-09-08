@@ -1,7 +1,6 @@
-﻿using Chemtech.CPNM.Interface.IApps;
+﻿using Chemtech.CPNM.Data.Repositories;
+using Chemtech.CPNM.Interface.IApps;
 using Chemtech.CPNM.Interface.ViewModels;
-using Chemtech.CPNM.Interface.Views;
-using Chemtech.Cpnm.Data.Repositories;
 
 namespace Chemtech.CPNM.Interface.Controllers
 {
@@ -9,13 +8,13 @@ namespace Chemtech.CPNM.Interface.Controllers
     {
         private readonly IGetAddressViewModel _addressViewModel;
         private readonly IAddressFactory _addressFactory;
-        private readonly ISetupReuseView _setupReuseView;
+        private readonly ISetupReuseViewModel _setupReuseViewModel;
 
-        public AppOfficeControllerBase(ICPNMApp cpnmApp, IGetAddressViewModel addressViewModel, IAddressFactory addressFactory, ISetupReuseView setupReuseView) : base(cpnmApp)
+        public AppOfficeControllerBase(ICPNMApp cpnmApp, IGetAddressViewModel addressViewModel, IAddressFactory addressFactory, ISetupReuseViewModel setupReuseViewModel) : base(cpnmApp)
         {
             _addressViewModel = addressViewModel;
             _addressFactory = addressFactory;
-            _setupReuseView = setupReuseView;
+            _setupReuseViewModel = setupReuseViewModel;
         }
 
         public override void InsertReferenceAction()
@@ -29,14 +28,14 @@ namespace Chemtech.CPNM.Interface.Controllers
 
         public override void ApplyReferenceReuseAction()
         {
-            _setupReuseView.Open();
-            if (!_setupReuseView.ResultOk()) return;
+            _setupReuseViewModel.Open();
+            if (!_setupReuseViewModel.ResultOk()) return;
             
-            var reuseHandler = _setupReuseView.GetReuseDefinition(); //gets reuse handler
-            var refDic = CPNMApp.GetIndexedReferences(_setupReuseView.IsRestrictedToSelection); // gets the references
+            var reuseHandler = _setupReuseViewModel.GetReuseDefinition(); //gets reuse handler
+            var refDic = CPNMApp.GetIndexedReferences(_setupReuseViewModel.IsRestrictedToSelection); // gets the references
             
             var mappedRefDic = reuseHandler.MapReferenceDic(refDic); //maps the active references into the new ones
-            CPNMApp.ApplyMapping(mappedRefDic, _setupReuseView.IsColorChanges);
+            CPNMApp.ApplyMapping(mappedRefDic, _setupReuseViewModel.IsColorChanges);
         }
 
         public override void UpdateReferencesAction()

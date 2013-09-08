@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chemtech.CPNM.App.Excel.App.Excel.Properties {
+namespace Chemtech.CPNM.App.Excel.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Chemtech.CPNM.App.Excel.App.Excel.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AppExcel.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chemtech.CPNM.App.Excel.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -9,7 +9,6 @@ using System;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
-using Chemtech.Cpnm.Data.Repositories;
 using NUnit.Framework;
 using Rhino.Mocks;
 

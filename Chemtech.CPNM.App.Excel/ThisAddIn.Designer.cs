@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 #pragma warning disable 414
-namespace Chemtech.CPNM.App.Excel.App.Excel {
+namespace Chemtech.CPNM.App.Excel {
     
     
     /// 

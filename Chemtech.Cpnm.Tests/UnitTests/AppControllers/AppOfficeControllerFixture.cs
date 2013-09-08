@@ -1,13 +1,9 @@
-﻿using Chemtech.CPNM.BR.DI;
-using Chemtech.CPNM.BR.Logic;
-using Chemtech.CPNM.Interface;
+﻿using Chemtech.CPNM.BR.Logic;
+using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Interface.Controllers;
 using Chemtech.CPNM.Interface.IApps;
 using Chemtech.CPNM.Interface.ViewModels;
-using Chemtech.CPNM.Interface.Views;
 using Chemtech.CPNM.Model.Addresses;
-using Chemtech.Cpnm.Data.Repositories;
-using NHibernate.Cfg;
 using Rhino.Mocks;
 using NUnit.Framework;
 
@@ -17,7 +13,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.AppControllers
     {
         private IGetAddressViewModel _addressViewModelMock;
         private IAddressFactory _addressFactoryMock;
-        private ISetupReuseView _setupReuseViewMock;
+        private ISetupReuseViewModel _setupReuseViewMock;
         private IReuseHandler _reuseHandlerMock;
         private ICPNMApp _appMock;
 
@@ -32,7 +28,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.AppControllers
             _addressFactoryMock = MockRepository.GenerateMock<IAddressFactory>();
             _addressFactoryMock.Expect(x => x.Create((IAddressDefiner) null)).IgnoreArguments().Return(null);
 
-            _setupReuseViewMock = MockRepository.GenerateMock<ISetupReuseView>();
+            _setupReuseViewMock = MockRepository.GenerateMock<ISetupReuseViewModel>();
             _setupReuseViewMock.Expect(x => x.Open());
             _setupReuseViewMock.Expect(x => x.Close());
             _setupReuseViewMock.Expect(x => x.ResultOk()).Return(true);
