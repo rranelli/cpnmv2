@@ -31,5 +31,11 @@ namespace Chemtech.CPNM.Model.Addresses
             SubAreaRef,
             ProjectRef
         }
+
+        public bool IsValid()
+        {
+            return ((Item != null && Property != null && UnitOfMeasure != null) || 
+                   IsMetadata == true);
+        }
     }
 }

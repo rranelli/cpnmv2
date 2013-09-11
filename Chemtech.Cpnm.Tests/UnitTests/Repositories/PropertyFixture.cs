@@ -5,11 +5,13 @@
 // Criado em: 10/06/2013
 // Modificado em: 18/06/2013 : 1:52 AM
 
+using System;
+using Castle.Windsor.Installer;
 using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
-using NHibernate.Cfg;
 using NUnit.Framework;
+using Configuration = NHibernate.Cfg.Configuration;
 
 namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
@@ -24,7 +26,10 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _testHelper = DiResolver.IocResolve<ITestHelper>();
+            var container = DiResolver.Getcontainer();
+            try { container.Install(FromAssembly.Named("Chemtech.CPNM.Tests")); }
+            catch (Exception) { }
+            _testHelper = container.Resolve<ITestHelper>();
             _configuration = _testHelper.MakeConfiguration();
         }
 

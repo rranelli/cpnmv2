@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
-using System.Windows.Input;
 using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Addresses;
@@ -14,8 +14,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
         public GetAddressViewModel(Window view)
             : base(view)
         {
-            ItemTypes = new ObservableCollection<ItemType>(DiResolver.IocResolve<IItemTypeRepository>().GetAll());
-            ItemTypeGroups = new ObservableCollection<ItemTypeGroup>(DiResolver.IocResolve<IItemTypeGroupRepository>().GetAll());
+            ItemTypeGroups = new ObservableCollection<ItemTypeGroup>(DiResolver.IocResolve<IItemTypeGroupRepository>().GetAll()); //Todo Resolvendo IOC aqui dentro. Lixo.
             PropertyGroups = new ObservableCollection<PropertyGroup>(DiResolver.IocResolve<IPropertyGroupRepository>().GetAll());
             SubAreas = new ObservableCollection<SubArea>(DiResolver.IocResolve<ISubAreaRepository>().GetAll());
         }
@@ -157,6 +156,8 @@ namespace Chemtech.CPNM.Interface.ViewModels
             set
             {
                 _selectedProperty = value;
+                if (SelectedProperty != null && SelectedProperty.ValidUnits != null) 
+                    UnitOfMeasures = new ObservableCollection<UnitOfMeasure>(SelectedProperty.ValidUnits);
                 OnPropertyChanged("SelectedProperty");
             }
         }
@@ -177,6 +178,8 @@ namespace Chemtech.CPNM.Interface.ViewModels
             set
             {
                 _selectedItemType = value;
+                Properties = new ObservableCollection<Property>(SelectedItemType.ValidProperties);
+                Items = new ObservableCollection<Item>(DiResolver.IocResolve<IItemRepository>().GetByType(SelectedItemType)); //TODO filtrar por subarea e projeto e afins
                 OnPropertyChanged("SelectedItemType");
             }
         }
@@ -188,7 +191,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
             {
                 _selectedItemTypeGroup = value;
                 ItemTypes = value != null ?
-                      new ObservableCollection<ItemType>(DiResolver.IocResolve<IItemTypeRepository>().GetByGroup(_selectedItemTypeGroup))
+                      new ObservableCollection<ItemType>(DiResolver.IocResolve<IItemTypeRepository>().GetByGroup(SelectedItemTypeGroup))
                     : new ObservableCollection<ItemType>(DiResolver.IocResolve<IItemTypeRepository>().GetAll());
 
                 OnPropertyChanged("SelectedItemTypeGroup");
@@ -201,6 +204,9 @@ namespace Chemtech.CPNM.Interface.ViewModels
             set
             {
                 _selectedPropertyGroup = value;
+                if (Properties != null) 
+                    Properties = new ObservableCollection<Property>(Properties.Where(x =>
+                                                                                    Equals(x.PropertyGroup, SelectedPropertyGroup)));
                 OnPropertyChanged("SelectedPropertyGroup");
             }
         }
@@ -211,6 +217,8 @@ namespace Chemtech.CPNM.Interface.ViewModels
             set
             {
                 _selectedSubArea = value;
+                if(Items != null) Items = new ObservableCollection<Item>(Items.Where(x =>
+                                                                 Equals(x.SubArea, SelectedSubArea)));
                 OnPropertyChanged("SelectedSubArea");
             }
         }
@@ -241,18 +249,27 @@ namespace Chemtech.CPNM.Interface.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
+            var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public override bool ResultOk()
         {
-            throw new System.NotImplementedException();
+            return GetAddressDefiner().IsValid();
         }
 
         public AddressDefiner GetAddressDefiner()
         {
-            throw new System.NotImplementedException();
+            return new AddressDefiner
+                       {
+                           FormatType = SelectedFormatType,
+                           Item = SelectedItem,
+                           Property = SelectedProperty,
+                           PropValue = SelectedItem.GetPropValue(SelectedProperty),
+                           IsMetadata = MetaSelected,
+                           ThisAddressType = SelectedAddressType,
+                           UnitOfMeasure = SelectedUnitOfMeasure
+                       };
         }
     }
 }

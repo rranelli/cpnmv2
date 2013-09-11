@@ -21,6 +21,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
         private PropValue.FormatType _formatType;
         private UnitOfMeasure _mockedUnit;
         private PropValue _mockedPropValue;
+        private Item _mockedItem;
         private Property _mockedProperty;
 
         [SetUp]
@@ -42,19 +43,22 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
             _mockedPropValue.Expect(pv => pv.ItemId).Return(_itemid);
             _mockedPropValue.Expect(pv => pv.GetProperty).Return(_mockedProperty);
             _mockedPropValue.Expect(pv => pv.FormatedValue(_mockedUnit, _formatType)).Return("Right Value");
+            
+            _mockedItem = MockRepository.GenerateMock<Item>();
+            _mockedItem.Expect(it => it.GetPropValue(_mockedProperty)).Return(_mockedPropValue);
         }
 
         [Test]
         public void ShowsCorrectValue() // Testa se o FormatedValue eh chamado.
         {
-            var result = new ValueRefAddress(_mockedPropValue, _mockedUnit, _formatType).GetValue();
+            var result = new ValueRefAddress(_mockedItem, _mockedProperty, _mockedUnit, _formatType).GetValue();
             Assert.AreEqual(result, "Right Value");
         }
 
         [Test]
         public void AddressContainsAllIds()
         {
-            var address = new ValueRefAddress(_mockedPropValue, _mockedUnit, _formatType).GetAddressString();
+            var address = new ValueRefAddress(_mockedItem, _mockedProperty, _mockedUnit, _formatType).GetAddressString();
             Assert.IsTrue(address.Contains(_itemid.ToString()));
             Assert.IsTrue(address.Contains(_unitid.ToString()));
             Assert.IsTrue(address.Contains(_propid.ToString()));
@@ -64,7 +68,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
         [Test]
         public void AddressContainsDefaultUnitId()
         {
-            var address = new ValueRefAddress(_mockedPropValue, null, _formatType).GetAddressString();
+            var address = new ValueRefAddress(_mockedItem, _mockedProperty, null, _formatType).GetAddressString();
             
             Assert.IsTrue(address.Contains(_itemid.ToString()));
             Assert.IsTrue(address.Contains(_unitid.ToString()));

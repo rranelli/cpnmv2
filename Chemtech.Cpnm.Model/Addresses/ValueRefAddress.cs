@@ -4,13 +4,15 @@ namespace Chemtech.CPNM.Model.Addresses
 {
     public class ValueRefAddress : Address
     {
-        private readonly PropValue _propValue;
         private readonly UnitOfMeasure _unitOfMeasure;
         private readonly PropValue.FormatType _formatType;
+        private readonly Item _item;
+        private readonly Property _property;
         
-        public ValueRefAddress(PropValue propValue, UnitOfMeasure unitOfMeasure, PropValue.FormatType formatType)
+        public ValueRefAddress(Item item , Property property, UnitOfMeasure unitOfMeasure, PropValue.FormatType formatType)
         {
-            _propValue = propValue;
+            _item = item;
+            _property = property;
             _unitOfMeasure = unitOfMeasure;
             _formatType = formatType;
         }
@@ -22,16 +24,18 @@ namespace Chemtech.CPNM.Model.Addresses
 
         public override string GetValue()
         {
-            return _propValue.FormatedValue(_unitOfMeasure, _formatType);
+            return _item.GetPropValue(_property) != null 
+                ? _item.GetPropValue(_property).FormatedValue(_unitOfMeasure, _formatType)
+                : "No Value";
         }
 
         private string MakeAddress() // TODO : move routerchar as a resource.
         {
-            return GetPreffix(AddressDefiner.AddressType.ValueRef) + RouterChar + _propValue.ItemId + RouterChar +
-                       _propValue.GetProperty.Id + RouterChar +
+            return GetPreffix(AddressDefiner.AddressType.ValueRef) + RouterChar + _item.Id + RouterChar +
+                       _property.Id + RouterChar +
                        (_unitOfMeasure != null
                             ? _unitOfMeasure.Id.ToString()
-                            : _propValue.GetProperty.DefaultUnit.Id.ToString())
+                            : _property.DefaultUnit.Id.ToString())
                        + RouterChar + _formatType;
         }
     }

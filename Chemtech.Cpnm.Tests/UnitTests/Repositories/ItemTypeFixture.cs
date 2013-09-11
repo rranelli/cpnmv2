@@ -5,12 +5,13 @@
 // Criado em: 11/06/2013
 // Modificado em: 18/06/2013 : 1:52 AM
 
-using Chemtech.CPNM.BR;
+using System;
+using Castle.Windsor.Installer;
 using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
-using NHibernate.Cfg;
 using NUnit.Framework;
+using Configuration = NHibernate.Cfg.Configuration;
 
 namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
@@ -27,7 +28,10 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _testHelper = DiResolver.IocResolve<ITestHelper>();
+            var container = DiResolver.Getcontainer();
+            try { container.Install(FromAssembly.Named("Chemtech.CPNM.Tests")); }
+            catch (Exception) { }
+            _testHelper = container.Resolve<ITestHelper>();
             _configuration = _testHelper.MakeConfiguration();
         }
 
@@ -51,11 +55,10 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [Test]
         public void CanAddItemType()
         {
-            var itemType = new ItemType();
-            itemType.Name = "Tanque";
+            var itemType = new ItemType {Name = "Tanque"};
 
             _itemTypeRepository.Add(itemType);
-            ItemType fromDb = _itemTypeRepository.GetById(itemType.Id);
+            var fromDb = _itemTypeRepository.GetById(itemType.Id);
 
             Assert.IsNotNull(fromDb);
             Assert.AreEqual(fromDb, itemType);
@@ -65,18 +68,18 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [Test]
         public void CanRemoveItemType()
         {
-            ItemType typeToBeRemoved = _itemTypeRepository.GetByName("Transmissor");
+            var typeToBeRemoved = _itemTypeRepository.GetByName("Transmissor");
             _itemTypeRepository.Remove(typeToBeRemoved);
             Assert.IsNotNull(typeToBeRemoved);
 
-            ItemType fromDb = _itemTypeRepository.GetById(typeToBeRemoved.Id);
+            var fromDb = _itemTypeRepository.GetById(typeToBeRemoved.Id);
             Assert.IsNull(fromDb);
         }
 
         [Test]
         public void CanUpdateItemType()
         {
-            ItemType typeToBeUpdated = _itemTypeRepository.GetByName("Bomba");
+            var typeToBeUpdated = _itemTypeRepository.GetByName("Bomba");
             typeToBeUpdated.Name = "Bombalove";
             _itemTypeRepository.Update(typeToBeUpdated);
 

@@ -22,14 +22,12 @@ namespace Chemtech.CPNM.Data.Repositories
         private static readonly Regex ValidationRegex = new Regex(RegexValidationCriteria);
 
         private readonly IItemRepository _itemRepository;
-        private readonly IPropValueRepository _propValueRepository;
         private readonly IUnitOfMeasureRepository _unitOfMeasureRepository;
         private readonly IPropertyRepository _propertyRepository;
 
-        public AddressObjFactory(IItemRepository itemRepository, IPropValueRepository propValueRepository, IUnitOfMeasureRepository unitOfMeasureRepository, IPropertyRepository propertyRepository)
+        public AddressObjFactory(IItemRepository itemRepository, IUnitOfMeasureRepository unitOfMeasureRepository, IPropertyRepository propertyRepository)
         {
             _itemRepository = itemRepository;
-            _propValueRepository = propValueRepository;
             _unitOfMeasureRepository = unitOfMeasureRepository;
             _propertyRepository = propertyRepository;
         }
@@ -48,7 +46,7 @@ namespace Chemtech.CPNM.Data.Repositories
             switch (addressDefiner.ThisAddressType)
             {
                 case AddressDefiner.AddressType.ValueRef:
-                    return new ValueRefAddress(addressDefiner.PropValue, addressDefiner.UnitOfMeasure, addressDefiner.FormatType);
+                    return new ValueRefAddress(addressDefiner.Item, addressDefiner.Property, addressDefiner.UnitOfMeasure, addressDefiner.FormatType);
                 case AddressDefiner.AddressType.ProjectRef:
                     throw new NotImplementedException();
                 case AddressDefiner.AddressType.AreaRef:
@@ -135,15 +133,16 @@ namespace Chemtech.CPNM.Data.Repositories
             var itemId = new Guid(itemIdString);
             var propId = new Guid(propIdString);
 
-            var propValue = _propValueRepository.GetByItemAndPropId(itemId, propId);
+            var item = _itemRepository.GetById(itemId);
+            var prop = _propertyRepository.GetById(propId);
 
             var unitOfMeasure = unitIdString != ""
                                 ? _unitOfMeasureRepository.GetById(new Guid(unitIdString))
-                                : propValue.GetProperty.DefaultUnit;
+                                : prop.DefaultUnit;
 
             var formatType = (PropValue.FormatType)Enum.Parse(typeof(PropValue.FormatType), formatTypeString);
 
-            return new ValueRefAddress(propValue, unitOfMeasure, formatType);
+            return new ValueRefAddress(item, prop, unitOfMeasure, formatType);
         }
     }
 }

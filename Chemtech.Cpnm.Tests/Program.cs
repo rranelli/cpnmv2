@@ -1,4 +1,5 @@
 ﻿using System;
+using Castle.Windsor.Installer;
 using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Tests.UnitTests;
 
@@ -9,13 +10,16 @@ namespace Chemtech.CPNM.Tests
         [STAThread]
         public static void Main()
         {
-            var testHelper = DiResolver.IocResolve<ITestHelper>();
+            var container = DiResolver.Getcontainer();
+            container.Install(FromAssembly.Named("Chemtech.CPNM.Tests"));
+            var testHelper = container.Resolve<ITestHelper>();
+
             var configuration = testHelper.MakeConfiguration();
             testHelper.SetUpDatabaseTestData(configuration);
 
-            //var b = DiResolver.IocResolve<IGetAddressViewModel>();
-
-            //b.Open();
+            var appexcelz = new Microsoft.Office.Interop.Excel.Application();
+            appexcelz.Visible = true;
+            appexcelz.Workbooks.OpenText("c:/text.txt");
         }
     }
 }

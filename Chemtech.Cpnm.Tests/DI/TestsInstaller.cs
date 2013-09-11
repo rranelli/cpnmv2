@@ -3,7 +3,7 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Chemtech.CPNM.Tests.UnitTests;
 
-namespace Chemtech.CPNM.Tests
+namespace Chemtech.CPNM.Tests.DI
 {
     public class InstallerTests : IWindsorInstaller
     {

@@ -177,7 +177,7 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="Application\AppExcel.cs" />
+    <Compile Include="Application\CPNMAppExcel.cs" />
     <Compile Include="CPNMRibbon.cs">
       <SubType>Component</SubType>
     </Compile>

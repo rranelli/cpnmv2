@@ -49,6 +49,9 @@
       <HintPath>..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\SharedLibs\NHibernate.dll</HintPath>
     </Reference>
@@ -88,6 +91,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Chemtech.CPNM.App.Excel\Chemtech.CPNM.App.Excel.csproj">
+      <Project>{64C020F9-31F6-4C4E-B3C6-3B81D692A830}</Project>
+      <Name>Chemtech.CPNM.App.Excel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Chemtech.CPNM.BR\Chemtech.CPNM.BR.csproj">
       <Project>{DE72ECFD-276D-4B03-BE91-CE05F1C18D80}</Project>
       <Name>Chemtech.CPNM.BR</Name>

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="GetAddressView" Height="auto" Width="auto">
-    <Grid Height="auto" Width="auto">
+    <Grid>
         <!--Grid definition-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -58,7 +58,7 @@
         </ComboBox>
 
         <!--Listboxes-->
-        <ListBox Grid.Row="3" ItemsSource="{Binding Path=ItemTypes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="148" VerticalAlignment="Top">
+        <ListBox Grid.Row="3" SelectedItem="{Binding Path=SelectedItemType}" ItemsSource="{Binding Path=ItemTypes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="85" VerticalAlignment="Top">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -66,7 +66,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Path=Items, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="84" VerticalAlignment="Top">
+        <ListBox Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Path=SelectedItem}" ItemsSource="{Binding Path=Items, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="84" VerticalAlignment="Top">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -75,7 +75,7 @@
         </ListBox>
 
         <ListBox SelectedItem="{Binding Path=SelectedProperty, Mode=TwoWay}" ItemsSource="{Binding Path=Properties, UpdateSourceTrigger=PropertyChanged}"
-                 Grid.Row="3" Grid.Column="2"  Width="100" Height="164" Name="ltbprop" VerticalAlignment="Top">
+                 Grid.Row="3" Grid.Column="2"  Width="100" Height="84" Name="ltbprop" VerticalAlignment="Top">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -83,7 +83,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Grid.Row ="3" Grid.Column="3" ItemsSource="{Binding Path=UnitOfMeasures, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="4" VerticalAlignment="Top">
+        <ListBox Grid.Row ="3" Grid.Column="3" SelectedItem="{Binding Path=SelectedUnitOfMeasure}" ItemsSource="{Binding Path=UnitOfMeasures, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="85" Margin="1,0" VerticalAlignment="Top">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -119,6 +119,6 @@
         </GroupBox>
 
         <!--AddReferenceButton-->
-        <Button Grid.Row="6" Grid.Column="3" Content="InsertAddress"></Button>
+        <Button Grid.Row="6" Grid.Column="3" Content="InsertAddress" Click="Button_Click"></Button>
     </Grid>
 </Window>

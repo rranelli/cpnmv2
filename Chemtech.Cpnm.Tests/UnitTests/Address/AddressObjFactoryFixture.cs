@@ -18,6 +18,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
     {
         private IAddressFactory _addressObjfactory;
         private PropValue _mockedPropValue ;
+        private Property _mockedProperty ;
         private UnitOfMeasure _mockedUnit;
         private Item _mockedItem;
         
@@ -34,16 +35,20 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
             _propid = Guid.NewGuid();
             _formatType = PropValue.FormatType.ValueAndUnit;
 
-            _mockedItem = MockRepository.GenerateMock<Item>();
-            _mockedItem.Expect(i => i.Id).Return(_itemid);
-
             _mockedUnit = MockRepository.GenerateMock<UnitOfMeasure>();
             _mockedUnit.Expect(uom => uom.Id).Return(_unitid);
 
+            _mockedProperty = MockRepository.GenerateMock<Property>();
+            _mockedProperty.Expect(prop => prop.Id).Return(_propid);
+
             _mockedPropValue = MockRepository.GenerateMock<PropValue>();
             _mockedPropValue.Expect(pv => pv.ItemId).Return(_itemid);
-            _mockedPropValue.Expect(pv => pv.GetProperty.Id).Return(_propid);
+            _mockedPropValue.Expect(pv => pv.GetProperty).Return(_mockedProperty);
             _mockedPropValue.Expect(pv => pv.FormatedValue(_mockedUnit, _formatType)).Return("Right Value");
+
+            _mockedItem = MockRepository.GenerateMock<Item>();
+            _mockedItem.Expect(i => i.Id).Return(_itemid);
+            _mockedItem.Expect(i => i.GetPropValue(_mockedProperty)).Return(_mockedPropValue);
 
             var mockedItemRepo = MockRepository.GenerateMock<IItemRepository>();
             var mockedPropRepo = MockRepository.GenerateMock<IPropertyRepository>();
@@ -54,13 +59,13 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
             var mockedPropValRepo = MockRepository.GenerateMock<IPropValueRepository>();
             mockedPropValRepo.Expect(pvr => pvr.GetByItemAndPropId(_itemid, _propid)).Return(_mockedPropValue);
 
-            _addressObjfactory = new AddressObjFactory(mockedItemRepo,mockedPropValRepo,mockedUnitRepo,mockedPropRepo);
+            _addressObjfactory = new AddressObjFactory(mockedItemRepo,mockedUnitRepo,mockedPropRepo);
         }
 
         [Test]
         public void CanParsePropValAddressIntoObject() // Tests if the address factory can parse a string into the object with the correct behavior.
         {
-            var valueRefAddressObj = new ValueRefAddress(_mockedPropValue, _mockedUnit, _formatType);
+            var valueRefAddressObj = new ValueRefAddress(_mockedItem, _mockedProperty, _mockedUnit, _formatType);
 
             string address = valueRefAddressObj.GetAddressString();
             var addressObj = _addressObjfactory.Create(address);
@@ -78,7 +83,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
                                                UnitOfMeasure = _mockedUnit,
                                                FormatType = _formatType
                                            };
-            var realAddressObj = new ValueRefAddress(_mockedPropValue, _mockedUnit, _formatType);
+            var realAddressObj = new ValueRefAddress(_mockedItem, _mockedProperty, _mockedUnit, _formatType);
             var addressObj = _addressObjfactory.Create(valRefAddressDefiner);
 
             Assert.AreEqual(realAddressObj.GetAddressString(), addressObj.GetAddressString());
