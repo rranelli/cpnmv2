@@ -17,7 +17,7 @@ namespace Chemtech.CPNM.Data.Repositories
         // todo: factories should be static. make it static.
 
         private const string RegexCriteria = @"\/([\w-]*)";
-        private const string RegexValidationCriteria = @"^CPNM_(\w*):";
+        private const string RegexValidationCriteria = @"CPNM_(\w*):";
         private static readonly Regex BreakerRegex = new Regex(RegexCriteria);
         private static readonly Regex ValidationRegex = new Regex(RegexValidationCriteria);
 

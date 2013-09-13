@@ -17,7 +17,7 @@ namespace Chemtech.CPNM.App.Excel
             ISetupReuseViewModel setupReuseViewModel = null;
             var getReferenceViewModel = DiResolver.IocResolve<IGetAddressViewModel>();
             var addressFactory = DiResolver.IocResolve<IAddressFactory>();
-            var appExcel = new CPNMAppExcel();
+            var appExcel = new CPNMAppExcel(DiResolver.IocResolve<IAddressFactory>());
 
             _officeController = new AppOfficeControllerBase(appExcel, getReferenceViewModel, addressFactory, setupReuseViewModel);
         }
@@ -25,6 +25,11 @@ namespace Chemtech.CPNM.App.Excel
         private void btnInsertReference_Click(object sender, RibbonControlEventArgs e)
         {
             _officeController.InsertReferenceAction();
+        }
+
+        private void btnUpdateReferences_Click(object sender, RibbonControlEventArgs e)
+        {
+            _officeController.UpdateReferencesAction();
         }
     }
 }
