@@ -79,10 +79,10 @@ namespace Chemtech.CPNM.Data.Repositories
 
         public T GetById(Guid id)
         {
-            using (Session.BeginTransaction())
-            {
-                return Session.Get<T>(id);
-            }
+            return Session.QueryOver<T>()
+                .Where(x=> x.Id == id)
+                .CacheMode(CacheMode.Ignore)
+                .SingleOrDefault();
         }
 
         #endregion

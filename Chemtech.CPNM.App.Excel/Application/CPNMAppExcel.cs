@@ -1,17 +1,21 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Interface.IApps;
 using Chemtech.CPNM.Model.Addresses;
+using Microsoft.Office.Interop.Excel;
 
 namespace Chemtech.CPNM.App.Excel.Application
 {
     public class CPNMAppExcel : ICPNMApp
     {
         private readonly Microsoft.Office.Interop.Excel.Application _excelApp;
+        private readonly IAddressFactory _addressObjFactory;
 
-        public CPNMAppExcel()
+        public CPNMAppExcel(IAddressFactory addressObjFactory)
         {
+            _addressObjFactory = addressObjFactory;
             _excelApp = Globals.ThisAddIn.Application;
         }
 
@@ -25,29 +29,64 @@ namespace Chemtech.CPNM.App.Excel.Application
 
         public IDictionary<int, IAddress> GetIndexedReferences(bool isRestrictedToSelection)
         {
-            throw new NotImplementedException();
+            IDictionary<int, IAddress> indexedReferences = new Dictionary<int, IAddress>();
+            foreach(Name name in _excelApp.Names)
+                if(IsCpnmRefVarName(name.Name)) 
+                    indexedReferences.Add(GetIndexFromName(name.Name), _addressObjFactory.Create(name.RefersTo.ToString()));
+
+            return indexedReferences;
         }
 
         public void ApplyMapping(IDictionary<int, IAddress> newMapping, bool isColorChanges)
         {
-            throw new NotImplementedException();
+            // Importante. O caching do nhibernate n'ao recarrega os valores do banco quando eles sao alterados.
+            foreach(Name name in _excelApp.Names)  //pqp, Names n'ao implementa ienumerable.... good lord.
+            {
+                if(IsCpnmRefVarName(name.Name))
+                    name.RefersTo = newMapping[GetIndexFromName(name.Name)].GetAddressString();
+                if (IsCpnmValueVarName(name.Name))
+                    name.RefersTo = newMapping[GetIndexFromName(name.Name)].GetValue();
+            }
         }
 
-        public void UpdateAllReferences()
+        public void UpdateAllReferences() // confia na implementacao de apply mapping
         {
-            throw new NotImplementedException();
+            var currentIndexedReferences = GetIndexedReferences(false);
+            var updatedIndexedReferences = new Dictionary<int, IAddress>();
+            
+            currentIndexedReferences.ToList()
+                .ForEach(x => 
+                    updatedIndexedReferences.Add(x.Key,
+                                                _addressObjFactory
+                                                .Create(x.Value.GetAddressString())));
+
+            ApplyMapping(updatedIndexedReferences, true);
         }
 
-        private int GetNextIndex()
+        private int GetNextIndex() // todo: eliminar essa mutacao de maxindex.
         {
             var maxindex=0;
-            foreach (var name in _excelApp.Names)
+            foreach (Name name in _excelApp.Names)
             {
-                var thisindex = Convert.ToInt32(name.ToString().Replace("cpnmref", ""));
+                var thisindex = Convert.ToInt32(GetIndexFromName(name.Name));
                 if (thisindex > maxindex) maxindex = thisindex;
             }
             return maxindex + 1;
         }
+
+        private static bool IsCpnmRefVarName(string cpnmRefVarName)
+        {
+            return cpnmRefVarName.Contains("cpnmref");
+        }
+
+        private bool IsCpnmValueVarName(string cpnmValueVarName)
+        {
+            return cpnmValueVarName.Contains("cpnmval");
+        }
+
+        private int GetIndexFromName(string cpnmRefVarName)
+        {
+            return Convert.ToInt16(cpnmRefVarName.Replace("cpnmref", "").Replace("cpnmval", ""));
+        }
     }
 }
-

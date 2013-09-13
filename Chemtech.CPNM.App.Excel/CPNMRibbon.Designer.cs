@@ -37,6 +37,7 @@
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.btnInsertReference = this.Factory.CreateRibbonButton();
+            this.btnUpdateReferences = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             // 
@@ -50,6 +51,7 @@
             // group1
             // 
             this.group1.Items.Add(this.btnInsertReference);
+            this.group1.Items.Add(this.btnUpdateReferences);
             this.group1.Label = "group1";
             this.group1.Name = "group1";
             // 
@@ -58,6 +60,12 @@
             this.btnInsertReference.Label = "Inserir Referencia";
             this.btnInsertReference.Name = "btnInsertReference";
             this.btnInsertReference.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnInsertReference_Click);
+            // 
+            // btnUpdateReferences
+            // 
+            this.btnUpdateReferences.Label = "Update Valores";
+            this.btnUpdateReferences.Name = "btnUpdateReferences";
+            this.btnUpdateReferences.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnUpdateReferences_Click);
             // 
             // CPNMRibbon
             // 
@@ -77,6 +85,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnInsertReference;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnUpdateReferences;
     }
 
     partial class ThisRibbonCollection
