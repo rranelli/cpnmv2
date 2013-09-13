@@ -1,0 +1,45 @@
+﻿<Window x:Class="Chemtech.CPNM.Interface.Views.SetupReuseView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SetupReuseView" Height="332" Width="409">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Label Grid.Row="0" Grid.Column="0" Content="Item Origem"></Label>
+        <Label Grid.Row="0" Grid.Column="1" Content="Item Destino"></Label>
+        <Label Grid.Row="0" Grid.Column="3" Content="Queue"></Label>
+        
+        <ListBox Grid.Row="1" Grid.Column="0" Grid.RowSpan="5" Height="220" Width="100" VerticalAlignment="top"
+                 ItemsSource="{Binding Path=ExistantItems}" SelectedItem="{Binding Path=SelectedOrigin}"></ListBox>
+        <ListBox Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" Height="220" Width="100" VerticalAlignment="top"
+                 ItemsSource="{Binding Path=CandidateItems}" SelectedItem="{Binding Path=SelectedCandidate}"></ListBox>
+        <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" Height="150" Width="100" VerticalAlignment="top"
+                 ItemsSource="{Binding Path=ReuseQueue}"></ListBox>
+
+        <Button Grid.Row="2" Grid.Column="2" Content="Add" Height="40"></Button>
+        <Button Grid.Row="3" Grid.Column="2" Content="Remove" Height="40"></Button>
+        <Button Grid.Row="6" Grid.Column="3" Content="Commit Reuse!" Height="auto"></Button>
+        
+        <CheckBox Grid.Row="4" Grid.Column="3" Content="Colorir Mudanças?" VerticalAlignment="Center"
+                  IsChecked="{Binding Path=IsColorChanges}"></CheckBox>
+        <CheckBox Grid.Row="5" Grid.Column="3" Content="Restringe à Seleção" VerticalAlignment="Center"
+                  IsChecked="{Binding Path=IsRestrictedToSelection}"></CheckBox>
+    </Grid>
+</Window>

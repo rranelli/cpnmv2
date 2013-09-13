@@ -246,12 +246,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
         // ############
         // Property Chagned Event Handling
         // ############
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
 
         public override bool ResultOk()
         {

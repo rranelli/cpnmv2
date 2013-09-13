@@ -13,8 +13,6 @@ namespace Chemtech.CPNM.BR.AddressHandling.Addresses
         protected const char RouterChar = '/'; // TODO: make this a resource.
         private const string CpnmAddressPreffix = "CPNM_#:"; // TODO: make this a resource.
         
-
-
         public AddressDefiner.AddressType ThisAddressType { get; protected set; }
         public abstract string GetAddressString();
         public abstract string GetValue();

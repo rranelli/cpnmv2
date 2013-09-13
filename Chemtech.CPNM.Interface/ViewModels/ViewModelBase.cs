@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 
 namespace Chemtech.CPNM.Interface.ViewModels
 {
@@ -28,5 +29,12 @@ namespace Chemtech.CPNM.Interface.ViewModels
         }
 
         public abstract bool ResultOk();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

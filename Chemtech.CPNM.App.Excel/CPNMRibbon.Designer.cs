@@ -38,6 +38,7 @@
             this.group1 = this.Factory.CreateRibbonGroup();
             this.btnInsertReference = this.Factory.CreateRibbonButton();
             this.btnUpdateReferences = this.Factory.CreateRibbonButton();
+            this.btnApplyItemReuse = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             // 
@@ -52,6 +53,7 @@
             // 
             this.group1.Items.Add(this.btnInsertReference);
             this.group1.Items.Add(this.btnUpdateReferences);
+            this.group1.Items.Add(this.btnApplyItemReuse);
             this.group1.Label = "group1";
             this.group1.Name = "group1";
             // 
@@ -66,6 +68,12 @@
             this.btnUpdateReferences.Label = "Update Valores";
             this.btnUpdateReferences.Name = "btnUpdateReferences";
             this.btnUpdateReferences.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnUpdateReferences_Click);
+            // 
+            // btnApplyItemReuse
+            // 
+            this.btnApplyItemReuse.Label = "Aplicar Reuso";
+            this.btnApplyItemReuse.Name = "btnApplyItemReuse";
+            this.btnApplyItemReuse.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnApplyItemReuse_Click);
             // 
             // CPNMRibbon
             // 
@@ -86,6 +94,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnInsertReference;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnUpdateReferences;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnApplyItemReuse;
     }
 
     partial class ThisRibbonCollection

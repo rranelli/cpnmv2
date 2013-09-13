@@ -5,6 +5,7 @@ using Chemtech.CPNM.BR.AddressHandling;
 using Chemtech.CPNM.BR.AddressHandling.Addresses;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Interface.IApps;
+using Chemtech.CPNM.Model.Domain;
 using Microsoft.Office.Interop.Excel;
 
 namespace Chemtech.CPNM.App.Excel.Application
@@ -62,6 +63,11 @@ namespace Chemtech.CPNM.App.Excel.Application
                                                 .Create(x.Value.GetAddressString())));
 
             ApplyMapping(updatedIndexedReferences, true);
+        }
+
+        public ICollection<Item> GetReferencedItems()
+        {
+            return GetIndexedReferences(false).ToList().Select(kvp => kvp.Value.Item);
         }
 
         private int GetNextIndex() // todo: eliminar essa mutacao de maxindex.

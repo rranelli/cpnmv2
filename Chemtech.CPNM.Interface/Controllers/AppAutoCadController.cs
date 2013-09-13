@@ -3,9 +3,9 @@ using Chemtech.CPNM.Interface.IApps;
 
 namespace Chemtech.CPNM.Interface.Controllers
 {
-    public class AutoCadAppControllerBase : AppControllerBase
+    public class AppAutoCadController : AppControllerBase
     {
-        public AutoCadAppControllerBase(ICPNMApp cpnmApp) : base(cpnmApp) {}
+        public AppAutoCadController(ICPNMApp cpnmApp) : base(cpnmApp) {}
         public override void InsertReferenceAction()
         {
             throw new NotImplementedException();
