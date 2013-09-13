@@ -1,5 +1,4 @@
 ﻿using System;
-using Chemtech.CPNM.BR;
 using Chemtech.CPNM.BR.DI;
 
 namespace Chemtech.CPNM.Interface.Controllers

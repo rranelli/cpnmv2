@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Chemtech.CPNM.Model.Addresses;
+using Chemtech.CPNM.BR.AddressHandling.Addresses;
 
 namespace Chemtech.CPNM.Interface.IApps
 {

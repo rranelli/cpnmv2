@@ -1,6 +1,6 @@
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.Model.Addresses
+namespace Chemtech.CPNM.BR.AddressHandling.Addresses
 {
     public class ValueRefAddress : Address
     {

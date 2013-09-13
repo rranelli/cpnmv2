@@ -10,7 +10,6 @@ namespace Chemtech.CPNM.BR.DI
         static DiResolver()
         {
             Container = new WindsorContainer();
-            Container.Install(FromAssembly.This());
             Container.Install(FromAssembly.Named("Chemtech.CPNM.BR"));
             Container.Install(FromAssembly.Named("Chemtech.CPNM.Data"));
             Container.Install(FromAssembly.Named("Chemtech.CPNM.Model"));

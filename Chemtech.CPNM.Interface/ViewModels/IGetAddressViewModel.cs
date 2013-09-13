@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using Chemtech.CPNM.Model.Addresses;
+using Chemtech.CPNM.BR.AddressHandling.Addresses;
 using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.CPNM.Interface.ViewModels

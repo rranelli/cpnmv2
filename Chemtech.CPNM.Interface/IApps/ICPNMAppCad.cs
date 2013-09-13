@@ -1,7 +1,6 @@
-using Chemtech.CPNM.Interface.IApps;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.Interface
+namespace Chemtech.CPNM.Interface.IApps
 {
     public interface ICPNMAppCad : ICPNMApp
     {

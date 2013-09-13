@@ -6,7 +6,7 @@
 // Modificado em: 18/06/2013 : 1:51 AM
 
 using System;
-using Chemtech.CPNM.Model.Addresses;
+using Chemtech.CPNM.BR.AddressHandling.Addresses;
 using Chemtech.CPNM.Model.Domain;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -45,6 +45,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
             _mockedPropValue.Expect(pv => pv.FormatedValue(_mockedUnit, _formatType)).Return("Right Value");
             
             _mockedItem = MockRepository.GenerateMock<Item>();
+            _mockedItem.Expect(it => it.Id).Return(_itemid);
             _mockedItem.Expect(it => it.GetPropValue(_mockedProperty)).Return(_mockedPropValue);
         }
 

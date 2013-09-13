@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Chemtech.CPNM.BR.Logic;
+using Chemtech.CPNM.BR.ReuseLogic;
 using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.CPNM.Interface.ViewModels

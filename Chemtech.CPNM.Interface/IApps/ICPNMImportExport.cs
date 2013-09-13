@@ -1,7 +1,6 @@
-using Chemtech.CPNM.App.Excel.Data.DTOs;
-using Chemtech.CPNM.Interface.IApps;
+using Chemtech.Cpnm.Data.DTOs;
 
-namespace Chemtech.CPNM.Interface
+namespace Chemtech.CPNM.Interface.IApps
 {
     public interface ICPNMImportExport : ICPNMApp
     {

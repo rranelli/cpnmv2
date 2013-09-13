@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using Chemtech.CPNM.BR.AddressHandling.Addresses;
 using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
-using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.CPNM.Interface.ViewModels

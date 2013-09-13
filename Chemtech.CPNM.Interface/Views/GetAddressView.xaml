@@ -58,7 +58,7 @@
         </ComboBox>
 
         <!--Listboxes-->
-        <ListBox Grid.Row="3" SelectedItem="{Binding Path=SelectedItemType}" ItemsSource="{Binding Path=ItemTypes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="85" VerticalAlignment="Top">
+        <ListBox Grid.Row="3" SelectedItem="{Binding Path=SelectedItemType}" ItemsSource="{Binding Path=ItemTypes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="156" VerticalAlignment="Top" Grid.RowSpan="3">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -66,7 +66,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Path=SelectedItem}" ItemsSource="{Binding Path=Items, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="84" VerticalAlignment="Top">
+        <ListBox Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Path=SelectedItem}" ItemsSource="{Binding Path=Items, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="156" VerticalAlignment="Top" Grid.RowSpan="3">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -75,7 +75,7 @@
         </ListBox>
 
         <ListBox SelectedItem="{Binding Path=SelectedProperty, Mode=TwoWay}" ItemsSource="{Binding Path=Properties, UpdateSourceTrigger=PropertyChanged}"
-                 Grid.Row="3" Grid.Column="2"  Width="100" Height="84" Name="ltbprop" VerticalAlignment="Top">
+                 Grid.Row="3" Grid.Column="2"  Width="100" Height="156" Name="ltbprop" VerticalAlignment="Top" Grid.RowSpan="3">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -83,7 +83,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Grid.Row ="3" Grid.Column="3" SelectedItem="{Binding Path=SelectedUnitOfMeasure}" ItemsSource="{Binding Path=UnitOfMeasures, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="85" Margin="1,0" VerticalAlignment="Top">
+        <ListBox Grid.Row ="3" Grid.Column="3" SelectedItem="{Binding Path=SelectedUnitOfMeasure}" ItemsSource="{Binding Path=UnitOfMeasures, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="85" Margin="0,0,1,0" VerticalAlignment="Top">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>

@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Chemtech.CPNM.Data.Repositories;
-using Chemtech.CPNM.Model.Addresses;
+using Chemtech.CPNM.BR.AddressHandling;
+using Chemtech.CPNM.BR.AddressHandling.Addresses;
 using Chemtech.CPNM.Model.Domain;
-using Chemtech.CPNM.Data.DTOs;
 
-namespace Chemtech.CPNM.BR.Logic
+namespace Chemtech.CPNM.BR.ReuseLogic
 {
     public interface IReuseHandler 
     {

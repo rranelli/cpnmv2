@@ -1,4 +1,4 @@
-﻿// ReusePair.cs
+// ReusePair.cs
 // Projeto: Chemtech.CPNM.Data
 // Solution: Chemtech.CPNM
 // Implementado por: Renan
@@ -7,7 +7,7 @@
 
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.Data.DTOs
+namespace Chemtech.CPNM.BR.ReuseLogic
 {
     public class ItemReusePair
     {

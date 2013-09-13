@@ -1,9 +1,10 @@
-﻿using Chemtech.CPNM.BR.Logic;
+﻿using Chemtech.CPNM.BR.AddressHandling;
+using Chemtech.CPNM.BR.AddressHandling.Addresses;
+using Chemtech.CPNM.BR.ReuseLogic;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Interface.Controllers;
 using Chemtech.CPNM.Interface.IApps;
 using Chemtech.CPNM.Interface.ViewModels;
-using Chemtech.CPNM.Model.Addresses;
 using Rhino.Mocks;
 using NUnit.Framework;
 

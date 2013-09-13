@@ -6,8 +6,9 @@
 // Modificado em: 18/06/2013 : 1:51 AM
 
 using System;
+using Chemtech.CPNM.BR.AddressHandling;
+using Chemtech.CPNM.BR.AddressHandling.Addresses;
 using Chemtech.CPNM.Data.Repositories;
-using Chemtech.CPNM.Model.Addresses;
 using Chemtech.CPNM.Model.Domain;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -16,6 +17,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
 {
     internal class AddressObjFactoryFixture
     {
+        // Todo: Nao da pra testar a addressobjfactory pois ela faz fetch direto do banco de dados. Nao da pra mockar parse.
         private IAddressFactory _addressObjfactory;
         private PropValue _mockedPropValue ;
         private Property _mockedProperty ;
@@ -45,19 +47,20 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
             _mockedPropValue.Expect(pv => pv.ItemId).Return(_itemid);
             _mockedPropValue.Expect(pv => pv.GetProperty).Return(_mockedProperty);
             _mockedPropValue.Expect(pv => pv.FormatedValue(_mockedUnit, _formatType)).Return("Right Value");
+            _mockedPropValue.Expect(pv => pv.Value).Return("Right Value");
 
             _mockedItem = MockRepository.GenerateMock<Item>();
             _mockedItem.Expect(i => i.Id).Return(_itemid);
             _mockedItem.Expect(i => i.GetPropValue(_mockedProperty)).Return(_mockedPropValue);
 
             var mockedItemRepo = MockRepository.GenerateMock<IItemRepository>();
+            mockedItemRepo.Expect(mir => mir.GetById(_mockedItem.Id)).Return(_mockedItem);
+
             var mockedPropRepo = MockRepository.GenerateMock<IPropertyRepository>();
+            mockedPropRepo.Expect(mpr => mpr.GetById(_mockedProperty.Id)).Return(_mockedProperty);
             
             var mockedUnitRepo = MockRepository.GenerateMock<IUnitOfMeasureRepository>();
             mockedUnitRepo.Expect(uomr => uomr.GetById(_unitid)).Return(_mockedUnit);
-
-            var mockedPropValRepo = MockRepository.GenerateMock<IPropValueRepository>();
-            mockedPropValRepo.Expect(pvr => pvr.GetByItemAndPropId(_itemid, _propid)).Return(_mockedPropValue);
 
             _addressObjfactory = new AddressObjFactory(mockedItemRepo,mockedUnitRepo,mockedPropRepo);
         }
@@ -79,7 +82,8 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
         {
             var valRefAddressDefiner = new AddressDefiner
                                            {
-                                               PropValue = _mockedPropValue,
+                                               Item = _mockedItem,
+                                               Property = _mockedProperty,
                                                UnitOfMeasure = _mockedUnit,
                                                FormatType = _formatType
                                            };

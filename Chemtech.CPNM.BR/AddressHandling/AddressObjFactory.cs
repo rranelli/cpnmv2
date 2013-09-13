@@ -1,10 +1,11 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Chemtech.CPNM.Model.Addresses;
+using Chemtech.CPNM.BR.AddressHandling.Addresses;
+using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.Data.Repositories
+namespace Chemtech.CPNM.BR.AddressHandling
 {
     public interface IAddressFactory
     {

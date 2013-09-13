@@ -1,6 +1,6 @@
 ﻿using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.BR.Logic
+namespace Chemtech.CPNM.BR.ReuseLogic
 {
     public static class CpnmSession
     {

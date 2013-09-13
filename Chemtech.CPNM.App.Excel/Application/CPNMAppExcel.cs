@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Chemtech.CPNM.BR.AddressHandling;
+using Chemtech.CPNM.BR.AddressHandling.Addresses;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Interface.IApps;
-using Chemtech.CPNM.Model.Addresses;
 using Microsoft.Office.Interop.Excel;
 
 namespace Chemtech.CPNM.App.Excel.Application
@@ -79,12 +80,12 @@ namespace Chemtech.CPNM.App.Excel.Application
             return cpnmRefVarName.Contains("cpnmref");
         }
 
-        private bool IsCpnmValueVarName(string cpnmValueVarName)
+        private static bool IsCpnmValueVarName(string cpnmValueVarName)
         {
             return cpnmValueVarName.Contains("cpnmval");
         }
 
-        private int GetIndexFromName(string cpnmRefVarName)
+        private static int GetIndexFromName(string cpnmRefVarName)
         {
             return Convert.ToInt16(cpnmRefVarName.Replace("cpnmref", "").Replace("cpnmval", ""));
         }
