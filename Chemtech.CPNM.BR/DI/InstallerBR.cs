@@ -9,7 +9,7 @@ namespace Chemtech.CPNM.BR.DI
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<IAddressFactory>().ImplementedBy<AddressObjFactory>());
+            container.Register(Component.For<IAddressFactory>().ImplementedBy<AddressObjFactory>().LifeStyle.Transient);
         }
     }
 }

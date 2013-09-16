@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Chemtech.CPNM.BR.AddressHandling;
 using Chemtech.CPNM.BR.AddressHandling.Addresses;
-using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Interface.IApps;
 using Chemtech.CPNM.Model.Domain;
 using Microsoft.Office.Interop.Excel;
 
 namespace Chemtech.CPNM.App.Excel.Application
 {
+    // TODO: _excelApp deveria ser uma dependencia cara. Como fica se o cara estiver com mais de um excel aberto ????
     public class CPNMAppExcel : ICPNMApp
     {
         private readonly Microsoft.Office.Interop.Excel.Application _excelApp;
@@ -32,8 +32,8 @@ namespace Chemtech.CPNM.App.Excel.Application
         public IDictionary<int, IAddress> GetIndexedReferences(bool isRestrictedToSelection)
         {
             IDictionary<int, IAddress> indexedReferences = new Dictionary<int, IAddress>();
-            foreach(Name name in _excelApp.Names)
-                if(IsCpnmRefVarName(name.Name)) 
+            foreach (Name name in _excelApp.Names)
+                if (IsCpnmRefVarName(name.Name))
                     indexedReferences.Add(GetIndexFromName(name.Name), _addressObjFactory.Create(name.RefersTo.ToString()));
 
             return indexedReferences;
@@ -42,9 +42,9 @@ namespace Chemtech.CPNM.App.Excel.Application
         public void ApplyMapping(IDictionary<int, IAddress> newMapping, bool isColorChanges)
         {
             // Importante. O caching do nhibernate n'ao recarrega os valores do banco quando eles sao alterados.
-            foreach(Name name in _excelApp.Names)  //pqp, Names n'ao implementa ienumerable.... good lord.
+            foreach (Name name in _excelApp.Names)  //pqp, Names n'ao implementa ienumerable.... good lord.
             {
-                if(IsCpnmRefVarName(name.Name))
+                if (IsCpnmRefVarName(name.Name))
                     name.RefersTo = newMapping[GetIndexFromName(name.Name)].GetAddressString();
                 if (IsCpnmValueVarName(name.Name))
                     name.RefersTo = newMapping[GetIndexFromName(name.Name)].GetValue();
@@ -55,9 +55,9 @@ namespace Chemtech.CPNM.App.Excel.Application
         {
             var currentIndexedReferences = GetIndexedReferences(false);
             var updatedIndexedReferences = new Dictionary<int, IAddress>();
-            
+
             currentIndexedReferences.ToList()
-                .ForEach(x => 
+                .ForEach(x =>
                     updatedIndexedReferences.Add(x.Key,
                                                 _addressObjFactory
                                                 .Create(x.Value.GetAddressString())));
@@ -67,12 +67,13 @@ namespace Chemtech.CPNM.App.Excel.Application
 
         public ICollection<Item> GetReferencedItems()
         {
-            return GetIndexedReferences(false).ToList().Select(kvp => kvp.Value.Item);
+            //return GetIndexedReferences(false).ToList().Select(kvp => kvp.Value.Item);
+            return null; //TODO: Fix this. Ow god.
         }
 
         private int GetNextIndex() // todo: eliminar essa mutacao de maxindex.
         {
-            var maxindex=0;
+            var maxindex = 0;
             foreach (Name name in _excelApp.Names)
             {
                 var thisindex = Convert.ToInt32(GetIndexFromName(name.Name));

@@ -156,7 +156,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
             set
             {
                 _selectedProperty = value;
-                if (SelectedProperty != null && SelectedProperty.ValidUnits != null) 
+                if (SelectedProperty != null && SelectedProperty.ValidUnits != null)
                     UnitOfMeasures = new ObservableCollection<UnitOfMeasure>(SelectedProperty.ValidUnits);
                 OnPropertyChanged("SelectedProperty");
             }
@@ -204,7 +204,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
             set
             {
                 _selectedPropertyGroup = value;
-                if (Properties != null) 
+                if (Properties != null)
                     Properties = new ObservableCollection<Property>(Properties.Where(x =>
                                                                                     Equals(x.PropertyGroup, SelectedPropertyGroup)));
                 OnPropertyChanged("SelectedPropertyGroup");
@@ -217,8 +217,8 @@ namespace Chemtech.CPNM.Interface.ViewModels
             set
             {
                 _selectedSubArea = value;
-                if(Items != null) Items = new ObservableCollection<Item>(Items.Where(x =>
-                                                                 Equals(x.SubArea, SelectedSubArea)));
+                if (Items != null) Items = new ObservableCollection<Item>(Items.Where(x =>
+                                                                  Equals(x.SubArea, SelectedSubArea)));
                 OnPropertyChanged("SelectedSubArea");
             }
         }
@@ -246,7 +246,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
         // ############
         // Property Chagned Event Handling
         // ############
-        
+
 
         public override bool ResultOk()
         {

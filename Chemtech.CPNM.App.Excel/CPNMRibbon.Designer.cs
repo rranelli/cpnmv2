@@ -54,7 +54,7 @@
             this.group1.Items.Add(this.btnInsertReference);
             this.group1.Items.Add(this.btnUpdateReferences);
             this.group1.Items.Add(this.btnApplyItemReuse);
-            this.group1.Label = "group1";
+            this.group1.Label = "CPNM";
             this.group1.Name = "group1";
             // 
             // btnInsertReference
