@@ -5,9 +5,7 @@
 // Criado em: 11/06/2013
 // Modificado em: 18/06/2013 : 1:52 AM
 
-using System;
-using Castle.Windsor.Installer;
-using Chemtech.CPNM.BR.DI;
+using Castle.Windsor;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NUnit.Framework;
@@ -17,6 +15,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
     internal class ItemTypeFixture
     {
+        private WindsorContainer _container;
         private Configuration _configuration;
         private IItemTypeRepository _itemTypeRepository;
         private IItemTypeGroupRepository _itemTypeGroupRepository;
@@ -28,10 +27,8 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            var container = DiResolver.Getcontainer();
-            try { container.Install(FromAssembly.Named("Chemtech.CPNM.Tests")); }
-            catch (Exception) { }
-            _testHelper = container.Resolve<ITestHelper>();
+            _container = new TestDIContainer();
+            _testHelper = _container.Resolve<ITestHelper>();
             _configuration = _testHelper.MakeConfiguration();
         }
 
@@ -39,9 +36,9 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         public void SetUp()
         {
             _testHelper.SetUpDatabaseTestData(_configuration);
-            _itemTypeRepository = DiResolver.IocResolve<IItemTypeRepository>();
-            _propertyRepository = DiResolver.IocResolve<IPropertyRepository>();
-            _itemTypeGroupRepository = DiResolver.IocResolve<IItemTypeGroupRepository>();
+            _itemTypeRepository = _container.Resolve<IItemTypeRepository>();
+            _propertyRepository = _container.Resolve<IPropertyRepository>();
+            _itemTypeGroupRepository = _container.Resolve<IItemTypeGroupRepository>();
         }
 
         [TestFixtureTearDown]

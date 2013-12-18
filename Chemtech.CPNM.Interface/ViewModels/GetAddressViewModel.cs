@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using Chemtech.CPNM.BR.AddressHandling.Addresses;
-using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 
@@ -14,9 +13,14 @@ namespace Chemtech.CPNM.Interface.ViewModels
         public GetAddressViewModel(Window view)
             : base(view)
         {
-            ItemTypeGroups = new ObservableCollection<ItemTypeGroup>(DiResolver.IocResolve<IItemTypeGroupRepository>().GetAll()); //Todo Resolvendo IOC aqui dentro. Lixo.
-            PropertyGroups = new ObservableCollection<PropertyGroup>(DiResolver.IocResolve<IPropertyGroupRepository>().GetAll());
-            SubAreas = new ObservableCollection<SubArea>(DiResolver.IocResolve<ISubAreaRepository>().GetAll());
+            var container = new InterfaceDIContainer();
+
+            ItemTypeGroups = new ObservableCollection<ItemTypeGroup>(container.Resolve<IItemTypeGroupRepository>().GetAll()); //Todo Resolvendo IOC aqui dentro. Lixo.
+            PropertyGroups = new ObservableCollection<PropertyGroup>(container.Resolve<IPropertyGroupRepository>().GetAll());
+            SubAreas = new ObservableCollection<SubArea>(container.Resolve<ISubAreaRepository>().GetAll());
+
+            _itemRepository = container.Resolve<IItemRepository>();
+            _itemTypeRepository = container.Resolve<IItemTypeRepository>();
         }
 
         private Property _selectedProperty;
@@ -26,8 +30,11 @@ namespace Chemtech.CPNM.Interface.ViewModels
         private ItemTypeGroup _selectedItemTypeGroup;
         private PropertyGroup _selectedPropertyGroup;
         private SubArea _selectedSubArea;
-        private PropValue.FormatType _selectedFormatType;
+        private FormatType _selectedFormatType;
         private AddressDefiner.AddressType _selectedAddressType;
+
+        private readonly IItemRepository _itemRepository;
+        private readonly IItemTypeRepository _itemTypeRepository;
 
         private ObservableCollection<ItemType> _itemTypes;
         private ObservableCollection<Item> _items;
@@ -36,9 +43,10 @@ namespace Chemtech.CPNM.Interface.ViewModels
         private ObservableCollection<ItemTypeGroup> _itemTypeGroups;
         private ObservableCollection<PropertyGroup> _propertyGroups;
         private ObservableCollection<SubArea> _subAreas;
-        private PropValue.FormatType _formatTypes;
+        private FormatType _formatTypes;
         private AddressDefiner.AddressType _addressType;
         private bool _metaSelected;
+
 
         public ObservableCollection<Item> Items
         {
@@ -110,7 +118,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
             }
         }
 
-        public PropValue.FormatType FormatTypes
+        public FormatType FormatTypes
         {
             get { return _formatTypes; }
             set
@@ -179,7 +187,9 @@ namespace Chemtech.CPNM.Interface.ViewModels
             {
                 _selectedItemType = value;
                 Properties = new ObservableCollection<Property>(SelectedItemType.ValidProperties);
-                Items = new ObservableCollection<Item>(DiResolver.IocResolve<IItemRepository>().GetByType(SelectedItemType)); //TODO filtrar por subarea e projeto e afins
+
+                //TODO filtrar por subarea e projeto e afins
+                Items = new ObservableCollection<Item>(_itemRepository.GetByType(SelectedItemType));
                 OnPropertyChanged("SelectedItemType");
             }
         }
@@ -191,8 +201,8 @@ namespace Chemtech.CPNM.Interface.ViewModels
             {
                 _selectedItemTypeGroup = value;
                 ItemTypes = value != null ?
-                      new ObservableCollection<ItemType>(DiResolver.IocResolve<IItemTypeRepository>().GetByGroup(SelectedItemTypeGroup))
-                    : new ObservableCollection<ItemType>(DiResolver.IocResolve<IItemTypeRepository>().GetAll());
+                      new ObservableCollection<ItemType>(_itemTypeRepository.GetByGroup(SelectedItemTypeGroup))
+                    : new ObservableCollection<ItemType>(_itemTypeRepository.GetAll());
 
                 OnPropertyChanged("SelectedItemTypeGroup");
             }
@@ -223,7 +233,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
             }
         }
 
-        public PropValue.FormatType SelectedFormatType
+        public FormatType SelectedFormatType
         {
             get { return _selectedFormatType; }
             set

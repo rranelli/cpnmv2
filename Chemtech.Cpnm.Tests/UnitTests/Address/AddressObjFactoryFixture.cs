@@ -27,7 +27,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
         private Guid _itemid;
         private Guid _propid;
         private Guid _unitid;
-        private PropValue.FormatType _formatType;
+        private FormatType _formatType;
 
         [SetUp]
         public void SetUp()
@@ -35,7 +35,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Address
             _unitid = Guid.NewGuid();
             _itemid = Guid.NewGuid();
             _propid = Guid.NewGuid();
-            _formatType = PropValue.FormatType.ValueAndUnit;
+            _formatType = FormatType.ValueAndUnit;
 
             _mockedUnit = MockRepository.GenerateMock<UnitOfMeasure>();
             _mockedUnit.Expect(uom => uom.Id).Return(_unitid);

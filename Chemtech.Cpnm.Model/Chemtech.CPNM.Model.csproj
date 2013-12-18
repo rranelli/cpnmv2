@@ -60,7 +60,9 @@
     <Compile Include="Domain\Dimension.cs" />
     <Compile Include="Domain\Discipline.cs" />
     <Compile Include="Domain\Entity.cs" />
+    <Compile Include="Domain\FormatType.cs" />
     <Compile Include="Domain\SubArea.cs" />
+    <Compile Include="Domain\ValueRef.cs" />
     <Compile Include="Domain\Xref.cs" />
     <Compile Include="Domain\ItemTypeGroup.cs" />
     <Compile Include="Domain\PropertyGroup.cs" />
@@ -78,7 +80,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

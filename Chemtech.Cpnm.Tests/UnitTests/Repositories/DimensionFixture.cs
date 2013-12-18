@@ -5,10 +5,8 @@
 // Criado em: 10/06/2013
 // Modificado em: 18/06/2013 : 1:51 AM
 
-using System;
 using System.Linq;
-using Castle.Windsor.Installer;
-using Chemtech.CPNM.BR.DI;
+using Castle.Windsor;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NUnit.Framework;
@@ -19,6 +17,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
     internal class DimensionFixture
     {
         private Configuration _configuration;
+        private WindsorContainer _container;
         private IDimensionRepository _dimensionRepository;
         private IUnitOfMeasureRepository _unitOfMeasureRepository;
         private ITestHelper _testHelper;
@@ -28,9 +27,8 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            var container = DiResolver.Getcontainer();
-            try { container.Install(FromAssembly.Named("Chemtech.CPNM.Tests")); } catch (Exception) { }
-            _testHelper = container.Resolve<ITestHelper>();
+            _container = new TestDIContainer();
+            _testHelper = _container.Resolve<ITestHelper>();
             _configuration = _testHelper.MakeConfiguration();
         }
 
@@ -38,8 +36,8 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         public void SetUp()
         {
             _testHelper.SetUpDatabaseTestData(_configuration);
-            _dimensionRepository = DiResolver.IocResolve<IDimensionRepository>();
-            _unitOfMeasureRepository = DiResolver.IocResolve<IUnitOfMeasureRepository>();
+            _dimensionRepository = _container.Resolve<IDimensionRepository>();
+            _unitOfMeasureRepository = _container.Resolve<IUnitOfMeasureRepository>();
         }
 
         [TestFixtureTearDown]

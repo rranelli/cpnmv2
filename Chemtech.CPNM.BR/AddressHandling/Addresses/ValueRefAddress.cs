@@ -5,11 +5,11 @@ namespace Chemtech.CPNM.BR.AddressHandling.Addresses
     public class ValueRefAddress : Address
     {
         private readonly UnitOfMeasure _unitOfMeasure;
-        private readonly PropValue.FormatType _formatType;
+        private readonly FormatType _formatType;
         private readonly Item _item;
         private readonly Property _property;
         
-        public ValueRefAddress(Item item , Property property, UnitOfMeasure unitOfMeasure, PropValue.FormatType formatType)
+        public ValueRefAddress(Item item , Property property, UnitOfMeasure unitOfMeasure, FormatType formatType)
         {
             _item = item;
             _property = property;

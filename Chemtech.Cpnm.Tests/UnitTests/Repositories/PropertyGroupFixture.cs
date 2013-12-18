@@ -4,9 +4,8 @@
 // 6:18 PM
 
 using System;
+using Castle.Windsor;
 using Castle.Windsor.Installer;
-using Chemtech.CPNM.BR;
-using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NUnit.Framework;
@@ -16,6 +15,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
     internal class PropertyGroupFixture
     {
+        private WindsorContainer _container;
         private Configuration _configuration;
         private IPropertyGroupRepository _propertyGroupRepository;
         private ITestHelper _testHelper;
@@ -25,10 +25,8 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            var container = DiResolver.Getcontainer();
-            try { container.Install(FromAssembly.Named("Chemtech.CPNM.Tests")); }
-            catch (Exception) { }
-            _testHelper = container.Resolve<ITestHelper>();
+            _container = new TestDIContainer();
+            _testHelper = _container.Resolve<ITestHelper>();
             _configuration = _testHelper.MakeConfiguration();
         }
 
@@ -36,7 +34,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         public void SetUp()
         {
             _testHelper.SetUpDatabaseTestData(_configuration);
-            _propertyGroupRepository = DiResolver.IocResolve<IPropertyGroupRepository>();
+            _propertyGroupRepository = _container.Resolve<IPropertyGroupRepository>();
         }
 
         [TestFixtureTearDown]

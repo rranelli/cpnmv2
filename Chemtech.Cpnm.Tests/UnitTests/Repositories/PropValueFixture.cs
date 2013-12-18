@@ -7,8 +7,7 @@
 
 using System;
 using System.Linq;
-using Castle.Windsor.Installer;
-using Chemtech.CPNM.BR.DI;
+using Castle.Windsor;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NUnit.Framework;
@@ -19,6 +18,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
     internal class PropValueFixture
     {
+        private WindsorContainer _container;
         private Configuration _configuration;
         private Xref _newXref;
         private Guid _parentId1;
@@ -43,17 +43,15 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            var container = DiResolver.Getcontainer();
-            try { container.Install(FromAssembly.Named("Chemtech.CPNM.Tests")); }
-            catch { }
-            _testHelper = container.Resolve<ITestHelper>();
+            _container = new TestDIContainer();
+            _testHelper = _container.Resolve<ITestHelper>();
             _configuration = _testHelper.MakeConfiguration();
 
-            _dimensionRepository = DiResolver.IocResolve<IDimensionRepository>();
-            _itemRepository = DiResolver.IocResolve<IItemRepository>();
-            _propertyRepository = DiResolver.IocResolve<IPropertyRepository>();
-            _xrefRepository = DiResolver.IocResolve<IXrefRepository>();
-            _propValueRepository = DiResolver.IocResolve<IPropValueRepository>();
+            _dimensionRepository  = _container.Resolve<IDimensionRepository>();
+            _itemRepository       = _container.Resolve<IItemRepository>();
+            _propertyRepository   = _container.Resolve<IPropertyRepository>();
+            _xrefRepository       = _container.Resolve<IXrefRepository>();
+            _propValueRepository  = _container.Resolve<IPropValueRepository>();
         }
 
         [SetUp]
@@ -67,8 +65,10 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
             _unit3 = dimension.Units.ToList().SingleOrDefault(x => x.Name == "Unit3");
 
             _thisproperty = new Property {Dimension = dimension, DefaultUnit = _unit3};
+// ReSharper disable PossibleNullReferenceException
             _parentId1 = _itemRepository.GetAll().SingleOrDefault(i => i.Name == "Complex").Id;
             _parentId2 = _itemRepository.GetAll().SingleOrDefault(i => i.Name == "P-101").Id;
+// ReSharper restore PossibleNullReferenceException
             _thispropvalue = new PropValue {Xref = _newXref, Value = "100", ItemId = _parentId1};
 
             _newXref = new Xref {Property = _thisproperty};
@@ -242,8 +242,8 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [Test] // must convert correctly
         public void CanConvert()
         {
-            string stringValue1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.Value);
-            string stringValue2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.Value);
+            string stringValue1 = _thispropvalue.FormatedValue(_unit1, FormatType.Value);
+            string stringValue2 = _thispropvalue.FormatedValue(_unit2, FormatType.Value);
 
             Assert.AreEqual(stringValue1, "303");
             Assert.AreEqual(stringValue2, "200");
@@ -252,13 +252,13 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [Test]
         public void CanShowValueCorrectly()
         {
-            var valueOnly1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.Value);
-            var valueAndSymbol1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.ValueAndUnit);
-            var symbolOnly1 = _thispropvalue.FormatedValue(_unit1, PropValue.FormatType.Unit);
+            var valueOnly1 = _thispropvalue.FormatedValue(_unit1, FormatType.Value);
+            var valueAndSymbol1 = _thispropvalue.FormatedValue(_unit1, FormatType.ValueAndUnit);
+            var symbolOnly1 = _thispropvalue.FormatedValue(_unit1, FormatType.Unit);
 
-            var valueOnly2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.Value);
-            var valueAndSymbol2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.ValueAndUnit);
-            var symbolOnly2 = _thispropvalue.FormatedValue(_unit2, PropValue.FormatType.Unit);
+            var valueOnly2 = _thispropvalue.FormatedValue(_unit2, FormatType.Value);
+            var valueAndSymbol2 = _thispropvalue.FormatedValue(_unit2, FormatType.ValueAndUnit);
+            var symbolOnly2 = _thispropvalue.FormatedValue(_unit2, FormatType.Unit);
 
             Assert.AreEqual(valueOnly1, "303");
             Assert.AreEqual(valueAndSymbol1, "303 Unit1");
@@ -272,8 +272,8 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [Test]
         public void CanShowDefaultUnit()
         {
-            var valueAndSymbolDefault = _thispropvalue.FormatedValue(_unit3, PropValue.FormatType.ValueAndUnit);
-            var symbolDefault = _thispropvalue.FormatedValue(PropValue.FormatType.Unit);
+            var valueAndSymbolDefault = _thispropvalue.FormatedValue(_unit3, FormatType.ValueAndUnit);
+            var symbolDefault = _thispropvalue.FormatedValue(FormatType.Unit);
 
             Assert.AreEqual(symbolDefault, "Unit3");
             Assert.AreEqual(valueAndSymbolDefault, "30.3 Unit3");

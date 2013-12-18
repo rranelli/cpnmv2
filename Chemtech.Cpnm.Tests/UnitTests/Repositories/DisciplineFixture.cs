@@ -5,10 +5,7 @@
 // Criado em: 10/06/2013
 // Modificado em: 18/06/2013 : 1:51 AM
 
-using System;
-using Castle.Windsor.Installer;
-using Chemtech.CPNM.BR;
-using Chemtech.CPNM.BR.DI;
+using Castle.Windsor;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NUnit.Framework;
@@ -19,7 +16,9 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
     internal class DisciplineFixture
     {
         private Configuration _configuration;
-        private IDisciplineRepository _repository;
+        private WindsorContainer _container;
+        
+        IDisciplineRepository _repository;
         private ITestHelper _testHelper;
 
         #region Fixture, Setup and Teardown config
@@ -27,9 +26,8 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            var container = DiResolver.Getcontainer();
-            try {container.Install(FromAssembly.Named("Chemtech.CPNM.Tests"));} catch (Exception) {}
-            _testHelper = container.Resolve<ITestHelper>();
+            _container = new TestDIContainer();
+            _testHelper = _container.Resolve<ITestHelper>();
             _configuration = _testHelper.MakeConfiguration();
         }
 
@@ -37,7 +35,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         public void SetUp()
         {
             _testHelper.SetUpDatabaseTestData(_configuration);
-            _repository = DiResolver.IocResolve<IDisciplineRepository>();
+            _repository = _container.Resolve<IDisciplineRepository>();
         }
 
         [TestFixtureTearDown]

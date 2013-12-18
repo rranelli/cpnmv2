@@ -1,6 +1,5 @@
 ﻿using System;
 using Castle.Windsor.Installer;
-using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Tests.UnitTests;
 
 namespace Chemtech.CPNM.Tests
@@ -10,8 +9,7 @@ namespace Chemtech.CPNM.Tests
         [STAThread]
         public static void Main()
         {
-            var container = DiResolver.Getcontainer();
-            container.Install(FromAssembly.Named("Chemtech.CPNM.Tests"));
+            var container = new TestDIContainer();
             var testHelper = container.Resolve<ITestHelper>();
 
             var configuration = testHelper.MakeConfiguration();

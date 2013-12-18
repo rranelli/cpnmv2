@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using Chemtech.CPNM.Interface.Views;
 
 namespace Chemtech.CPNM.Interface.ViewModels
 {
@@ -20,7 +21,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
 
         public void Open()
         {
-            View.ShowDialog();
+            View.Show();
         }
 
         public void Close()

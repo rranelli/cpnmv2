@@ -21,6 +21,14 @@ namespace Chemtech.CPNM.Interface.ViewModels
         private bool _isRestrictedToSelection;
         private bool _isColorChanges;
 
+        public SetupReuseViewModel(Window view, IEnumerable<Item> existantItems, IAddressFactory addressFactory, IItemRepository itemRepository)
+            : base(view)
+        {
+            _addressFactory = addressFactory;
+            _itemRepository = itemRepository;
+            ExistantItems = new ObservableCollection<Item>(existantItems);
+        }
+
         public ObservableCollection<Item> ExistantItems
         {
             get { return _existantItems; }
@@ -92,13 +100,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
             }
         }
 
-        public SetupReuseViewModel(Window view, IEnumerable<Item> existantItems, IAddressFactory addressFactory, IItemRepository itemRepository)
-            : base(view)
-        {
-            _addressFactory = addressFactory;
-            _itemRepository = itemRepository;
-            ExistantItems = new ObservableCollection<Item>(existantItems);
-        }
+
 
         public IReuseHandler GetReuseDefinition()
         {

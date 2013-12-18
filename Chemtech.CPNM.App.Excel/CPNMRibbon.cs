@@ -1,8 +1,8 @@
-﻿using Chemtech.CPNM.App.Excel.Application;
-using Chemtech.CPNM.BR.AddressHandling;
-using Chemtech.CPNM.BR.DI;
+﻿using System.Windows;
+using Castle.MicroKernel;
 using Chemtech.CPNM.Interface.Controllers;
-using Chemtech.CPNM.Interface.ViewModels;
+using Chemtech.CPNM.Interface.IApps;
+using Chemtech.CPNM.Model.Domain;
 using Microsoft.Office.Tools.Ribbon;
 
 // TODO: fazer o resolve da injecao de dependencia direito.
@@ -12,46 +12,35 @@ namespace Chemtech.CPNM.App.Excel
 {
     public partial class CPNMRibbon
     {
-        private AppOfficeControllerBase _officeController;
-
-        private void CPNMRibbon_Load(object sender, RibbonUIEventArgs e)
-        {
-        }
+        private void CPNMRibbon_Load(object sender, RibbonUIEventArgs e) {}
 
         private void btnInsertReference_Click(object sender, RibbonControlEventArgs e)
         {
-            var getReferenceViewModel = DiResolver.IocResolve<IGetAddressViewModel>();
-            var addressFactory = DiResolver.IocResolve<IAddressFactory>();
-            var appExcel = new CPNMAppExcel(DiResolver.IocResolve<IAddressFactory>());
-            ISetupReuseViewModel setupReuseViewModel = null;
-
-            _officeController = new AppOfficeControllerBase(appExcel, getReferenceViewModel, addressFactory, setupReuseViewModel);
-
-            _officeController.InsertReferenceAction();
+            getController().InsertReferenceAction();
         }
 
         private void btnUpdateReferences_Click(object sender, RibbonControlEventArgs e)
         {
-            var getReferenceViewModel = DiResolver.IocResolve<IGetAddressViewModel>();
-            var addressFactory = DiResolver.IocResolve<IAddressFactory>();
-            var appExcel = new CPNMAppExcel(DiResolver.IocResolve<IAddressFactory>());
-            ISetupReuseViewModel setupReuseViewModel = null;
-
-            _officeController = new AppOfficeControllerBase(appExcel, getReferenceViewModel, addressFactory, setupReuseViewModel);
-
-            _officeController.UpdateReferencesAction();
+            getController().UpdateReferencesAction();
         }
 
         private void btnApplyItemReuse_Click(object sender, RibbonControlEventArgs e)
         {
-            var getReferenceViewModel = DiResolver.IocResolve<IGetAddressViewModel>();
-            var addressFactory = DiResolver.IocResolve<IAddressFactory>();
-            var appExcel = new CPNMAppExcel(DiResolver.IocResolve<IAddressFactory>());
-            ISetupReuseViewModel setupReuseViewModel = null;
+            getController().ApplyReferenceReuseAction();
+        }
 
-            _officeController = new AppOfficeControllerBase(appExcel, getReferenceViewModel, addressFactory, setupReuseViewModel);
+        private IAppController getController()
+        {
+            // TODO: good lord..... IOC com mvvm ta ficando uma zona, pqp!
 
-            _officeController.ApplyReferenceReuseAction();
+
+            var container = new AppExcelDIContainer();
+            var appExcel = container.Resolve<ICPNMApp>("CPNMAppExcel",
+                                                       new Arguments(new {appExcel = Globals.ThisAddIn.Application}));
+            var setupReuseViewModel = container.Resolve<Window>("SetupReuseViewModel",
+                                                                                   new Arguments(new {existantItems =  new Item[]{new Item(), }}));
+            return container.Resolve<IAppController>("AppOfficeControllerBase",
+                                                     new Arguments(new {cpnmApp = appExcel, setupReuseViewModel = setupReuseViewModel}));
         }
     }
 }

@@ -15,12 +15,11 @@ namespace Chemtech.CPNM.App.Excel.Application
         private readonly Microsoft.Office.Interop.Excel.Application _excelApp;
         private readonly IAddressFactory _addressObjFactory;
 
-        public CPNMAppExcel(IAddressFactory addressObjFactory)
+        public CPNMAppExcel(IAddressFactory addressObjFactory, Microsoft.Office.Interop.Excel.Application appExcel)
         {
             _addressObjFactory = addressObjFactory;
-            _excelApp = Globals.ThisAddIn.Application;
+            _excelApp = appExcel;
         }
-
         public void InsertReference(IAddress address)
         {
             var nextIndex = GetNextIndex();
@@ -41,7 +40,6 @@ namespace Chemtech.CPNM.App.Excel.Application
 
         public void ApplyMapping(IDictionary<int, IAddress> newMapping, bool isColorChanges)
         {
-            // Importante. O caching do nhibernate n'ao recarrega os valores do banco quando eles sao alterados.
             foreach (Name name in _excelApp.Names)  //pqp, Names n'ao implementa ienumerable.... good lord.
             {
                 if (IsCpnmRefVarName(name.Name))

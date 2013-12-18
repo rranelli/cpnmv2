@@ -5,10 +5,7 @@
 // Criado em: 06/06/2013
 // Modificado em: 18/06/2013 : 1:52 AM
 
-using System;
-using Castle.Windsor.Installer;
-using Chemtech.CPNM.BR;
-using Chemtech.CPNM.BR.DI;
+using Castle.Windsor;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NUnit.Framework;
@@ -18,6 +15,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
 {
     internal class ItemTypeGroupFixture
     {
+        private WindsorContainer _container;
         private Configuration _configuration;
         private IItemTypeGroupRepository _itemTypeGroupRepository;
         private ITestHelper _testHelper;
@@ -27,17 +25,15 @@ namespace Chemtech.CPNM.Tests.UnitTests.Repositories
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            var container = DiResolver.Getcontainer();
-            try { container.Install(FromAssembly.Named("Chemtech.CPNM.Tests")); }
-            catch (Exception) { }
-            _testHelper = container.Resolve<ITestHelper>();
+            _container = new TestDIContainer();
+            _testHelper = _container.Resolve<ITestHelper>();
             _configuration = _testHelper.MakeConfiguration();
         }
 
         [SetUp]
         public void SetUp()
         {
-            _itemTypeGroupRepository = DiResolver.IocResolve<IItemTypeGroupRepository>();
+            _itemTypeGroupRepository = _container.Resolve<IItemTypeGroupRepository>();
             _testHelper.SetUpDatabaseTestData(_configuration);
         }
 

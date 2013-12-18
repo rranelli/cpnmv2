@@ -141,7 +141,7 @@ namespace Chemtech.CPNM.BR.AddressHandling
                                 ? _unitOfMeasureRepository.GetById(new Guid(unitIdString))
                                 : prop.DefaultUnit;
 
-            var formatType = (PropValue.FormatType)Enum.Parse(typeof(PropValue.FormatType), formatTypeString);
+            var formatType = (FormatType)Enum.Parse(typeof(FormatType), formatTypeString);
 
             return new ValueRefAddress(item, prop, unitOfMeasure, formatType);
         }

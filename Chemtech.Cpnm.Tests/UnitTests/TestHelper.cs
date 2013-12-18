@@ -5,7 +5,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Chemtech.CPNM.BR.DI;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using NHibernate.Cfg;
@@ -14,7 +13,6 @@ using NHibernate.Tool.hbm2ddl;
 namespace Chemtech.CPNM.Tests.UnitTests
 {
     public interface ITestHelper {
-        void AddGroups<T1>(IEnumerable<T1> ents) where T1 : Entity;
         Configuration MakeConfiguration();
         void TestTearDown(Configuration configuration);
         void SetUpDatabaseTestData(Configuration configuration);
@@ -23,17 +21,11 @@ namespace Chemtech.CPNM.Tests.UnitTests
     public class TestHelper : ITestHelper
     {
         private readonly IItemRepository _itemRepository;
+        private readonly IGeneralRepository<Entity> _generalRepository;
 
-        public TestHelper(IItemRepository itemRepository){
+        public TestHelper(IItemRepository itemRepository, IGeneralRepository<Entity> generalRepository){
             _itemRepository = itemRepository;
-        }
-
-        public void AddGroups<T1>(IEnumerable<T1> ents) where T1 : Entity
-        {
-            // THIS IS SO TERRIBLE I SHOULD NEVER DO THIS AGAIN !!!!!!!!!!!!!!!
-            var repository = DiResolver.Getcontainer().Resolve<IGeneralRepository<T1>>();  // TODO: THIS IS SO UGLY I CANT EVEN
-
-            ents.ToList().ForEach(ent => repository.Add(ent));
+            _generalRepository = generalRepository;
         }
 
         public Configuration MakeConfiguration()
@@ -47,7 +39,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
 
         public void TestTearDown(Configuration configuration)
         {
-            //new SchemaExport(configuration).Drop(false, true);
+            new SchemaExport(configuration).Drop(false, true);
         }
 
         public void SetUpDatabaseTestData(Configuration configuration)
@@ -161,7 +153,8 @@ namespace Chemtech.CPNM.Tests.UnitTests
                                   unitsOfMeasure, dimensions, disciplines, propGroups, properties, itemTypeGroups,
                                   itemTypes, items
                               };
-            allData.ToList().ForEach(ent => AddGroups(ent));
+
+            allData.ToList().ForEach(ents => ents.ToList().ForEach(ent => _generalRepository.Add(ent)));
 
             // subindo propvalues
             var complexItem = _itemRepository.GetByName("Complex");

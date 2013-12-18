@@ -22,5 +22,10 @@ namespace Chemtech.CPNM.Interface.Views
         {
             InitializeComponent();
         }
+
+        public void Show()
+        {
+            base.Show();
+        }
     }
 }

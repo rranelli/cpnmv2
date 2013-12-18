@@ -21,8 +21,9 @@ namespace Chemtech.CPNM.Model.Domain
         {
             get
             {
-                if (Dimension == null) return null;
-                return Dimension.Units;
+                return Dimension == null 
+                    ? null
+                    : Dimension.Units;
             }
         }
 

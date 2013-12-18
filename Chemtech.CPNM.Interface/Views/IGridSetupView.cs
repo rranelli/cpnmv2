@@ -3,7 +3,7 @@ using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.CPNM.Interface.Views
 {
-    public interface IGridSetupView : IView
+    public interface IGridSetupView
     {
         ICollection<ItemTypeGroup> ItemTypeGroups { get; set; }
         ICollection<PropertyGroup> PropertyGroups { get; set; }

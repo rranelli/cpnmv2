@@ -10,7 +10,8 @@ namespace Chemtech.CPNM.Interface.Controllers
         private readonly IAddressFactory _addressFactory;
         private readonly ISetupReuseViewModel _setupReuseViewModel;
 
-        public AppOfficeControllerBase(ICPNMApp cpnmApp, IGetAddressViewModel addressViewModel, IAddressFactory addressFactory, ISetupReuseViewModel setupReuseViewModel) : base(cpnmApp)
+        public AppOfficeControllerBase
+            (ICPNMApp cpnmApp, IGetAddressViewModel addressViewModel, IAddressFactory addressFactory, ISetupReuseViewModel setupReuseViewModel) : base(cpnmApp)
         {
             _addressViewModel = addressViewModel;
             _addressFactory = addressFactory;

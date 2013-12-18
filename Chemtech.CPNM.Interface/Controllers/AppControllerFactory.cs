@@ -1,5 +1,4 @@
 ﻿using System;
-using Chemtech.CPNM.BR.DI;
 
 namespace Chemtech.CPNM.Interface.Controllers
 {
@@ -10,7 +9,7 @@ namespace Chemtech.CPNM.Interface.Controllers
             switch (desiredController)
             {
                 case "AppWordController":
-                    return DiResolver.IocResolve<IAppController>(); // TODO: Add Resolve ByName.
+                    return new InterfaceDIContainer().Resolve<IAppController>(); // TODO: Add Resolve ByName.
                 //Todo: adicionar implementacao de outros controllers.
                 default:
                     throw new Exception("invalid controller asked for");

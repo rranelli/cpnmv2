@@ -39,7 +39,7 @@ namespace Chemtech.CPNM.Model.Domain
         {
             return Equals(obj as Entity<TId>);
         }
-
+        
         public virtual bool Equals(Entity<TId> other)
         {
             if (other == null)

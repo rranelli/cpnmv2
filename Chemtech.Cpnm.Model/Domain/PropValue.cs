@@ -10,24 +10,8 @@ using System.Globalization;
 
 namespace Chemtech.CPNM.Model.Domain
 {
-    public class ValueRef : Entity
-    {
-        public virtual string Value { get; set; }
-    }
-
     public class PropValue : Entity
     {
-        #region FormatType enum
-
-        public enum FormatType
-        {
-            ValueAndUnit,
-            Value,
-            Unit
-        }
-
-        #endregion
-
         public virtual Guid ItemId { get; set; }
         public virtual Xref Xref { get; set; }
         protected internal virtual ValueRef ValueRef { get; set; }
@@ -67,11 +51,9 @@ namespace Chemtech.CPNM.Model.Domain
 
         public virtual string FormatedValue(UnitOfMeasure desiredUnit, FormatType formatType)
         {
-            if (!IsConvertible())
-            {
-                return Value;
-            }
+            if (!IsConvertible()) return Value;
 
+            
             if (desiredUnit == null) desiredUnit = Xref.Property.DefaultUnit;
 
             switch (formatType)
@@ -92,20 +74,19 @@ namespace Chemtech.CPNM.Model.Domain
             return FormatedValue(GetProperty.DefaultUnit, formatType);
         }
 
-        public virtual void MakeShare(PropValue other)
+        public virtual void MakeShare(PropValue other) // TODO : Isso é metodo de serviço e não de modelo.
         {
             if (!GetProperty.Dimension.Equals(other.GetProperty.Dimension))
                 throw new Exception("Dimensoes invalidas para o Share");
             ValueRef = other.ValueRef;
         }
 
-        public virtual void BreakShare(PropValue other)
+        public virtual void BreakShare(PropValue other) // TODO : Isso é metodo de serviço e não de modelo.
         {
-            if (Equals(ValueRef, other.ValueRef))
-            {
-                ValueRef = new ValueRef {Value = other.Value};
-                if (Equals(ValueRef, other.ValueRef)) throw new Exception("BreakShare failed miserably.");
-            }
+            if (!Equals(ValueRef, other.ValueRef)) return;
+
+            ValueRef = new ValueRef {Value = other.Value};
+            if (Equals(ValueRef, other.ValueRef)) throw new Exception("BreakShare failed miserably.");
         }
 
         private string ConvertValue(UnitOfMeasure desiredUnit)
@@ -118,4 +99,5 @@ namespace Chemtech.CPNM.Model.Domain
             return valueAsDouble.ToString(CultureInfo.InvariantCulture);
         }
     }
+
 }

@@ -7,7 +7,7 @@ namespace Chemtech.CPNM.BR.AddressHandling.Addresses
         Property Property { get; set; }
         PropValue PropValue { get; set; }
         UnitOfMeasure UnitOfMeasure { get; set; }
-        PropValue.FormatType FormatType { get; set; }
+        FormatType FormatType { get; set; }
         AddressDefiner.AddressType ThisAddressType { get; set; }
     }
 
@@ -17,7 +17,7 @@ namespace Chemtech.CPNM.BR.AddressHandling.Addresses
         public Property Property { get; set; }
         public PropValue PropValue { get; set; }
         public UnitOfMeasure UnitOfMeasure { get; set; }
-        public PropValue.FormatType FormatType { get; set; }
+        public FormatType FormatType { get; set; }
         public bool IsMetadata { get; set; }
         public AddressType ThisAddressType { get; set; }
 

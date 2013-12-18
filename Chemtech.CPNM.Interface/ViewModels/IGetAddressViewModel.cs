@@ -18,7 +18,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
         ObservableCollection<PropertyGroup> PropertyGroups { get; set; }
         ObservableCollection<SubArea> SubAreas { get; set; }
 
-        PropValue.FormatType FormatTypes { get; set; }
+        FormatType FormatTypes { get; set; }
         AddressDefiner.AddressType AddressType { get; set; }
         bool MetaSelected { get; set; }
 

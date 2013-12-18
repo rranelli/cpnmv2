@@ -42,7 +42,7 @@ namespace Chemtech.Cpnm.Data.DTOs
                                                               pval.FormatedValue(_unitOfMeasures.ContainsKey(prp)
                                                                                      ? _unitOfMeasures[prp]
                                                                                      : prp.DefaultUnit,
-                                                                                 PropValue.FormatType.ValueAndUnit);
+                                                                                 FormatType.ValueAndUnit);
                                                       }
                                                       j += 1;
                                                   });
