@@ -33,8 +33,7 @@ namespace Chemtech.CPNM.BR.ReuseLogic
 
             _mapOldToNew = new Dictionary<string, string>();
             _reusePairs.ToList().
-                ForEach(rp =>
-                        _mapOldToNew.Add(rp.OldItem.Id.ToString(), rp.NewItem.Id.ToString()));
+                ForEach(rp => _mapOldToNew.Add(rp.OldItem.Id.ToString(), rp.NewItem.Id.ToString()));
         }
 
         public ICollection<Item> OldItems

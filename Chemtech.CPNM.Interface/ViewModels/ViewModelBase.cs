@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using Chemtech.CPNM.Interface.Views;
 
 namespace Chemtech.CPNM.Interface.ViewModels
 {
     public interface IViewModelBase {
-        void Open();
+        void OpenViewDialog();
         void Close();
         bool ResultOk();
     }
@@ -19,9 +18,9 @@ namespace Chemtech.CPNM.Interface.ViewModels
             View.DataContext = this;
         }
 
-        public void Open()
+        public void OpenViewDialog()
         {
-            View.Show();
+            View.ShowDialog();
         }
 
         public void Close()

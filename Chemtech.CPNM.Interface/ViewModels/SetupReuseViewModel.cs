@@ -18,6 +18,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
         private ObservableCollection<ItemReusePair> _reuseQueue;
         private Item _selectedOrigin;
         private Item _selectedCandidate;
+        private ItemReusePair _selectedItemReusePair;
         private bool _isRestrictedToSelection;
         private bool _isColorChanges;
 
@@ -26,7 +27,20 @@ namespace Chemtech.CPNM.Interface.ViewModels
         {
             _addressFactory = addressFactory;
             _itemRepository = itemRepository;
+            _reuseQueue = new ObservableCollection<ItemReusePair>();
             ExistantItems = new ObservableCollection<Item>(existantItems);
+        }
+
+        public void AddPairToQueue()
+        {
+            ReuseQueue.Add(new ItemReusePair(SelectedOrigin, SelectedCandidate));
+            OnPropertyChanged("ReuseQueue");
+        }
+
+        public void RemovePairFromQueue()
+        {
+            ReuseQueue.Remove(SelectedItemReusePair);
+            OnPropertyChanged("ReuseQueue");
         }
 
         public ObservableCollection<Item> ExistantItems
@@ -65,6 +79,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
             set
             {
                 _selectedOrigin = value;
+                CandidateItems = new ObservableCollection<Item>(_itemRepository.GetByType(SelectedOrigin.ItemType));
                 OnPropertyChanged("SelectedOrigin");
             }
         }
@@ -75,8 +90,17 @@ namespace Chemtech.CPNM.Interface.ViewModels
             set
             {
                 _selectedCandidate = value;
-                CandidateItems = new ObservableCollection<Item>(_itemRepository.GetByType(SelectedCandidate.ItemType));
                 OnPropertyChanged("SelectedCandidate");
+            }
+        }
+
+        public ItemReusePair SelectedItemReusePair
+        {
+            get { return _selectedItemReusePair; }
+            set
+            {
+                _selectedItemReusePair = value;
+                OnPropertyChanged("SelectedItemReusePair");
             }
         }
 
@@ -99,8 +123,6 @@ namespace Chemtech.CPNM.Interface.ViewModels
                 OnPropertyChanged("IsColorChanges");
             }
         }
-
-
 
         public IReuseHandler GetReuseDefinition()
         {

@@ -11,8 +11,15 @@ namespace Chemtech.CPNM.BR.ReuseLogic
 {
     public class ItemReusePair
     {
-        public Item OldItem { get; set; }
-        public Item NewItem { get; set; }
+        public Item OldItem { get; private set; }
+        public Item NewItem { get; private set; }
+        public string Name { get { return ToString(); }}
+
+        public ItemReusePair(Item oldItem, Item newItem)
+        {
+            NewItem = newItem;
+            OldItem = oldItem;
+        }
 
         public override string ToString()
         {

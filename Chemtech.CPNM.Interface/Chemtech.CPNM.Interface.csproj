@@ -63,13 +63,9 @@
   <ItemGroup>
     <Compile Include="Controllers\AppControllerFactory.cs" />
     <Compile Include="Controllers\AppExcelImportExportControllerBase.cs" />
-    <Compile Include="Controllers\AppOfficeControllerBase.cs" />
-    <Compile Include="Controllers\AppAutoCadController.cs" />
     <Compile Include="Controllers\AppControllerBase.cs" />
+    <Compile Include="Controllers\AppAutoCadController.cs" />
     <Compile Include="Controllers\IAppController.cs" />
-    <Compile Include="IApps\ICPNMApp.cs" />
-    <Compile Include="IApps\ICPNMAppCad.cs" />
-    <Compile Include="IApps\ICPNMImportExport.cs" />
     <Compile Include="InterfaceDIContainer.cs" />
     <Compile Include="ViewModels\GetAddressViewModel.cs" />
     <Compile Include="ViewModels\ISetupReuseViewModel.cs" />

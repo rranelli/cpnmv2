@@ -39,7 +39,7 @@ namespace Chemtech.CPNM.Tests.UnitTests
 
         public void TestTearDown(Configuration configuration)
         {
-            new SchemaExport(configuration).Drop(false, true);
+            //new SchemaExport(configuration).Drop(false, true);
         }
 
         public void SetUpDatabaseTestData(Configuration configuration)

@@ -75,7 +75,8 @@
     <Compile Include="TestDIContainer.cs" />
     <Compile Include="UnitTests\Address\AddressObjFactoryFixture.cs" />
     <Compile Include="UnitTests\Address\ValueRefAddressFixture.cs" />
-    <Compile Include="UnitTests\AppControllers\AppOfficeControllerFixture.cs" />
+    <Compile Include="UnitTests\AppControllers\AppBaseControllerFixture.cs" />
+    <Compile Include="UnitTests\AppExcel\AppExcelFixture.cs" />
     <Compile Include="UnitTests\Repositories\DimensionFixture.cs" />
     <Compile Include="UnitTests\Repositories\DisciplineFixture.cs" />
     <Compile Include="UnitTests\Repositories\GenerateSchemaFixture.cs" />

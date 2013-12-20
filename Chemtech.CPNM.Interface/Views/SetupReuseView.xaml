@@ -26,12 +26,30 @@
         <Label Grid.Row="0" Grid.Column="1" Content="Item Destino"></Label>
         <Label Grid.Row="0" Grid.Column="3" Content="Queue"></Label>
         
-        <ListBox Grid.Row="1" Grid.Column="0" Grid.RowSpan="5" Height="220" Width="100" VerticalAlignment="top"
-                 ItemsSource="{Binding Path=ExistantItems}" SelectedItem="{Binding Path=SelectedOrigin}"></ListBox>
+        <ListBox  Grid.Row="1" Grid.Column="0" Grid.RowSpan="5" Height="220" Width="100" VerticalAlignment="top"
+                 ItemsSource="{Binding Path=ExistantItems}" SelectedItem="{Binding Path=SelectedOrigin}" Name="lb1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <ListBox Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" Height="220" Width="100" VerticalAlignment="top"
-                 ItemsSource="{Binding Path=CandidateItems}" SelectedItem="{Binding Path=SelectedCandidate}"></ListBox>
+                 ItemsSource="{Binding Path=CandidateItems}" SelectedItem="{Binding Path=SelectedCandidate}" Name="lb2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" Height="150" Width="100" VerticalAlignment="top"
-                 ItemsSource="{Binding Path=ReuseQueue}"></ListBox>
+                 ItemsSource="{Binding Path=ReuseQueue}" Name="lb3">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <Button Grid.Row="2" Grid.Column="2" Content="Add" Height="40"></Button>
         <Button Grid.Row="3" Grid.Column="2" Content="Remove" Height="40"></Button>

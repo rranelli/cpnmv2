@@ -1,16 +1,16 @@
 ﻿using Chemtech.CPNM.BR.AddressHandling;
 using Chemtech.CPNM.BR.AddressHandling.Addresses;
+using Chemtech.CPNM.BR.IApps;
 using Chemtech.CPNM.BR.ReuseLogic;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Interface.Controllers;
-using Chemtech.CPNM.Interface.IApps;
 using Chemtech.CPNM.Interface.ViewModels;
 using Rhino.Mocks;
 using NUnit.Framework;
 
 namespace Chemtech.CPNM.Tests.UnitTests.AppControllers
 {
-    class AppOfficeControllerFixture
+    class AppBaseControllerFixture
     {
         private IGetAddressViewModel _addressViewModelMock;
         private IAddressFactory _addressFactoryMock;
@@ -30,12 +30,12 @@ namespace Chemtech.CPNM.Tests.UnitTests.AppControllers
             _addressFactoryMock.Expect(x => x.Create((IAddressDefiner) null)).IgnoreArguments().Return(null);
 
             _setupReuseViewMock = MockRepository.GenerateMock<ISetupReuseViewModel>();
-            _setupReuseViewMock.Expect(x => x.Open());
+            _setupReuseViewMock.Expect(x => x.OpenViewDialog());
             _setupReuseViewMock.Expect(x => x.Close());
             _setupReuseViewMock.Expect(x => x.ResultOk()).Return(true);
 
             _addressViewModelMock = MockRepository.GenerateMock<IGetAddressViewModel>();
-            _addressViewModelMock.Expect(x => x.Open());
+            _addressViewModelMock.Expect(x => x.OpenViewDialog());
             _addressViewModelMock.Expect(x => x.Close());
             _addressViewModelMock.Expect(x => x.ResultOk()).Return(true);
             _addressViewModelMock.Expect(x => x.GetAddressDefiner()).Return(null);
@@ -53,7 +53,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.AppControllers
         {
             _appMock.Expect(x => x.InsertReference(null));
 
-            var controller = new AppOfficeControllerBase(_appMock, _addressViewModelMock, _addressFactoryMock,
+            var controller = new AppControllerBase(_appMock, _addressViewModelMock, _addressFactoryMock,
                                                          _setupReuseViewMock);
 
             controller.InsertReferenceAction();
@@ -72,7 +72,7 @@ namespace Chemtech.CPNM.Tests.UnitTests.AppControllers
             _appMock.Expect(x => x.GetIndexedReferences(false)); // o app deve receber uma chamada para devolver as suas referencias indexads
             _appMock.Expect(x => x.ApplyMapping(null, false));   // o app deve receber uma chamada para mapear as suas referencias para o gerado pelo handler
 
-            var controller = new AppOfficeControllerBase(_appMock, _addressViewModelMock, _addressFactoryMock,
+            var controller = new AppControllerBase(_appMock, _addressViewModelMock, _addressFactoryMock,
                                                          _setupReuseViewMock);
 
             controller.ApplyReferenceReuseAction(); // O controller deve rotear as ações corretas.

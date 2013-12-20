@@ -1,46 +1,51 @@
-﻿using System.Windows;
-using Castle.MicroKernel;
+﻿using Castle.MicroKernel;
+using Chemtech.CPNM.BR.IApps;
 using Chemtech.CPNM.Interface.Controllers;
-using Chemtech.CPNM.Interface.IApps;
-using Chemtech.CPNM.Model.Domain;
+using Chemtech.CPNM.Interface.ViewModels;
+using Chemtech.CPNM.Interface.Views;
 using Microsoft.Office.Tools.Ribbon;
-
-// TODO: fazer o resolve da injecao de dependencia direito.
-// TODO: eliminar o controller private.
 
 namespace Chemtech.CPNM.App.Excel
 {
     public partial class CPNMRibbon
     {
-        private void CPNMRibbon_Load(object sender, RibbonUIEventArgs e) {}
+        private void CPNMRibbonLoad(object sender, RibbonUIEventArgs e) {}
 
-        private void btnInsertReference_Click(object sender, RibbonControlEventArgs e)
+        private void BtnInsertReferenceClick(object sender, RibbonControlEventArgs e)
         {
             getController().InsertReferenceAction();
         }
 
-        private void btnUpdateReferences_Click(object sender, RibbonControlEventArgs e)
+        private void BtnUpdateReferencesClick(object sender, RibbonControlEventArgs e)
         {
             getController().UpdateReferencesAction();
         }
 
-        private void btnApplyItemReuse_Click(object sender, RibbonControlEventArgs e)
+        private void BtnApplyItemReuseClick(object sender, RibbonControlEventArgs e)
         {
             getController().ApplyReferenceReuseAction();
         }
 
         private IAppController getController()
         {
-            // TODO: good lord..... IOC com mvvm ta ficando uma zona, pqp!
-
-
             var container = new AppExcelDIContainer();
-            var appExcel = container.Resolve<ICPNMApp>("CPNMAppExcel",
-                                                       new Arguments(new {appExcel = Globals.ThisAddIn.Application}));
-            var setupReuseViewModel = container.Resolve<Window>("SetupReuseViewModel",
-                                                                                   new Arguments(new {existantItems =  new Item[]{new Item(), }}));
-            return container.Resolve<IAppController>("AppOfficeControllerBase",
-                                                     new Arguments(new {cpnmApp = appExcel, setupReuseViewModel = setupReuseViewModel}));
+            var appExcel = container.Resolve<ICPNMApp>(new Arguments(new {appExcel = Globals.ThisAddIn.Application}));
+
+            var getAddressView = new GetAddressView();
+            var insertReferenceViewModel = container.Resolve<IGetAddressViewModel>(
+                new Arguments(new {view = getAddressView}));
+
+            var setupReuseView = new SetupReuseView();
+            var setupReuseViewModel = container.Resolve<ISetupReuseViewModel>(
+                new Arguments(new { existantItems = appExcel.GetReferencedItems(), view = setupReuseView }));
+            
+            return container.Resolve<IAppController>(
+                new Arguments(new
+                                  {
+                                      cpnmApp = appExcel, 
+                                      setupReuseViewModel,
+                                      addressViewModel = insertReferenceViewModel
+                                  }));
         }
     }
 }

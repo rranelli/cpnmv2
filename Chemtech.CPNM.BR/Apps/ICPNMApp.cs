@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using Chemtech.CPNM.BR.AddressHandling.Addresses;
+using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.Interface.IApps
+namespace Chemtech.CPNM.BR.IApps
 {
     public interface ICPNMApp
     {
-        // Assumption > The index is DOCUMENT DEPENDANT !!!!!
-
         // inserts a single text reference into the document.
         void InsertReference(IAddress address);
 
@@ -19,5 +18,8 @@ namespace Chemtech.CPNM.Interface.IApps
 
         // updates all values referenced into the document
         void UpdateAllReferences();
+
+        // gets referenced items
+        ICollection<Item> GetReferencedItems();
     }
 }

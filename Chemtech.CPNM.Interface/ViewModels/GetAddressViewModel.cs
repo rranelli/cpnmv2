@@ -31,7 +31,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
         private PropertyGroup _selectedPropertyGroup;
         private SubArea _selectedSubArea;
         private FormatType _selectedFormatType;
-        private AddressDefiner.AddressType _selectedAddressType;
+        private AddressType _selectedAddressType;
 
         private readonly IItemRepository _itemRepository;
         private readonly IItemTypeRepository _itemTypeRepository;
@@ -44,7 +44,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
         private ObservableCollection<PropertyGroup> _propertyGroups;
         private ObservableCollection<SubArea> _subAreas;
         private FormatType _formatTypes;
-        private AddressDefiner.AddressType _addressType;
+        private AddressType _addressType;
         private bool _metaSelected;
 
 
@@ -128,7 +128,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
             }
         }
 
-        public AddressDefiner.AddressType AddressType
+        public AddressType AddressType
         {
             get { return _addressType; }
             set
@@ -243,7 +243,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
             }
         }
 
-        public AddressDefiner.AddressType SelectedAddressType
+        public AddressType SelectedAddressType
         {
             get { return _selectedAddressType; }
             set
@@ -256,7 +256,6 @@ namespace Chemtech.CPNM.Interface.ViewModels
         // ############
         // Property Chagned Event Handling
         // ############
-
 
         public override bool ResultOk()
         {

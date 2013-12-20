@@ -6,7 +6,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
 {
     public interface IGetAddressViewModel
     {
-        void Open();
+        void OpenViewDialog();
         void Close();
         bool ResultOk();
 
@@ -19,7 +19,7 @@ namespace Chemtech.CPNM.Interface.ViewModels
         ObservableCollection<SubArea> SubAreas { get; set; }
 
         FormatType FormatTypes { get; set; }
-        AddressDefiner.AddressType AddressType { get; set; }
+        AddressType AddressType { get; set; }
         bool MetaSelected { get; set; }
 
         AddressDefiner GetAddressDefiner();

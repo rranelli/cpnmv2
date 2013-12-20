@@ -1,24 +1,12 @@
 ﻿using System;
-using Chemtech.CPNM.Interface.IApps;
+using Chemtech.CPNM.BR.AddressHandling;
+using Chemtech.CPNM.BR.IApps;
+using Chemtech.CPNM.Interface.ViewModels;
 
 namespace Chemtech.CPNM.Interface.Controllers
 {
     public class AppAutoCadController : AppControllerBase
     {
-        public AppAutoCadController(ICPNMApp cpnmApp) : base(cpnmApp) {}
-        public override void InsertReferenceAction()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ApplyReferenceReuseAction()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void UpdateReferencesAction()
-        {
-            throw new NotImplementedException();
-        }
+        public AppAutoCadController(ICPNMApp cpnmApp, IGetAddressViewModel addressViewModel, IAddressFactory addressFactory, ISetupReuseViewModel setupReuseViewModel) : base(cpnmApp, addressViewModel, addressFactory, setupReuseViewModel) {}
     }
 }

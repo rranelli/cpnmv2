@@ -15,8 +15,6 @@ namespace Chemtech.CPNM.BR.AddressHandling
 
     public class AddressObjFactory : IAddressFactory
     {
-        // todo: factories should be static. make it static.
-
         private const string RegexCriteria = @"\/([\w-]*)";
         private const string RegexValidationCriteria = @"CPNM_(\w*):";
         private static readonly Regex BreakerRegex = new Regex(RegexCriteria);
@@ -46,19 +44,19 @@ namespace Chemtech.CPNM.BR.AddressHandling
 
             switch (addressDefiner.ThisAddressType)
             {
-                case AddressDefiner.AddressType.ValueRef:
+                case AddressType.ValueRef:
                     return new ValueRefAddress(addressDefiner.Item, addressDefiner.Property, addressDefiner.UnitOfMeasure, addressDefiner.FormatType);
-                case AddressDefiner.AddressType.ProjectRef:
+                case AddressType.ProjectRef:
                     throw new NotImplementedException();
-                case AddressDefiner.AddressType.AreaRef:
+                case AddressType.AreaRef:
                     throw new NotImplementedException();
-                case AddressDefiner.AddressType.ItemTypeNameRef:
+                case AddressType.ItemTypeNameRef:
                     throw new NotImplementedException();
-                case AddressDefiner.AddressType.SubAreaRef:
+                case AddressType.SubAreaRef:
                     throw new NotImplementedException();
-                case AddressDefiner.AddressType.PropNameRef:
+                case AddressType.PropNameRef:
                     throw new NotImplementedException();
-                case AddressDefiner.AddressType.ItemNameRef:
+                case AddressType.ItemNameRef:
                     throw new NotImplementedException();
                 default:
                     throw new ArgumentException();
@@ -89,10 +87,10 @@ namespace Chemtech.CPNM.BR.AddressHandling
             return ValidationRegex.IsMatch(candidate);
         }
 
-        private AddressDefiner.AddressType GetAddressType(string candidateAddress)
+        private AddressType GetAddressType(string candidateAddress)
         {
             var matches = ValidationRegex.Matches(candidateAddress);
-            return (AddressDefiner.AddressType)Enum.Parse(typeof(AddressDefiner.AddressType), matches[0].Groups[1].Value);
+            return (AddressType)Enum.Parse(typeof(AddressType), matches[0].Groups[1].Value);
         }
 
         private IAddress ParseStringIntoAddressObject(string candidateAddress)
@@ -103,19 +101,19 @@ namespace Chemtech.CPNM.BR.AddressHandling
 
             switch (thisAddressType)
             {
-                case AddressDefiner.AddressType.ValueRef:
+                case AddressType.ValueRef:
                     return ParsePropValAddress(candidateAddress);
-                case AddressDefiner.AddressType.PropNameRef:
+                case AddressType.PropNameRef:
                     return null;
-                case AddressDefiner.AddressType.ItemNameRef:
+                case AddressType.ItemNameRef:
                     return null;
-                case AddressDefiner.AddressType.ItemTypeNameRef:
+                case AddressType.ItemTypeNameRef:
                     return null;
-                case AddressDefiner.AddressType.AreaRef:
+                case AddressType.AreaRef:
                     return null;
-                case AddressDefiner.AddressType.SubAreaRef:
+                case AddressType.SubAreaRef:
                     return null;
-                case AddressDefiner.AddressType.ProjectRef:
+                case AddressType.ProjectRef:
                     return null;
                 default:
                     throw new ArgumentException();

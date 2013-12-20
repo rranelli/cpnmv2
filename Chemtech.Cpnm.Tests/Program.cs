@@ -15,8 +15,7 @@ namespace Chemtech.CPNM.Tests
             var configuration = testHelper.MakeConfiguration();
             testHelper.SetUpDatabaseTestData(configuration);
 
-            var appexcelz = new Microsoft.Office.Interop.Excel.Application();
-            appexcelz.Visible = true;
+            var appexcelz = new Microsoft.Office.Interop.Excel.Application {Visible = true};
             appexcelz.Workbooks.OpenText("c:/text.txt");
         }
     }

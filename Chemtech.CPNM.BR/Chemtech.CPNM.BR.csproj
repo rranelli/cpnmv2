@@ -47,12 +47,18 @@
   <ItemGroup>
     <Compile Include="AddressHandling\Addresses\Address.cs" />
     <Compile Include="AddressHandling\Addresses\AddressDefiner.cs" />
+    <Compile Include="AddressHandling\Addresses\AddressType.cs" />
+    <Compile Include="AddressHandling\Addresses\ItemRelatedAddress.cs" />
     <Compile Include="AddressHandling\Addresses\ValueRefAddress.cs" />
     <Compile Include="AddressHandling\AddressObjFactory.cs" />
+    <Compile Include="Apps\CPNMAppBase.cs" />
     <Compile Include="BusinessDIContainer.cs" />
+    <Compile Include="Apps\ICPNMApp.cs" />
+    <Compile Include="Apps\ICPNMAppCad.cs" />
+    <Compile Include="Apps\ICPNMImportExport.cs" />
+    <Compile Include="CpnmSession.cs" />
     <Compile Include="ReuseLogic\ItemReusePair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReuseLogic\CpnmSession.cs" />
     <Compile Include="ReuseLogic\ReuseHandler.cs" />
   </ItemGroup>
   <ItemGroup>

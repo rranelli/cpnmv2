@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Chemtech.CPNM.BR.ReuseLogic;
+using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.CPNM.Interface.Views
 {
@@ -23,7 +25,7 @@ namespace Chemtech.CPNM.Interface.Views
             InitializeComponent();
         }
 
-        public void Show()
+        public new void Show()
         {
             base.Show();
         }

@@ -1,7 +1,7 @@
 namespace Chemtech.CPNM.BR.AddressHandling.Addresses
 {
     public interface IAddress {
-        AddressDefiner.AddressType ThisAddressType { get; }
+        AddressType ThisAddressType { get; }
         string GetAddressString();
         string GetValue();
     }
@@ -13,11 +13,11 @@ namespace Chemtech.CPNM.BR.AddressHandling.Addresses
         protected const char RouterChar = '/'; // TODO: make this a resource.
         private const string CpnmAddressPreffix = "CPNM_#:"; // TODO: make this a resource.
         
-        public AddressDefiner.AddressType ThisAddressType { get; protected set; }
+        public AddressType ThisAddressType { get; protected set; }
         public abstract string GetAddressString();
         public abstract string GetValue();
 
-        public static string GetPreffix(AddressDefiner.AddressType thisAddressType)
+        public static string GetPreffix(AddressType thisAddressType)
         {
             return CpnmAddressPreffix.Replace("#", thisAddressType.ToString());
         }

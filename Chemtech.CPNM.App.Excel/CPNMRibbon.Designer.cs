@@ -61,26 +61,26 @@
             // 
             this.btnInsertReference.Label = "Inserir Referencia";
             this.btnInsertReference.Name = "btnInsertReference";
-            this.btnInsertReference.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnInsertReference_Click);
+            this.btnInsertReference.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnInsertReferenceClick);
             // 
             // btnUpdateReferences
             // 
             this.btnUpdateReferences.Label = "Update Valores";
             this.btnUpdateReferences.Name = "btnUpdateReferences";
-            this.btnUpdateReferences.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnUpdateReferences_Click);
+            this.btnUpdateReferences.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnUpdateReferencesClick);
             // 
             // btnApplyItemReuse
             // 
             this.btnApplyItemReuse.Label = "Aplicar Reuso";
             this.btnApplyItemReuse.Name = "btnApplyItemReuse";
-            this.btnApplyItemReuse.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnApplyItemReuse_Click);
+            this.btnApplyItemReuse.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnApplyItemReuseClick);
             // 
             // CPNMRibbon
             // 
             this.Name = "CPNMRibbon";
             this.RibbonType = "Microsoft.Excel.Workbook";
             this.Tabs.Add(this.tab1);
-            this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.CPNMRibbon_Load);
+            this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.CPNMRibbonLoad);
             this.tab1.ResumeLayout(false);
             this.tab1.PerformLayout();
             this.group1.ResumeLayout(false);

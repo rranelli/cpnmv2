@@ -119,6 +119,6 @@
         </GroupBox>
 
         <!--AddReferenceButton-->
-        <Button Grid.Row="6" Grid.Column="3" Content="InsertAddress" Click="Button_Click"></Button>
+        <Button Grid.Row="6" Grid.Column="3" Content="InsertAddress" Click="ButtonClick"></Button>
     </Grid>
 </Window>
