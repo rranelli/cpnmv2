@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Chemtech.CPNM.BR.AddressHandling.Addresses;
 using Chemtech.CPNM.Model.Domain;
 
-namespace Chemtech.CPNM.BR.IApps
+namespace Chemtech.CPNM.BR.Apps
 {
     public interface ICPNMApp
     {

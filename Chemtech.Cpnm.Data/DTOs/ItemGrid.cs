@@ -25,29 +25,29 @@ namespace Chemtech.Cpnm.Data.DTOs
 
         public string[,] GetGridMatrix() // items in rows, properties in columns.
         {
-            var temp = new string[_items.Count,_properties.Count];
+            var temp = new string[_items.Count, _properties.Count];
             var i = 1;
             var j = 1;
 
             _items.ToList().ForEach(
                 it =>
-                    {
-                        _properties
-                            .ToList().ForEach(prp =>
+                {
+                    _properties
+                        .ToList().ForEach(prp =>
+                                              {
+                                                  var pval = it.GetPropValue(prp);
+                                                  if (pval != null)
                                                   {
-                                                      var pval = it.GetPropValue(prp);
-                                                      if (pval != null)
-                                                      {
-                                                          temp[i, j] =
-                                                              pval.FormatedValue(_unitOfMeasures.ContainsKey(prp)
-                                                                                     ? _unitOfMeasures[prp]
-                                                                                     : prp.DefaultUnit,
-                                                                                 FormatType.ValueAndUnit);
-                                                      }
-                                                      j += 1;
-                                                  });
-                        i += 1;
-                    }
+                                                      temp[i, j] =
+                                                          pval.FormatedValue(_unitOfMeasures.ContainsKey(prp)
+                                                                                 ? _unitOfMeasures[prp]
+                                                                                 : prp.DefaultUnit,
+                                                                             FormatType.ValueAndUnit);
+                                                  }
+                                                  j += 1;
+                                              });
+                    i += 1;
+                }
                 );
             return temp;
         }

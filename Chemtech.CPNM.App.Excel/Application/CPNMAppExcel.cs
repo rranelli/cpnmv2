@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Chemtech.CPNM.BR.AddressHandling;
 using Chemtech.CPNM.BR.AddressHandling.Addresses;
 using Chemtech.CPNM.BR.Apps;
@@ -36,7 +37,7 @@ namespace Chemtech.CPNM.App.Excel.Application
 
         public override void ApplyMapping(IDictionary<int, IAddress> newMapping, bool isColorChanges)
         {
-            foreach (MSExcel.Name name in _excelApp.Names) 
+            foreach (MSExcel.Name name in _excelApp.Names)
             {
                 if (IsCpnmRefVarName(name.Name))
                     name.RefersTo = newMapping[GetIndexFromName(name.Name)].GetAddressString();
@@ -47,18 +48,21 @@ namespace Chemtech.CPNM.App.Excel.Application
 
         private int GetNextIndex()
         {
-            var maxindex = 0;
-            foreach (MSExcel.Name name in _excelApp.Names)
-            {
-                var thisindex = Convert.ToInt32(GetIndexFromName(name.Name));
-                if (thisindex > maxindex) maxindex = thisindex;
-            }
-            return maxindex + 1;
+            var indexes = _excelApp.Names
+                                   .Cast<MSExcel.Name>()
+                                   .Select(name => GetIndexFromName(name.Name))
+                                   .ToList();
+
+            var maxIndex = indexes.Count > 0
+                ? indexes.Max(x => x)
+                : 0;
+
+            return maxIndex + 1;
         }
 
         private static int GetIndexFromName(string cpnmRefVarName)
         {
-            return Convert.ToInt16(cpnmRefVarName.Replace("cpnmref", "").Replace("cpnmval", ""));
+            return Convert.ToInt16(cpnmRefVarName.Replace("cpnmref", string.Empty).Replace("cpnmval", string.Empty));
         }
     }
 }

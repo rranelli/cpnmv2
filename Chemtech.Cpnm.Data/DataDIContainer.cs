@@ -8,16 +8,15 @@ namespace Chemtech.Cpnm.Data
 {
     public class DataDIContainer : WindsorContainer
     {
-        private readonly ISessionFactory _sessionFactory;
-
         public DataDIContainer()
         {
             // configuring NHibernate
             var configuration = new NHibernate.Cfg.Configuration();
             configuration.Configure();
             configuration.AddAssembly(typeof(DimensionRepository).Assembly);
-            _sessionFactory = configuration.BuildSessionFactory();
+            var sessionFactory = configuration.BuildSessionFactory();
 
+// ReSharper disable once DoNotCallOverridableMethodsInConstructor
             Kernel.ProxyFactory = new DefaultProxyFactory(true);
 
             Register(Component.For<IDimensionRepository>()    .ImplementedBy<DimensionRepository>()    .LifeStyle.Singleton);
@@ -34,7 +33,7 @@ namespace Chemtech.Cpnm.Data
 
             Register(Component.For(typeof(IGeneralRepository<>)).ImplementedBy(typeof(GeneralRepository<>)).LifeStyle.Singleton);
             
-            Register(Component.For<ISession>().UsingFactoryMethod(_sessionFactory.OpenSession).LifeStyle.Singleton);
+            Register(Component.For<ISession>().UsingFactoryMethod(sessionFactory.OpenSession).LifeStyle.Singleton);
         }
     }
 }

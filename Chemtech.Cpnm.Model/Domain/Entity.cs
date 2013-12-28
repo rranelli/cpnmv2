@@ -70,9 +70,10 @@ namespace Chemtech.CPNM.Model.Domain
 
         public override int GetHashCode()
         {
-            if (Equals(Id, default(TId)))
-                return base.GetHashCode();
-            return Id.GetHashCode();
+            return Equals(Id, default(TId))
+// ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
+                ? base.GetHashCode()
+                : Id.GetHashCode();
         }
     }
 }

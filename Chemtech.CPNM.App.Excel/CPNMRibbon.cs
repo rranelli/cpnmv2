@@ -1,5 +1,5 @@
 ﻿using Castle.MicroKernel;
-using Chemtech.CPNM.BR.IApps;
+using Chemtech.CPNM.BR.Apps;
 using Chemtech.CPNM.Interface.Controllers;
 using Chemtech.CPNM.Interface.ViewModels;
 using Chemtech.CPNM.Interface.Views;
@@ -13,20 +13,20 @@ namespace Chemtech.CPNM.App.Excel
 
         private void BtnInsertReferenceClick(object sender, RibbonControlEventArgs e)
         {
-            getController().InsertReferenceAction();
+            GetController().InsertReferenceAction();
         }
 
         private void BtnUpdateReferencesClick(object sender, RibbonControlEventArgs e)
         {
-            getController().UpdateReferencesAction();
+            GetController().UpdateReferencesAction();
         }
 
         private void BtnApplyItemReuseClick(object sender, RibbonControlEventArgs e)
         {
-            getController().ApplyReferenceReuseAction();
+            GetController().ApplyReferenceReuseAction();
         }
 
-        private IAppController getController()
+        private static IAppController GetController()
         {
             var container = new AppExcelDIContainer();
             var appExcel = container.Resolve<ICPNMApp>(new Arguments(new {appExcel = Globals.ThisAddIn.Application}));

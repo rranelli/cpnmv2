@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Chemtech.CPNM.BR.AddressHandling;
 using Chemtech.CPNM.BR.AddressHandling.Addresses;
-using Chemtech.CPNM.BR.IApps;
 using Chemtech.CPNM.Model.Domain;
 
 namespace Chemtech.CPNM.BR.Apps

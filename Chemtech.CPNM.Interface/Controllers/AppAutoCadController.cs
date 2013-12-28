@@ -1,6 +1,6 @@
 ﻿using System;
 using Chemtech.CPNM.BR.AddressHandling;
-using Chemtech.CPNM.BR.IApps;
+using Chemtech.CPNM.BR.Apps;
 using Chemtech.CPNM.Interface.ViewModels;
 
 namespace Chemtech.CPNM.Interface.Controllers

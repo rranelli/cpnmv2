@@ -4,7 +4,7 @@ using System.Linq;
 using Castle.MicroKernel;
 using Chemtech.CPNM.App.Excel;
 using Chemtech.CPNM.BR.AddressHandling.Addresses;
-using Chemtech.CPNM.BR.IApps;
+using Chemtech.CPNM.BR.Apps;
 using Chemtech.CPNM.Data.Repositories;
 using Chemtech.CPNM.Model.Domain;
 using Microsoft.Office.Interop.Excel;
@@ -15,6 +15,8 @@ namespace Chemtech.CPNM.Tests.UnitTests.AppExcel
 {
     public class AppExcelFixture
     {
+        private const string TestFilePath = "c:/users/renan/exceltest.txt";
+
         private Application _appExcel;
         private TestDIContainer _container;
         private ITestHelper _testHelper;
@@ -39,7 +41,8 @@ namespace Chemtech.CPNM.Tests.UnitTests.AppExcel
         {
             _testHelper.SetUpDatabaseTestData(_configuration);
             _appExcel = new Application { Visible = false, DisplayAlerts = false};
-            _appExcel.Workbooks.OpenText("c:/text.txt");
+            
+            _appExcel.Workbooks.OpenText(TestFilePath);
 
             _cpnmAppExcel = new AppExcelDIContainer().Resolve<ICPNMApp>(new Arguments(new { appExcel = _appExcel }));
         }

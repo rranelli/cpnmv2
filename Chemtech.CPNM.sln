@@ -1,6 +1,15 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2924B859-28C6-4AF6-8DA2-26C36B100FEE}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.Model", "Chemtech.Cpnm.Model\Chemtech.CPNM.Model.csproj", "{CBCF5650-193E-40C7-872C-61C5F95F6014}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.Data", "Chemtech.Cpnm.Data\Chemtech.CPNM.Data.csproj", "{6C355B16-F0C0-4B0A-9184-43136534AD36}"
@@ -10,13 +19,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.BR", "Chemtech.CPNM.BR\Chemtech.CPNM.BR.csproj", "{DE72ECFD-276D-4B03-BE91-CE05F1C18D80}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.Tests", "Chemtech.CPNM.Tests\Chemtech.CPNM.Tests.csproj", "{220B1C4B-E18F-44A7-B0B2-564D5A6B3BF9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2924B859-28C6-4AF6-8DA2-26C36B100FEE}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemtech.CPNM.App.Excel", "Chemtech.CPNM.App.Excel\Chemtech.CPNM.App.Excel.csproj", "{64C020F9-31F6-4C4E-B3C6-3B81D692A830}"
 EndProject

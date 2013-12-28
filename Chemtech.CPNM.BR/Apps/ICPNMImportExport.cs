@@ -1,6 +1,6 @@
 using Chemtech.Cpnm.Data.DTOs;
 
-namespace Chemtech.CPNM.BR.IApps
+namespace Chemtech.CPNM.BR.Apps
 {
     public interface ICPNMImportExport : ICPNMApp
     {

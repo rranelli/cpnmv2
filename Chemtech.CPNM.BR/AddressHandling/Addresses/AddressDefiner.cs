@@ -23,8 +23,7 @@ namespace Chemtech.CPNM.BR.AddressHandling.Addresses
 
         public bool IsValid()
         {
-            return ((Item != null && Property != null && UnitOfMeasure != null) || 
-                   IsMetadata == true);
+            return ((Item != null && Property != null && UnitOfMeasure != null) || IsMetadata);
         }
     }
 }
